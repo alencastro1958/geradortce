@@ -24,11 +24,20 @@ class EstagiarioController extends Controller
             'nome' => 'required|string|max:255',
             'cpf' => 'required|unique:estagiarios,cpf',
             'rg' => 'nullable|string|max:255',
+            'data_nascimento' => 'nullable|date',
+            'estado_civil' => 'nullable|string|max:255',
+            'endereco' => 'nullable|string|max:255',
+            'bairro' => 'nullable|string|max:255',
+            'cidade' => 'nullable|string|max:255',
+            'estado' => 'nullable|string|max:2',
+            'cep' => 'nullable|string|max:10',
             'telefone' => 'nullable|string|max:255',
             'email' => 'nullable|email|max:255',
             'curso' => 'nullable|string|max:255',
             'semestre_atual' => 'nullable|integer',
             'matricula' => 'nullable|string|max:255',
+            'responsavel_legal_nome' => 'nullable|string|max:255',
+            'responsavel_legal_cpf' => 'nullable|string|max:255',
         ]);
 
         Estagiario::create($validated);
@@ -47,11 +56,20 @@ class EstagiarioController extends Controller
             'nome' => 'required|string|max:255',
             'cpf' => 'required|unique:estagiarios,cpf,' . $estagiario->id,
             'rg' => 'nullable|string|max:255',
+            'data_nascimento' => 'nullable|date',
+            'estado_civil' => 'nullable|string|max:255',
+            'endereco' => 'nullable|string|max:255',
+            'bairro' => 'nullable|string|max:255',
+            'cidade' => 'nullable|string|max:255',
+            'estado' => 'nullable|string|max:2',
+            'cep' => 'nullable|string|max:10',
             'telefone' => 'nullable|string|max:255',
             'email' => 'nullable|email|max:255',
             'curso' => 'nullable|string|max:255',
             'semestre_atual' => 'nullable|integer',
             'matricula' => 'nullable|string|max:255',
+            'responsavel_legal_nome' => 'nullable|string|max:255',
+            'responsavel_legal_cpf' => 'nullable|string|max:255',
         ]);
 
         $estagiario->update($validated);

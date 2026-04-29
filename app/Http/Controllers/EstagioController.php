@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Estagio;
-use App\Models\InstituicaoEnsino;
-use App\Models\EmpresaConcedente;
 use App\Models\Estagiario;
+use App\Models\EmpresaConcedente;
+use App\Models\InstituicaoEnsino;
+use App\Models\Seguradora;
 use Illuminate\Http\Request;
 
 class EstagioController extends Controller
@@ -18,10 +19,12 @@ class EstagioController extends Controller
 
     public function create()
     {
-        $estagiarios = Estagiario::all();
-        $empresas = EmpresaConcedente::all();
-        $instituicoes = InstituicaoEnsino::all();
-        return view('estagios.create', compact('estagiarios', 'empresas', 'instituicoes'));
+        $estagiarios = Estagiario::orderBy('nome')->get();
+        $empresas = EmpresaConcedente::orderBy('nome_fantasia')->get();
+        $instituicoes = InstituicaoEnsino::orderBy('nome')->get();
+        $seguradoras = Seguradora::orderBy('nome')->get();
+        
+        return view('estagios.create', compact('estagiarios', 'empresas', 'instituicoes', 'seguradoras'));
     }
 
     public function store(Request $request)
@@ -30,25 +33,34 @@ class EstagioController extends Controller
             'estagiario_id' => 'required|exists:estagiarios,id',
             'empresa_concedente_id' => 'required|exists:empresa_concedentes,id',
             'instituicao_ensino_id' => 'required|exists:instituicao_ensinos,id',
+            'seguradora_id' => 'nullable|exists:seguradoras,id',
             'data_inicio' => 'required|date',
             'data_fim' => 'required|date|after:data_inicio',
-            'carga_horaria_semanal' => 'required|integer',
-            'valor_bolsa' => 'nullable|numeric',
-            'valor_auxilio_transporte' => 'nullable|numeric',
+            'carga_horaria_semanal' => 'required|integer|min:1|max:40',
+            'valor_bolsa' => 'nullable|numeric|min:0',
+            'valor_auxilio_transporte' => 'nullable|numeric|min:0',
             'atividades' => 'nullable|string',
+            'status' => 'required|in:pendente,ativo,concluido,rescindido',
         ]);
 
         Estagio::create($validated);
 
-        return redirect()->route('estagios.index')->with('success', 'TCE criado com sucesso.');
+        return redirect()->route('estagios.index')->with('success', 'Estágio (TCE) cadastrado com sucesso.');
+    }
+
+    public function show(Estagio $estagio)
+    {
+        return view('estagios.show', compact('estagio'));
     }
 
     public function edit(Estagio $estagio)
     {
-        $estagiarios = Estagiario::all();
-        $empresas = EmpresaConcedente::all();
-        $instituicoes = InstituicaoEnsino::all();
-        return view('estagios.edit', compact('estagio', 'estagiarios', 'empresas', 'instituicoes'));
+        $estagiarios = Estagiario::orderBy('nome')->get();
+        $empresas = EmpresaConcedente::orderBy('nome_fantasia')->get();
+        $instituicoes = InstituicaoEnsino::orderBy('nome')->get();
+        $seguradoras = Seguradora::orderBy('nome')->get();
+
+        return view('estagios.edit', compact('estagio', 'estagiarios', 'empresas', 'instituicoes', 'seguradoras'));
     }
 
     public function update(Request $request, Estagio $estagio)
@@ -57,22 +69,29 @@ class EstagioController extends Controller
             'estagiario_id' => 'required|exists:estagiarios,id',
             'empresa_concedente_id' => 'required|exists:empresa_concedentes,id',
             'instituicao_ensino_id' => 'required|exists:instituicao_ensinos,id',
+            'seguradora_id' => 'nullable|exists:seguradoras,id',
             'data_inicio' => 'required|date',
             'data_fim' => 'required|date|after:data_inicio',
-            'carga_horaria_semanal' => 'required|integer',
-            'valor_bolsa' => 'nullable|numeric',
-            'valor_auxilio_transporte' => 'nullable|numeric',
+            'carga_horaria_semanal' => 'required|integer|min:1|max:40',
+            'valor_bolsa' => 'nullable|numeric|min:0',
+            'valor_auxilio_transporte' => 'nullable|numeric|min:0',
             'atividades' => 'nullable|string',
+            'status' => 'required|in:pendente,ativo,concluido,rescindido',
         ]);
 
         $estagio->update($validated);
 
-        return redirect()->route('estagios.index')->with('success', 'TCE atualizado com sucesso.');
+        return redirect()->route('estagios.index')->with('success', 'Estágio (TCE) atualizado com sucesso.');
     }
 
     public function destroy(Estagio $estagio)
     {
         $estagio->delete();
-        return redirect()->route('estagios.index')->with('success', 'TCE removido com sucesso.');
+        return redirect()->route('estagios.index')->with('success', 'Estágio (TCE) removido com sucesso.');
+    }
+
+    public function gerarDocumento(Estagio $estagio)
+    {
+        return view('estagios.pdf', compact('estagio'));
     }
 }

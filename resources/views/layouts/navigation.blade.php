@@ -15,6 +15,21 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('instituicoes.index')" :active="request()->routeIs('instituicoes.*')">
+                        {{ __('Instituições') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('empresas.index')" :active="request()->routeIs('empresas.*')">
+                        {{ __('Empresas') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('estagiarios.index')" :active="request()->routeIs('estagiarios.*')">
+                        {{ __('Estagiários') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('seguradoras.index')" :active="request()->routeIs('seguradoras.*')">
+                        {{ __('Seguradoras') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('estagios.index')" :active="request()->routeIs('estagios.*')">
+                        {{ __('TCEs') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -69,6 +84,21 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('instituicoes.index')" :active="request()->routeIs('instituicoes.*')">
+                {{ __('Instituições') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('empresas.index')" :active="request()->routeIs('empresas.*')">
+                {{ __('Empresas') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('estagiarios.index')" :active="request()->routeIs('estagiarios.*')">
+                {{ __('Estagiários') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('seguradoras.index')" :active="request()->routeIs('seguradoras.*')">
+                {{ __('Seguradoras') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('estagios.index')" :active="request()->routeIs('estagios.*')">
+                {{ __('TCEs') }}
             </x-responsive-nav-link>
         </div>
 

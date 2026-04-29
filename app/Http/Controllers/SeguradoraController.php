@@ -3,64 +3,53 @@
 namespace App\Http\Controllers;
 
 use App\Models\Seguradora;
-use App\Http\Requests\StoreSeguradoraRequest;
-use App\Http\Requests\UpdateSeguradoraRequest;
+use Illuminate\Http\Request;
 
 class SeguradoraController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $seguradoras = Seguradora::latest()->paginate(10);
+        return view('seguradoras.index', compact('seguradoras'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('seguradoras.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreSeguradoraRequest $request)
+    public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'nome' => 'required|string|max:255',
+            'apolice_numero' => 'nullable|string|max:255',
+        ]);
+
+        Seguradora::create($validated);
+
+        return redirect()->route('seguradoras.index')->with('success', 'Seguradora cadastrada com sucesso.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Seguradora $seguradora)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Seguradora $seguradora)
     {
-        //
+        return view('seguradoras.edit', compact('seguradora'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateSeguradoraRequest $request, Seguradora $seguradora)
+    public function update(Request $request, Seguradora $seguradora)
     {
-        //
+        $validated = $request->validate([
+            'nome' => 'required|string|max:255',
+            'apolice_numero' => 'nullable|string|max:255',
+        ]);
+
+        $seguradora->update($validated);
+
+        return redirect()->route('seguradoras.index')->with('success', 'Seguradora atualizada com sucesso.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Seguradora $seguradora)
     {
-        //
+        $seguradora->delete();
+        return redirect()->route('seguradoras.index')->with('success', 'Seguradora removida com sucesso.');
     }
 }

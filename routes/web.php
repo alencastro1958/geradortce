@@ -19,7 +19,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('instituicoes', \App\Http\Controllers\InstituicaoEnsinoController::class);
     Route::resource('empresas', \App\Http\Controllers\EmpresaConcedenteController::class);
     Route::resource('estagiarios', \App\Http\Controllers\EstagiarioController::class);
+    Route::resource('seguradoras', \App\Http\Controllers\SeguradoraController::class);
     Route::resource('estagios', \App\Http\Controllers\EstagioController::class);
+    Route::get('estagios/{estagio}/gerar-documento', [\App\Http\Controllers\EstagioController::class, 'gerarDocumento'])->name('estagios.gerar-documento');
 });
 
 require __DIR__.'/auth.php';
