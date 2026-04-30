@@ -35,21 +35,24 @@ class CnpjService
                 return $response->json();
             }
 
-            // Tenta fallback com v1
-            $fallbackUrl = 'https://api.estagee.com.br/receita/v1/cnpj';
-            $responseFallback = Http::withoutVerifying()
-                ->withHeaders([
-                    'Authorization' => 'Bearer ' . $this->token,
-                    'Accept' => 'application/json',
-                ])
-                ->timeout(10)
-                ->get($fallbackUrl . '/' . $cnpj);
-
-            if ($responseFallback->successful()) {
-                return $responseFallback->json();
+            // TENTATIVA 3: Minha Receita (Backup ultra-resiliente)
+            $minhaReceitaUrl = 'https://minhareceita.org';
+            $responseMR = Http::withoutVerifying()->timeout(10)->get($minhaReceitaUrl . '/' . $cnpj);
+            if ($responseMR->successful()) {
+                $data = $responseMR->json();
+                return [
+                    'razao_social' => $data['razao_social'] ?? $data['nome'],
+                    'nome_fantasia' => $data['nome_fantasia'] ?? $data['fantasia'] ?? null,
+                    'logradouro' => $data['logradouro'],
+                    'numero' => $data['numero'],
+                    'bairro' => $data['bairro'],
+                    'cidade' => $data['municipio'],
+                    'estado' => $data['uf'],
+                    'cep' => $data['cep'],
+                ];
             }
 
-            // Tenta fallback com BrasilAPI v2
+            // TENTATIVA 4: BrasilAPI v2
             $brasilApiV2 = 'https://brasilapi.com.br/api/cnpj/v2';
             $responseV2 = Http::withoutVerifying()
                 ->timeout(10)

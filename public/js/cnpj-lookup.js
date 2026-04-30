@@ -67,35 +67,46 @@ document.addEventListener('DOMContentLoaded', function() {
             // Feedback visual de carregamento
             input.classList.add('opacity-50', 'cursor-wait');
             
-            // TENTATIVA 1: BrasilAPI v2 (Navegador - Mais atualizado)
-            fetch(`https://brasilapi.com.br/api/cnpj/v2/${cnpjLimpo}`)
+            // TENTATIVA 1: Minha Receita (Navegador - Altamente estável)
+            fetch(`https://minhareceita.org/${cnpjLimpo}`)
                 .then(r => {
-                    if (!r.ok) throw new Error('Falha v2');
+                    if (!r.ok) throw new Error('Falha MinhaReceita');
                     return r.json();
                 })
                 .then(data => preencherCamposComData(data))
                 .catch(err => {
-                    console.warn('BrasilAPI v2 falhou, tentando v1...', err);
+                    console.warn('MinhaReceita falhou, tentando BrasilAPI v2...', err);
                     
-                    // TENTATIVA 2: BrasilAPI v1 (Navegador)
-                    fetch(`https://brasilapi.com.br/api/cnpj/v1/${cnpjLimpo}`)
+                    // TENTATIVA 2: BrasilAPI v2
+                    fetch(`https://brasilapi.com.br/api/cnpj/v2/${cnpjLimpo}`)
                         .then(r => {
-                            if (!r.ok) throw new Error('Falha v1');
+                            if (!r.ok) throw new Error('Falha v2');
                             return r.json();
                         })
                         .then(data => preencherCamposComData(data))
                         .catch(err => {
-                            console.warn('BrasilAPI v1 também falhou, tentando via servidor (Estagee)...', err);
+                            console.warn('BrasilAPI v2 falhou, tentando v1...', err);
                             
-                            // TENTATIVA 3: Via Servidor (Backup silencioso)
-                            fetch(`/api/consultar-cnpj?cnpj=${cnpjLimpo}`)
-                                .then(r => r.json())
-                                .then(data => {
-                                    if (data && !data.error) {
-                                        preencherCamposComData(data);
-                                    }
+                            // TENTATIVA 3: BrasilAPI v1
+                            fetch(`https://brasilapi.com.br/api/cnpj/v1/${cnpjLimpo}`)
+                                .then(r => {
+                                    if (!r.ok) throw new Error('Falha v1');
+                                    return r.json();
                                 })
-                                .catch(e => console.log('Falha final na busca. Preenchimento manual necessário.'));
+                                .then(data => preencherCamposComData(data))
+                                .catch(err => {
+                                    console.warn('Todas as buscas no navegador falharam, tentando servidor...', err);
+                                    
+                                    // TENTATIVA 4: Via Servidor (Backup silencioso)
+                                    fetch(`/api/consultar-cnpj?cnpj=${cnpjLimpo}`)
+                                        .then(r => r.json())
+                                        .then(data => {
+                                            if (data && !data.error) {
+                                                preencherCamposComData(data);
+                                            }
+                                        })
+                                        .catch(e => console.log('Falha final na busca. Preenchimento manual necessário.'));
+                                });
                         });
                 })
                 .finally(() => {
