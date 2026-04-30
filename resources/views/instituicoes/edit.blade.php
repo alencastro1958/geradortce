@@ -39,6 +39,10 @@
                                     <input type="text" name="razao_social" id="razao_social" value="{{ old('razao_social', $instituicao->razao_social) }}" required class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
                                     @error('razao_social') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
                                 </div>
+                                <div class="col-span-2">
+                                    <label for="mantenedora" class="block text-sm font-medium text-gray-700 mb-1">Instituição Mantenedora</label>
+                                    <input type="text" name="mantenedora" id="mantenedora" value="{{ old('mantenedora', $instituicao->mantenedora) }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
+                                </div>
                                 <div class="col-span-2 md:col-span-1">
                                     <label for="nome_fantasia" class="block text-sm font-medium text-gray-700 mb-1">Nome Fantasia</label>
                                     <input type="text" name="nome_fantasia" id="nome_fantasia" value="{{ old('nome_fantasia', $instituicao->nome_fantasia) }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
