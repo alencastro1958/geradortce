@@ -21,14 +21,14 @@
                         @method('PUT')
 
                         <div>
-                            <label for="nome" class="block text-sm font-medium text-gray-700 mb-1">Nome da Seguradora *</label>
-                            <input type="text" name="nome" id="nome" value="{{ old('nome', $seguradora->nome) }}" required class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
-                            @error('nome') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
+                            <label for="cnpj" class="block text-sm font-medium text-gray-700 mb-1">CNPJ</label>
+                            <input type="text" name="cnpj" id="cnpj" value="{{ old('cnpj', $seguradora->cnpj) }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" placeholder="00.000.000/0000-00">
                         </div>
 
                         <div>
-                            <label for="cnpj" class="block text-sm font-medium text-gray-700 mb-1">CNPJ</label>
-                            <input type="text" name="cnpj" id="cnpj" value="{{ old('cnpj', $seguradora->cnpj) }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" placeholder="00.000.000/0000-00">
+                            <label for="nome" class="block text-sm font-medium text-gray-700 mb-1">Nome da Seguradora *</label>
+                            <input type="text" name="nome" id="nome" value="{{ old('nome', $seguradora->nome) }}" required class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
+                            @error('nome') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
                         </div>
 
                         <div>
