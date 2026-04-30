@@ -32,6 +32,38 @@
                         </div>
 
                         <div>
+                            <label for="razao_social" class="block text-sm font-medium text-gray-700 mb-1">Razão Social</label>
+                            <input type="text" name="razao_social" id="razao_social" value="{{ old('razao_social') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" placeholder="Razão Social completa">
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="cep" class="block text-sm font-medium text-gray-700 mb-1">CEP</label>
+                                <input type="text" name="cep" id="cep" value="{{ old('cep') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" placeholder="00000-000">
+                            </div>
+                            <div>
+                                <label for="estado" class="block text-sm font-medium text-gray-700 mb-1">UF</label>
+                                <input type="text" name="estado" id="estado" value="{{ old('estado') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" placeholder="UF">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="endereco" class="block text-sm font-medium text-gray-700 mb-1">Endereço</label>
+                            <input type="text" name="endereco" id="endereco" value="{{ old('endereco') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" placeholder="Rua, número, complemento">
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="bairro" class="block text-sm font-medium text-gray-700 mb-1">Bairro</label>
+                                <input type="text" name="bairro" id="bairro" value="{{ old('bairro') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                            </div>
+                            <div>
+                                <label for="cidade" class="block text-sm font-medium text-gray-700 mb-1">Cidade</label>
+                                <input type="text" name="cidade" id="cidade" value="{{ old('cidade') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                            </div>
+                        </div>
+
+                        <div>
                             <label for="apolice_numero" class="block text-sm font-medium text-gray-700 mb-1">Número da Apólice</label>
                             <input type="text" name="apolice_numero" id="apolice_numero" value="{{ old('apolice_numero') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md" placeholder="Número do contrato ou apólice coletiva">
                             @error('apolice_numero') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror

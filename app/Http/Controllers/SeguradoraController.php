@@ -23,7 +23,13 @@ class SeguradoraController extends Controller
     {
         $validated = $request->validate([
             'nome' => 'required|string|max:255',
+            'razao_social' => 'nullable|string|max:255',
             'cnpj' => 'nullable|string|max:20',
+            'endereco' => 'nullable|string|max:255',
+            'bairro' => 'nullable|string|max:255',
+            'cidade' => 'nullable|string|max:255',
+            'estado' => 'nullable|string|max:2',
+            'cep' => 'nullable|string|max:10',
             'apolice_numero' => 'nullable|string|max:255',
             'arquivo_apolice' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
         ]);
@@ -47,7 +53,13 @@ class SeguradoraController extends Controller
     {
         $validated = $request->validate([
             'nome' => 'required|string|max:255',
+            'razao_social' => 'nullable|string|max:255',
             'cnpj' => 'nullable|string|max:20',
+            'endereco' => 'nullable|string|max:255',
+            'bairro' => 'nullable|string|max:255',
+            'cidade' => 'nullable|string|max:255',
+            'estado' => 'nullable|string|max:2',
+            'cep' => 'nullable|string|max:10',
             'apolice_numero' => 'nullable|string|max:255',
             'arquivo_apolice' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
         ]);
