@@ -53,19 +53,19 @@ class InstituicaoEnsinoController extends Controller
         return redirect()->route('instituicoes.index')->with('success', 'Instituição cadastrada com sucesso.');
     }
 
-    public function edit(InstituicaoEnsino $instituicao)
+    public function edit(InstituicaoEnsino $instituico)
     {
-        return view('instituicoes.edit', compact('instituicao'));
+        return view('instituicoes.edit', ['instituicao' => $instituico]);
     }
 
-    public function update(Request $request, InstituicaoEnsino $instituicao)
+    public function update(Request $request, InstituicaoEnsino $instituico)
     {
         $excecaoCnpj = '82.951.328/0001-58';
         $cnpjLimpo = preg_replace('/\D/', '', $request->cnpj);
         $cnpjExcecaoLimpo = preg_replace('/\D/', '', $excecaoCnpj);
 
         $rules = [
-            'cnpj' => $cnpjLimpo === $cnpjExcecaoLimpo ? 'required' : 'required|unique:instituicao_ensinos,cnpj,' . $instituicao->id,
+            'cnpj' => $cnpjLimpo === $cnpjExcecaoLimpo ? 'required' : 'required|unique:instituicao_ensinos,cnpj,' . $instituico->id,
             'razao_social' => 'required|string|max:255',
             'nome_fantasia' => 'nullable|string|max:255',
             'mantenedora' => 'nullable|string|max:255',
@@ -88,14 +88,14 @@ class InstituicaoEnsinoController extends Controller
 
         $validated = $request->validate($rules);
 
-        $instituicao->update($validated);
+        $instituico->update($validated);
 
         return redirect()->route('instituicoes.index')->with('success', 'Instituição atualizada com sucesso.');
     }
 
-    public function destroy(InstituicaoEnsino $instituicao)
+    public function destroy(InstituicaoEnsino $instituico)
     {
-        $instituicao->delete();
+        $instituico->delete();
         return redirect()->route('instituicoes.index')->with('success', 'Instituição removida com sucesso.');
     }
 }
