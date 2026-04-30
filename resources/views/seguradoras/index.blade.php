@@ -32,7 +32,8 @@
                         <table class="min-w-full divide-y divide-gray-200">
                             <thead class="bg-gray-50/50">
                                 <tr>
-                                    <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Nome da Seguradora</th>
+                                    <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Seguradora</th>
+                                    <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">CNPJ</th>
                                     <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Número da Apólice</th>
                                     <th class="px-6 py-4 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">Ações</th>
                                 </tr>
@@ -44,10 +45,20 @@
                                             <div class="text-sm font-bold text-gray-900">{{ $seguradora->nome }}</div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                                            {{ $seguradora->cnpj ?? 'N/A' }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                                             {{ $seguradora->apolice_numero ?? 'N/A' }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                             <div class="flex justify-end gap-3">
+                                                @if($seguradora->arquivo_apolice)
+                                                    <a href="{{ route('seguradoras.download', $seguradora->id) }}" class="p-2 text-green-600 hover:bg-green-50 rounded-lg transition-all" title="Download Apólice">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                                        </svg>
+                                                    </a>
+                                                @endif
                                                 <a href="{{ route('seguradoras.edit', $seguradora->id) }}" class="p-2 text-indigo-600 hover:bg-indigo-50 rounded-lg transition-all" title="Editar">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />

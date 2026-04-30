@@ -16,7 +16,7 @@
         <div class="max-w-2xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white/90 backdrop-blur-xl shadow-2xl sm:rounded-3xl border border-gray-100 overflow-hidden">
                 <div class="p-10">
-                    <form method="POST" action="{{ route('seguradoras.store') }}" class="space-y-6">
+                    <form method="POST" action="{{ route('seguradoras.store') }}" enctype="multipart/form-data" class="space-y-6">
                         @csrf
 
                         <div>
@@ -26,9 +26,21 @@
                         </div>
 
                         <div>
+                            <label for="cnpj" class="block text-sm font-medium text-gray-700 mb-1">CNPJ</label>
+                            <input type="text" name="cnpj" id="cnpj" value="{{ old('cnpj') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md" placeholder="00.000.000/0000-00">
+                            @error('cnpj') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
+                        </div>
+
+                        <div>
                             <label for="apolice_numero" class="block text-sm font-medium text-gray-700 mb-1">Número da Apólice</label>
                             <input type="text" name="apolice_numero" id="apolice_numero" value="{{ old('apolice_numero') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md" placeholder="Número do contrato ou apólice coletiva">
                             @error('apolice_numero') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
+                        </div>
+
+                        <div>
+                            <label for="arquivo_apolice" class="block text-sm font-medium text-gray-700 mb-1">Arquivo da Apólice (PDF/Imagem)</label>
+                            <input type="file" name="arquivo_apolice" id="arquivo_apolice" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100">
+                            @error('arquivo_apolice') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
                         </div>
 
                         <div class="flex items-center justify-end gap-4 pt-6 mt-8 border-t border-gray-100">
