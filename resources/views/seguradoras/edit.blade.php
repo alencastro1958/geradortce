@@ -16,7 +16,7 @@
         <div class="max-w-2xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white/90 backdrop-blur-xl shadow-2xl sm:rounded-3xl border border-gray-100 overflow-hidden">
                 <div class="p-10">
-                    <form method="POST" action="{{ route('seguradoras.update', $seguradora->id) }}" class="space-y-6">
+                    <form method="POST" action="{{ route('seguradoras.update', $seguradora->id) }}" enctype="multipart/form-data" class="space-y-6">
                         @csrf
                         @method('PUT')
 
