@@ -28,15 +28,16 @@
                                 Dados Pessoais
                             </h3>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div class="col-span-2">
-                                    <label for="nome" class="block text-sm font-medium text-gray-700 mb-1">Nome Completo *</label>
-                                    <input type="text" name="nome" id="nome" value="{{ old('nome') }}" required class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
-                                    @error('nome') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
-                                </div>
+                                <!-- CPF PRIMEIRO -->
                                 <div class="col-span-2 md:col-span-1">
                                     <label for="cpf" class="block text-sm font-medium text-gray-700 mb-1">CPF *</label>
                                     <input type="text" name="cpf" id="cpf" value="{{ old('cpf') }}" required class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md" placeholder="000.000.000-00">
                                     @error('cpf') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
+                                </div>
+                                <div class="col-span-2">
+                                    <label for="nome" class="block text-sm font-medium text-gray-700 mb-1">Nome Completo *</label>
+                                    <input type="text" name="nome" id="nome" value="{{ old('nome') }}" required class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
+                                    @error('nome') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
                                 </div>
                                 <div class="col-span-2 md:col-span-1">
                                     <label for="rg" class="block text-sm font-medium text-gray-700 mb-1">RG</label>
@@ -47,15 +48,8 @@
                                     <input type="date" name="data_nascimento" id="data_nascimento" value="{{ old('data_nascimento') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
                                 </div>
                                 <div class="col-span-2 md:col-span-1">
-                                    <label for="estado_civil" class="block text-sm font-medium text-gray-700 mb-1">Estado Civil</label>
-                                    <select name="estado_civil" id="estado_civil" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
-                                        <option value="">Selecione</option>
-                                        <option value="Solteiro(a)" {{ old('estado_civil') == 'Solteiro(a)' ? 'selected' : '' }}>Solteiro(a)</option>
-                                        <option value="Casado(a)" {{ old('estado_civil') == 'Casado(a)' ? 'selected' : '' }}>Casado(a)</option>
-                                        <option value="Divorciado(a)" {{ old('estado_civil') == 'Divorciado(a)' ? 'selected' : '' }}>Divorciado(a)</option>
-                                        <option value="Viúvo(a)" {{ old('estado_civil') == 'Viúvo(a)' ? 'selected' : '' }}>Viúvo(a)</option>
-                                        <option value="União Estável" {{ old('estado_civil') == 'União Estável' ? 'selected' : '' }}>União Estável</option>
-                                    </select>
+                                    <label for="cep" class="block text-sm font-medium text-gray-700 mb-1">CEP</label>
+                                    <input type="text" name="cep" id="cep" value="{{ old('cep') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md" placeholder="00000-000">
                                 </div>
                             </div>
                         </div>

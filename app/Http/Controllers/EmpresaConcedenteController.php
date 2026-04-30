@@ -20,8 +20,12 @@ class EmpresaConcedenteController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'cnpj' => 'required|unique:empresa_concedentes,cnpj',
+        $excecaoCnpj = '82.951.328/0001-58';
+        $cnpjLimpo = preg_replace('/\D/', '', $request->cnpj);
+        $cnpjExcecaoLimpo = preg_replace('/\D/', '', $excecaoCnpj);
+
+        $rules = [
+            'cnpj' => $cnpjLimpo === $cnpjExcecaoLimpo ? 'required' : 'required|unique:empresa_concedentes,cnpj',
             'razao_social' => 'required|string|max:255',
             'nome_fantasia' => 'nullable|string|max:255',
             'endereco' => 'nullable|string|max:255',
@@ -33,9 +37,14 @@ class EmpresaConcedenteController extends Controller
             'email' => 'nullable|email|max:255',
             'responsavel_legal_nome' => 'nullable|string|max:255',
             'responsavel_legal_cargo' => 'nullable|string|max:255',
-            'supervisor_estagio_nome' => 'nullable|string|max:255',
-            'supervisor_estagio_cargo' => 'nullable|string|max:255',
-        ]);
+            'responsavel_legal_cpf' => 'nullable|string|max:255',
+            'responsavel_legal_rg' => 'nullable|string|max:255',
+            'whatsapp' => 'nullable|string|max:255',
+            'autoriza_envio_mensagens' => 'nullable|boolean',
+        ];
+
+        $validated = $request->validate($rules);
+        $validated['autoriza_envio_mensagens'] = $request->has('autoriza_envio_mensagens');
 
         EmpresaConcedente::create($validated);
 
@@ -49,8 +58,12 @@ class EmpresaConcedenteController extends Controller
 
     public function update(Request $request, EmpresaConcedente $empresa)
     {
-        $validated = $request->validate([
-            'cnpj' => 'required|unique:empresa_concedentes,cnpj,' . $empresa->id,
+        $excecaoCnpj = '82.951.328/0001-58';
+        $cnpjLimpo = preg_replace('/\D/', '', $request->cnpj);
+        $cnpjExcecaoLimpo = preg_replace('/\D/', '', $excecaoCnpj);
+
+        $rules = [
+            'cnpj' => $cnpjLimpo === $cnpjExcecaoLimpo ? 'required' : 'required|unique:empresa_concedentes,cnpj,' . $empresa->id,
             'razao_social' => 'required|string|max:255',
             'nome_fantasia' => 'nullable|string|max:255',
             'endereco' => 'nullable|string|max:255',
@@ -62,9 +75,14 @@ class EmpresaConcedenteController extends Controller
             'email' => 'nullable|email|max:255',
             'responsavel_legal_nome' => 'nullable|string|max:255',
             'responsavel_legal_cargo' => 'nullable|string|max:255',
-            'supervisor_estagio_nome' => 'nullable|string|max:255',
-            'supervisor_estagio_cargo' => 'nullable|string|max:255',
-        ]);
+            'responsavel_legal_cpf' => 'nullable|string|max:255',
+            'responsavel_legal_rg' => 'nullable|string|max:255',
+            'whatsapp' => 'nullable|string|max:255',
+            'autoriza_envio_mensagens' => 'nullable|boolean',
+        ];
+
+        $validated = $request->validate($rules);
+        $validated['autoriza_envio_mensagens'] = $request->has('autoriza_envio_mensagens');
 
         $empresa->update($validated);
 

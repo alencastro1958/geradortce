@@ -22,6 +22,14 @@ Route::middleware('auth')->group(function () {
     Route::resource('seguradoras', \App\Http\Controllers\SeguradoraController::class);
     Route::resource('estagios', \App\Http\Controllers\EstagioController::class);
     Route::get('estagios/{estagio}/gerar-documento', [\App\Http\Controllers\EstagioController::class, 'gerarDocumento'])->name('estagios.gerar-documento');
+
+    // API de Consulta CNPJ
+    Route::get('/api/consultar-cnpj', [\App\Http\Controllers\CnpjController::class, 'consultar'])->name('api.consultar-cnpj');
+
+    // Sistema de Vagas
+    Route::get('/vagas/oportunidades', [\App\Http\Controllers\VagaController::class, 'buscaPublica'])->name('vagas.busca');
+    Route::post('/vagas/{vaga}/candidatar', [\App\Http\Controllers\VagaController::class, 'candidatar'])->name('vagas.candidatar');
+    Route::resource('vagas', \App\Http\Controllers\VagaController::class)->except(['show']);
 });
 
 require __DIR__.'/auth.php';

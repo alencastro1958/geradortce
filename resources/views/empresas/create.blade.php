@@ -28,19 +28,24 @@
                                 Identificação da Empresa
                             </h3>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <!-- CNPJ PRIMEIRO CAMPO -->
+                                <div class="col-span-2 md:col-span-1">
+                                    <label for="cnpj" class="block text-sm font-medium text-gray-700 mb-1">CNPJ *</label>
+                                    <input type="text" name="cnpj" id="cnpj" value="{{ old('cnpj') }}" required class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md" placeholder="00.000.000/0000-00">
+                                    @error('cnpj') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
+                                </div>
                                 <div class="col-span-2">
                                     <label for="razao_social" class="block text-sm font-medium text-gray-700 mb-1">Razão Social *</label>
                                     <input type="text" name="razao_social" id="razao_social" value="{{ old('razao_social') }}" required class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
                                     @error('razao_social') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
                                 </div>
-                                <div>
+                                <div class="col-span-2 md:col-span-1">
                                     <label for="nome_fantasia" class="block text-sm font-medium text-gray-700 mb-1">Nome Fantasia</label>
                                     <input type="text" name="nome_fantasia" id="nome_fantasia" value="{{ old('nome_fantasia') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
                                 </div>
-                                <div>
-                                    <label for="cnpj" class="block text-sm font-medium text-gray-700 mb-1">CNPJ *</label>
-                                    <input type="text" name="cnpj" id="cnpj" value="{{ old('cnpj') }}" required class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md" placeholder="00.000.000/0000-00">
-                                    @error('cnpj') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
+                                <div class="col-span-2 md:col-span-1">
+                                    <label for="cep" class="block text-sm font-medium text-gray-700 mb-1">CEP</label>
+                                    <input type="text" name="cep" id="cep" value="{{ old('cep') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md" placeholder="00000-000">
                                 </div>
                             </div>
                         </div>
@@ -73,42 +78,58 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">E-mail</label>
+                                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">E-mail Comercial</label>
                                     <input type="email" name="email" id="email" value="{{ old('email') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
                                 </div>
                                 <div>
-                                    <label for="telefone" class="block text-sm font-medium text-gray-700 mb-1">Telefone</label>
+                                    <label for="telefone" class="block text-sm font-medium text-gray-700 mb-1">Telefone Comercial</label>
                                     <input type="text" name="telefone" id="telefone" value="{{ old('telefone') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Responsáveis -->
+                        <!-- Responsável Legal -->
                         <div>
                             <h3 class="text-lg font-semibold text-gray-900 border-b pb-2 mb-6 mt-8 flex items-center gap-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-500" viewBox="0 0 20 20" fill="currentColor">
-                                    <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
+                                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
                                 </svg>
-                                Responsáveis
+                                Dados do Responsável Legal
                             </h3>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <label for="responsavel_legal_nome" class="block text-sm font-medium text-gray-700 mb-1">Nome do Responsável Legal</label>
+                                <div class="col-span-2">
+                                    <label for="responsavel_legal_nome" class="block text-sm font-medium text-gray-700 mb-1">Nome Completo</label>
                                     <input type="text" name="responsavel_legal_nome" id="responsavel_legal_nome" value="{{ old('responsavel_legal_nome') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
                                 </div>
                                 <div>
-                                    <label for="responsavel_legal_cargo" class="block text-sm font-medium text-gray-700 mb-1">Cargo do Responsável</label>
+                                    <label for="responsavel_legal_cpf" class="block text-sm font-medium text-gray-700 mb-1">CPF</label>
+                                    <input type="text" name="responsavel_legal_cpf" id="responsavel_legal_cpf" value="{{ old('responsavel_legal_cpf') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md" placeholder="000.000.000-00">
+                                </div>
+                                <div>
+                                    <label for="responsavel_legal_rg" class="block text-sm font-medium text-gray-700 mb-1">RG</label>
+                                    <input type="text" name="responsavel_legal_rg" id="responsavel_legal_rg" value="{{ old('responsavel_legal_rg') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
+                                </div>
+                                <div>
+                                    <label for="responsavel_legal_cargo" class="block text-sm font-medium text-gray-700 mb-1">Cargo</label>
                                     <input type="text" name="responsavel_legal_cargo" id="responsavel_legal_cargo" value="{{ old('responsavel_legal_cargo') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
                                 </div>
                                 <div>
-                                    <label for="supervisor_estagio_nome" class="block text-sm font-medium text-gray-700 mb-1">Nome do Supervisor de Estágio</label>
-                                    <input type="text" name="supervisor_estagio_nome" id="supervisor_estagio_nome" value="{{ old('supervisor_estagio_nome') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
+                                    <label for="responsavel_legal_email" class="block text-sm font-medium text-gray-700 mb-1">E-mail</label>
+                                    <input type="email" name="responsavel_legal_email" id="responsavel_legal_email" value="{{ old('responsavel_legal_email') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
                                 </div>
                                 <div>
-                                    <label for="supervisor_estagio_cargo" class="block text-sm font-medium text-gray-700 mb-1">Cargo do Supervisor</label>
-                                    <input type="text" name="supervisor_estagio_cargo" id="supervisor_estagio_cargo" value="{{ old('supervisor_estagio_cargo') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
+                                    <label for="responsavel_legal_whatsapp" class="block text-sm font-medium text-gray-700 mb-1">WhatsApp</label>
+                                    <input type="text" name="responsavel_legal_whatsapp" id="responsavel_legal_whatsapp" value="{{ old('responsavel_legal_whatsapp') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md" placeholder="(00) 00000-0000">
                                 </div>
                             </div>
+                        </div>
+
+                        <!-- Configurações de Mensagens -->
+                        <div class="bg-indigo-50 p-6 rounded-2xl border border-indigo-100">
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input type="checkbox" name="autoriza_envio_mensagens" value="1" {{ old('autoriza_envio_mensagens', true) ? 'checked' : '' }} class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500">
+                                <span class="text-sm font-medium text-indigo-900">Autorizo o envio de mensagens de candidatos interessados em vagas</span>
+                            </label>
                         </div>
 
                         <div class="flex items-center justify-end gap-4 pt-6 mt-8 border-t border-gray-100">

@@ -22,6 +22,20 @@ return [
         'key' => env('RESEND_API_KEY'),
     ],
 
+    'mailgun' => [
+        'domain' => env('MAILGUN_DOMAIN'),
+        'secret' => env('MAILGUN_SECRET'),
+        'endpoint' => env('MAILGUN_ENDPOINT', 'api.mailgun.net'),
+    ],
+
+    'cnpj' => [
+        'token' => env('CNPJ_API_TOKEN'),
+    ],
+
+    'autentique' => [
+        'token' => env('AUTENTIQUE_TOKEN'),
+    ],
+
     'ses' => [
         'key' => env('AWS_ACCESS_KEY_ID'),
         'secret' => env('AWS_SECRET_ACCESS_KEY'),

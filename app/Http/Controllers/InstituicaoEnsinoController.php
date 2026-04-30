@@ -20,16 +20,27 @@ class InstituicaoEnsinoController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'cnpj' => 'required|unique:instituicao_ensinos,cnpj',
+        $excecaoCnpj = '82.951.328/0001-58';
+        $cnpjLimpo = preg_replace('/\D/', '', $request->cnpj);
+        $cnpjExcecaoLimpo = preg_replace('/\D/', '', $excecaoCnpj);
+
+        $rules = [
+            'cnpj' => $cnpjLimpo === $cnpjExcecaoLimpo ? 'required' : 'required|unique:instituicao_ensinos,cnpj',
             'razao_social' => 'required|string|max:255',
             'nome_fantasia' => 'nullable|string|max:255',
+            'mantenedora' => 'nullable|string|max:255',
             'endereco' => 'nullable|string|max:255',
+            'bairro' => 'nullable|string|max:255',
+            'cidade' => 'nullable|string|max:255',
+            'estado' => 'nullable|string|max:2',
+            'cep' => 'nullable|string|max:10',
             'telefone' => 'nullable|string|max:255',
             'email' => 'nullable|email|max:255',
             'responsavel_legal_nome' => 'nullable|string|max:255',
             'responsavel_legal_cargo' => 'nullable|string|max:255',
-        ]);
+        ];
+
+        $validated = $request->validate($rules);
 
         InstituicaoEnsino::create($validated);
 
@@ -43,16 +54,27 @@ class InstituicaoEnsinoController extends Controller
 
     public function update(Request $request, InstituicaoEnsino $instituicoe)
     {
-        $validated = $request->validate([
-            'cnpj' => 'required|unique:instituicao_ensinos,cnpj,' . $instituicoe->id,
+        $excecaoCnpj = '82.951.328/0001-58';
+        $cnpjLimpo = preg_replace('/\D/', '', $request->cnpj);
+        $cnpjExcecaoLimpo = preg_replace('/\D/', '', $excecaoCnpj);
+
+        $rules = [
+            'cnpj' => $cnpjLimpo === $cnpjExcecaoLimpo ? 'required' : 'required|unique:instituicao_ensinos,cnpj,' . $instituicoe->id,
             'razao_social' => 'required|string|max:255',
             'nome_fantasia' => 'nullable|string|max:255',
+            'mantenedora' => 'nullable|string|max:255',
             'endereco' => 'nullable|string|max:255',
+            'bairro' => 'nullable|string|max:255',
+            'cidade' => 'nullable|string|max:255',
+            'estado' => 'nullable|string|max:2',
+            'cep' => 'nullable|string|max:10',
             'telefone' => 'nullable|string|max:255',
             'email' => 'nullable|email|max:255',
             'responsavel_legal_nome' => 'nullable|string|max:255',
             'responsavel_legal_cargo' => 'nullable|string|max:255',
-        ]);
+        ];
+
+        $validated = $request->validate($rules);
 
         $instituicoe->update($validated);
 
