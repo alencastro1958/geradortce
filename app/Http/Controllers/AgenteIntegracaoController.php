@@ -28,7 +28,7 @@ class AgenteIntegracaoController extends Controller
             'estado' => 'required|string|max:2',
             'telefone' => 'required|string|max:20',
             'email' => 'required|email|max:255',
-            'responsavel_legal' => 'required|string|max:255',
+            'responsavel_legal_nome' => 'required|string|max:255',
         ]);
 
         $agente->fill($validated);

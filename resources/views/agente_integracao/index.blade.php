@@ -68,8 +68,8 @@
                                     <input type="email" name="email" id="email" value="{{ old('email', $agente->email ?? '') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
                                 </div>
                                 <div class="col-span-2">
-                                    <label for="responsavel_legal" class="block text-sm font-medium text-gray-700 mb-1">Responsável Legal</label>
-                                    <input type="text" name="responsavel_legal" id="responsavel_legal" value="{{ old('responsavel_legal', $agente->responsavel_legal ?? '') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
+                                    <label for="responsavel_legal_nome" class="block text-sm font-medium text-gray-700 mb-1">Responsável Legal</label>
+                                    <input type="text" name="responsavel_legal_nome" id="responsavel_legal_nome" value="{{ old('responsavel_legal_nome', $agente->responsavel_legal_nome ?? '') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
                                 </div>
                             </div>
                         </div>
