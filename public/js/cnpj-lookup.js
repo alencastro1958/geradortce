@@ -67,33 +67,39 @@ document.addEventListener('DOMContentLoaded', function() {
             // Feedback visual de carregamento
             input.classList.add('opacity-50', 'cursor-wait');
             
-            // TENTATIVA 1: Busca direta pelo Navegador (Bypassa bloqueios da VPS)
-            fetch(`https://brasilapi.com.br/api/cnpj/v1/${cnpjLimpo}`)
+            // TENTATIVA 1: BrasilAPI v2 (Navegador - Mais atualizado)
+            fetch(`https://brasilapi.com.br/api/cnpj/v2/${cnpjLimpo}`)
                 .then(r => {
-                    if (!r.ok) throw new Error('Falha no browser fetch');
+                    if (!r.ok) throw new Error('Falha v2');
                     return r.json();
                 })
-                .then(data => {
-                    preencherCamposComData(data);
-                })
+                .then(data => preencherCamposComData(data))
                 .catch(err => {
-                    console.warn('Busca direta via browser falhou ou bloqueada por CORS, tentando via servidor...', err);
+                    console.warn('BrasilAPI v2 falhou, tentando v1...', err);
                     
-                    // TENTATIVA 2: Via Servidor (Backup)
-                    fetch(`/api/consultar-cnpj?cnpj=${cnpjLimpo}`)
-                        .then(r => r.json())
-                        .then(data => {
-                            if (!data.error) {
-                                preencherCamposComData(data);
-                            } else {
-                                console.error('Erro no servidor:', data.error);
-                            }
+                    // TENTATIVA 2: BrasilAPI v1 (Navegador)
+                    fetch(`https://brasilapi.com.br/api/cnpj/v1/${cnpjLimpo}`)
+                        .then(r => {
+                            if (!r.ok) throw new Error('Falha v1');
+                            return r.json();
                         })
-                        .catch(err => console.error('Erro total na requisição:', err));
+                        .then(data => preencherCamposComData(data))
+                        .catch(err => {
+                            console.warn('BrasilAPI v1 também falhou, tentando via servidor (Estagee)...', err);
+                            
+                            // TENTATIVA 3: Via Servidor (Backup silencioso)
+                            fetch(`/api/consultar-cnpj?cnpj=${cnpjLimpo}`)
+                                .then(r => r.json())
+                                .then(data => {
+                                    if (data && !data.error) {
+                                        preencherCamposComData(data);
+                                    }
+                                })
+                                .catch(e => console.log('Falha final na busca. Preenchimento manual necessário.'));
+                        });
                 })
                 .finally(() => {
                     input.classList.remove('opacity-50', 'cursor-wait');
-                    window.lastEvent = null;
                 });
         };
 
