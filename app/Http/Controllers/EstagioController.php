@@ -37,6 +37,10 @@ class EstagioController extends Controller
             'data_inicio' => 'required|date',
             'data_fim' => 'required|date|after:data_inicio',
             'carga_horaria_semanal' => 'required|integer|min:1|max:40',
+            'horario_inicio' => 'nullable',
+            'horario_fim' => 'nullable',
+            'intervalo' => 'nullable|string',
+            'apolice_numero' => 'nullable|string',
             'valor_bolsa' => 'nullable|numeric|min:0',
             'valor_auxilio_transporte' => 'nullable|numeric|min:0',
             'atividades' => 'nullable|string',
@@ -73,6 +77,10 @@ class EstagioController extends Controller
             'data_inicio' => 'required|date',
             'data_fim' => 'required|date|after:data_inicio',
             'carga_horaria_semanal' => 'required|integer|min:1|max:40',
+            'horario_inicio' => 'nullable',
+            'horario_fim' => 'nullable',
+            'intervalo' => 'nullable|string',
+            'apolice_numero' => 'nullable|string',
             'valor_bolsa' => 'nullable|numeric|min:0',
             'valor_auxilio_transporte' => 'nullable|numeric|min:0',
             'atividades' => 'nullable|string',
@@ -90,8 +98,21 @@ class EstagioController extends Controller
         return redirect()->route('estagios.index')->with('success', 'Estágio (TCE) removido com sucesso.');
     }
 
-    public function gerarDocumento(Estagio $estagio)
+    public function gerarDocumento(Estagio $estagio, Request $request)
     {
-        return view('estagios.pdf', compact('estagio'));
+        $tipo = $request->query('tipo', 'tce'); // tce, convenio_ies, convenio_empresa, relatorio, certificado
+        $agente = \App\Models\AgenteIntegracao::first();
+
+        $view = 'estagios.pdfs.' . $tipo;
+
+        if (!view()->exists($view)) {
+            return back()->with('error', 'Modelo de documento não encontrado.');
+        }
+
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView($view, compact('estagio', 'agente'));
+        
+        $filename = strtoupper($tipo) . '_' . str_replace(' ', '_', $estagio->estagiario->nome) . '.pdf';
+        
+        return $pdf->download($filename);
     }
 }

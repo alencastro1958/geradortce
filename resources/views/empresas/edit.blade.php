@@ -125,13 +125,48 @@
                                     <label for="responsavel_legal_whatsapp" class="block text-sm font-medium text-gray-700 mb-1">WhatsApp</label>
                                     <input type="text" name="responsavel_legal_whatsapp" id="responsavel_legal_whatsapp" value="{{ old('responsavel_legal_whatsapp', $empresa->responsavel_legal_whatsapp) }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md" placeholder="(00) 00000-0000">
                                 </div>
-                                <div>
-                                    <label for="supervisor_estagio_nome" class="block text-sm font-medium text-gray-700 mb-1">Nome do Supervisor de Estágio</label>
-                                    <input type="text" name="supervisor_estagio_nome" id="supervisor_estagio_nome" value="{{ old('supervisor_estagio_nome', $empresa->supervisor_estagio_nome) }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
-                                </div>
-                                <div>
-                                    <label for="supervisor_estagio_cargo" class="block text-sm font-medium text-gray-700 mb-1">Cargo do Supervisor</label>
-                                    <input type="text" name="supervisor_estagio_cargo" id="supervisor_estagio_cargo" value="{{ old('supervisor_estagio_cargo', $empresa->supervisor_estagio_cargo) }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
+                                <!-- Dados do Supervisor -->
+                                <div class="col-span-2 mt-8">
+                                    <h3 class="text-lg font-semibold text-gray-900 border-b pb-2 mb-6 flex items-center gap-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-500" viewBox="0 0 20 20" fill="currentColor">
+                                            <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
+                                        </svg>
+                                        Dados do Supervisor de Estágio
+                                    </h3>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div class="col-span-2">
+                                            <label for="supervisor_nome" class="block text-sm font-medium text-gray-700 mb-1">Nome Completo</label>
+                                            <input type="text" name="supervisor_nome" id="supervisor_nome" value="{{ old('supervisor_nome', $empresa->supervisor_nome) }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
+                                        </div>
+                                        <div>
+                                            <label for="supervisor_cargo" class="block text-sm font-medium text-gray-700 mb-1">Cargo</label>
+                                            <input type="text" name="supervisor_cargo" id="supervisor_cargo" value="{{ old('supervisor_cargo', $empresa->supervisor_cargo) }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
+                                        </div>
+                                        <div>
+                                            <label for="supervisor_tempo_atividade" class="block text-sm font-medium text-gray-700 mb-1">Tempo de atividade na função</label>
+                                            <input type="text" name="supervisor_tempo_atividade" id="supervisor_tempo_atividade" value="{{ old('supervisor_tempo_atividade', $empresa->supervisor_tempo_atividade) }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
+                                        </div>
+                                        <div>
+                                            <label for="supervisor_cpf" class="block text-sm font-medium text-gray-700 mb-1">CPF</label>
+                                            <input type="text" name="supervisor_cpf" id="supervisor_cpf" value="{{ old('supervisor_cpf', $empresa->supervisor_cpf) }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md" placeholder="000.000.000-00">
+                                        </div>
+                                        <div>
+                                            <label for="supervisor_rg" class="block text-sm font-medium text-gray-700 mb-1">RG</label>
+                                            <input type="text" name="supervisor_rg" id="supervisor_rg" value="{{ old('supervisor_rg', $empresa->supervisor_rg) }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
+                                        </div>
+                                        <div>
+                                            <label for="supervisor_email" class="block text-sm font-medium text-gray-700 mb-1">E-mail</label>
+                                            <input type="email" name="supervisor_email" id="supervisor_email" value="{{ old('supervisor_email', $empresa->supervisor_email) }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
+                                        </div>
+                                        <div>
+                                            <label for="supervisor_telefone_whatsapp" class="block text-sm font-medium text-gray-700 mb-1">Telefone/WhatsApp</label>
+                                            <input type="text" name="supervisor_telefone_whatsapp" id="supervisor_telefone_whatsapp" value="{{ old('supervisor_telefone_whatsapp', $empresa->supervisor_telefone_whatsapp) }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md" placeholder="(00) 00000-0000">
+                                        </div>
+                                        <div class="col-span-2">
+                                            <label for="supervisor_registro_profissional" class="block text-sm font-medium text-gray-700 mb-1">Registro Profissional (Conselho, etc)</label>
+                                            <input type="text" name="supervisor_registro_profissional" id="supervisor_registro_profissional" value="{{ old('supervisor_registro_profissional', $empresa->supervisor_registro_profissional) }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

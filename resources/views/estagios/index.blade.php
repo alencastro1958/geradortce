@@ -71,9 +71,36 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                             <div class="flex justify-end gap-2">
-                                                <a href="{{ route('estagios.gerar-documento', $estagio->id) }}" target="_blank" class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-all" title="Gerar Documento (PDF/Impressão)">
+                                            <div class="flex justify-end gap-1">
+                                                <!-- TCE -->
+                                                <a href="{{ route('estagios.gerar-documento', $estagio->id) }}?tipo=tce" target="_blank" class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-all" title="Baixar TCE">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                                    </svg>
+                                                </a>
+                                                <!-- Convênio IES -->
+                                                <a href="{{ route('estagios.gerar-documento', $estagio->id) }}?tipo=convenio_ies" target="_blank" class="p-2 text-green-600 hover:bg-green-50 rounded-lg transition-all" title="Convênio IES">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                                                    </svg>
+                                                </a>
+                                                <!-- Convênio Empresa -->
+                                                <a href="{{ route('estagios.gerar-documento', $estagio->id) }}?tipo=convenio_empresa" target="_blank" class="p-2 text-purple-600 hover:bg-purple-50 rounded-lg transition-all" title="Convênio Empresa">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                                    </svg>
+                                                </a>
+                                                <!-- Relatório -->
+                                                <a href="{{ route('estagios.gerar-documento', $estagio->id) }}?tipo=relatorio" target="_blank" class="p-2 text-orange-600 hover:bg-orange-50 rounded-lg transition-all" title="Relatório Semestral">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
+                                                    </svg>
+                                                </a>
+                                                <!-- Certificado -->
+                                                <a href="{{ route('estagios.gerar-documento', $estagio->id) }}?tipo=certificado" target="_blank" class="p-2 text-yellow-600 hover:bg-yellow-50 rounded-lg transition-all" title="Certificado">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-7.714 2.143L11 21l-2.286-6.857L1 12l7.714-2.143L11 3z" />
                                                     </svg>
                                                 </a>
                                                 <a href="{{ route('estagios.edit', $estagio->id) }}" class="p-2 text-indigo-600 hover:bg-indigo-50 rounded-lg transition-all" title="Editar">

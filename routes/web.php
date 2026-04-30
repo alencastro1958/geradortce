@@ -21,6 +21,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('estagiarios', \App\Http\Controllers\EstagiarioController::class);
     Route::get('seguradoras/{seguradora}/download', [\App\Http\Controllers\SeguradoraController::class, 'download'])->name('seguradoras.download');
     Route::resource('seguradoras', \App\Http\Controllers\SeguradoraController::class);
+    Route::get('agente-integracao', [\App\Http\Controllers\AgenteIntegracaoController::class, 'index'])->name('agente.index');
+    Route::put('agente-integracao', [\App\Http\Controllers\AgenteIntegracaoController::class, 'update'])->name('agente.update');
+
     Route::resource('estagios', \App\Http\Controllers\EstagioController::class);
     Route::get('estagios/{estagio}/gerar-documento', [\App\Http\Controllers\EstagioController::class, 'gerarDocumento'])->name('estagios.gerar-documento');
 

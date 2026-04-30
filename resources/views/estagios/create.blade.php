@@ -115,6 +115,36 @@
                             </div>
                         </div>
 
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 border-t border-gray-100 pt-8">
+                            <!-- Horários e Intervalo -->
+                            <div>
+                                <label for="horario_inicio" class="block text-sm font-bold text-gray-700 mb-2">Horário de Início</label>
+                                <input type="time" name="horario_inicio" id="horario_inicio" value="{{ old('horario_inicio') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow">
+                                @error('horario_inicio') <span class="text-red-500 text-xs mt-1">{{ $message }}</span> @enderror
+                            </div>
+
+                            <div>
+                                <label for="horario_fim" class="block text-sm font-bold text-gray-700 mb-2">Horário de Término</label>
+                                <input type="time" name="horario_fim" id="horario_fim" value="{{ old('horario_fim') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow">
+                                @error('horario_fim') <span class="text-red-500 text-xs mt-1">{{ $message }}</span> @enderror
+                            </div>
+
+                            <div>
+                                <label for="intervalo" class="block text-sm font-bold text-gray-700 mb-2">Intervalo</label>
+                                <input type="text" name="intervalo" id="intervalo" value="{{ old('intervalo', '01:00 de intervalo') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow" placeholder="Ex: 01:00 de intervalo">
+                                @error('intervalo') <span class="text-red-500 text-xs mt-1">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 border-t border-gray-100 pt-8">
+                            <!-- Apólice -->
+                            <div>
+                                <label for="apolice_numero" class="block text-sm font-bold text-gray-700 mb-2">Número da Apólice (Específico para este estágio)</label>
+                                <input type="text" name="apolice_numero" id="apolice_numero" value="{{ old('apolice_numero') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow" placeholder="Caso diferente da seguradora">
+                                @error('apolice_numero') <span class="text-red-500 text-xs mt-1">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
+
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 border-t border-gray-100 pt-8">
                             <!-- Valores -->
                             <div>

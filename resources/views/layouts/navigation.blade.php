@@ -27,6 +27,9 @@
                     <x-nav-link :href="route('seguradoras.index')" :active="request()->routeIs('seguradoras.*')">
                         {{ __('Seguradoras') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('agente.index')" :active="request()->routeIs('agente.*')">
+                        {{ __('Agência') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('estagios.index')" :active="request()->routeIs('estagios.*')">
                         {{ __('TCEs') }}
                     </x-nav-link>
@@ -96,6 +99,9 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('seguradoras.index')" :active="request()->routeIs('seguradoras.*')">
                 {{ __('Seguradoras') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('agente.index')" :active="request()->routeIs('agente.*')">
+                {{ __('Agência') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('estagios.index')" :active="request()->routeIs('estagios.*')">
                 {{ __('TCEs') }}

@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             RoleSeeder::class,
+            AgenteIntegracaoSeeder::class,
         ]);
 
         $master = User::factory()->create([

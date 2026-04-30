@@ -34,7 +34,6 @@ class EmpresaConcedenteController extends Controller
             'estado' => 'nullable|string|max:2',
             'cep' => 'nullable|string|max:10',
             'telefone' => 'nullable|string|max:255',
-            'telefone_secundario' => 'nullable|string|max:255',
             'email' => 'nullable|email|max:255',
             'email_secundario' => 'nullable|email|max:255',
             'responsavel_legal_nome' => 'nullable|string|max:255',
@@ -44,6 +43,14 @@ class EmpresaConcedenteController extends Controller
             'responsavel_legal_email' => 'nullable|email|max:255',
             'responsavel_legal_whatsapp' => 'nullable|string|max:255',
             'autoriza_envio_mensagens' => 'nullable|boolean',
+            'supervisor_nome' => 'nullable|string|max:255',
+            'supervisor_cargo' => 'nullable|string|max:100',
+            'supervisor_tempo_atividade' => 'nullable|string|max:100',
+            'supervisor_cpf' => 'nullable|string|max:20',
+            'supervisor_rg' => 'nullable|string|max:20',
+            'supervisor_email' => 'nullable|email|max:255',
+            'supervisor_telefone_whatsapp' => 'nullable|string|max:20',
+            'supervisor_registro_profissional' => 'nullable|string|max:100',
         ];
 
         $validated = $request->validate($rules);
@@ -75,7 +82,6 @@ class EmpresaConcedenteController extends Controller
             'estado' => 'nullable|string|max:2',
             'cep' => 'nullable|string|max:10',
             'telefone' => 'nullable|string|max:255',
-            'telefone_secundario' => 'nullable|string|max:255',
             'email' => 'nullable|email|max:255',
             'email_secundario' => 'nullable|email|max:255',
             'responsavel_legal_nome' => 'nullable|string|max:255',
@@ -85,6 +91,14 @@ class EmpresaConcedenteController extends Controller
             'responsavel_legal_email' => 'nullable|email|max:255',
             'responsavel_legal_whatsapp' => 'nullable|string|max:255',
             'autoriza_envio_mensagens' => 'nullable|boolean',
+            'supervisor_nome' => 'nullable|string|max:255',
+            'supervisor_cargo' => 'nullable|string|max:100',
+            'supervisor_tempo_atividade' => 'nullable|string|max:100',
+            'supervisor_cpf' => 'nullable|string|max:20',
+            'supervisor_rg' => 'nullable|string|max:20',
+            'supervisor_email' => 'nullable|email|max:255',
+            'supervisor_telefone_whatsapp' => 'nullable|string|max:20',
+            'supervisor_registro_profissional' => 'nullable|string|max:100',
         ];
 
         $validated = $request->validate($rules);
