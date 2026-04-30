@@ -107,8 +107,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- LÓGICA DE CEP (VIA CEP) ---
     document.querySelectorAll('input[name="cep"]').forEach(input => {
-        input.addEventListener('blur', function() {
-            const cep = this.value.replace(/\D/g, '');
+        const buscarCep = () => {
+            const cep = input.value.replace(/\D/g, '');
             if (cep.length !== 8) return;
 
             fetch(`https://viacep.com.br/ws/${cep}/json/`)
@@ -121,6 +121,15 @@ document.addEventListener('DOMContentLoaded', function() {
                         preencherCampo('estado', data.uf);
                     }
                 });
+        };
+
+        input.addEventListener('blur', buscarCep);
+
+        input.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault(); // Impede o envio do formulário ao apertar Enter
+                buscarCep();
+            }
         });
     });
 
