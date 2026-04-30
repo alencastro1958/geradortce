@@ -23,10 +23,11 @@ class CnpjService
         $cnpj = preg_replace('/[^0-9]/', '', $cnpj);
 
         try {
-            $response = Http::withHeaders([
-                'Authorization' => 'Bearer ' . $this->token,
-                'Accept' => 'application/json',
-            ])->get($this->baseUrl . '/' . $cnpj);
+            $response = Http::withoutVerifying()
+                ->withHeaders([
+                    'Authorization' => 'Bearer ' . $this->token,
+                    'Accept' => 'application/json',
+                ])->get($this->baseUrl . '/' . $cnpj);
 
             if ($response->successful()) {
                 return $response->json();

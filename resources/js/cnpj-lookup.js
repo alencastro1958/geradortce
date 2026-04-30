@@ -53,36 +53,29 @@ document.addEventListener('DOMContentLoaded', function() {
     const cnpjInputs = document.querySelectorAll('input[name="cnpj"]');
     
     cnpjInputs.forEach(input => {
-        const wrapper = document.createElement('div');
-        wrapper.className = 'relative flex items-center w-full';
-        input.parentNode.insertBefore(wrapper, input);
-        wrapper.appendChild(input);
-        
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = 'absolute right-2 p-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors shadow-sm z-10';
-        btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>`;
-        wrapper.appendChild(btn);
-        
-        btn.addEventListener('click', function() {
+        const handleLookup = function() {
             const cnpjLimpo = input.value.replace(/\D/g, '');
+            if (!cnpjLimpo || cnpjLimpo.length === 0) return;
+
             if (cnpjLimpo === CNPJ_EXCECAO) {
-                alert('Preenchimento manual habilitado para este CNPJ.');
-                return;
-            }
-            if (cnpjLimpo.length !== 14) {
-                alert('CNPJ inválido.');
+                console.log('Preenchimento manual habilitado para este CNPJ.');
                 return;
             }
 
-            btn.disabled = true;
-            btn.innerHTML = '<span class="animate-spin text-xs">...</span>';
+            if (cnpjLimpo.length !== 14) return;
 
+            // Feedback visual de carregamento
+            input.classList.add('opacity-50', 'cursor-wait');
+            
             fetch(`/api/consultar-cnpj?cnpj=${cnpjLimpo}`)
                 .then(r => r.json())
                 .then(data => {
-                    if (data.error) alert(data.error);
-                    else {
+                    if (data.error) {
+                        // Não mostramos alerta em caso de falha de comunicação silenciosa no blur, 
+                        // apenas se o usuário forçou a busca (ex: enter)
+                        console.error(data.error);
+                        if (window.lastEvent === 'Enter') alert(data.error);
+                    } else {
                         preencherCampo('razao_social', data.razao_social || data.nome);
                         preencherCampo('nome_fantasia', data.nome_fantasia || data.fantasia);
                         preencherCampo('endereco', data.logradouro ? `${data.logradouro}, ${data.numero}` : data.endereco);
@@ -91,10 +84,26 @@ document.addEventListener('DOMContentLoaded', function() {
                         preencherCampo('estado', data.estado || data.uf);
                         preencherCampo('cep', data.cep);
                     }
-                }).finally(() => {
-                    btn.disabled = false;
-                    btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>`;
+                })
+                .catch(err => console.error('Erro na requisição:', err))
+                .finally(() => {
+                    input.classList.remove('opacity-50', 'cursor-wait');
+                    window.lastEvent = null;
                 });
+        };
+
+        // Busca ao pressionar Enter
+        input.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                window.lastEvent = 'Enter';
+                handleLookup();
+            }
+        });
+
+        // Busca ao sair do campo (Blur)
+        input.addEventListener('blur', function() {
+            handleLookup();
         });
     });
 
