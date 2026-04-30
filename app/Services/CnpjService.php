@@ -27,15 +27,34 @@ class CnpjService
                 ->withHeaders([
                     'Authorization' => 'Bearer ' . $this->token,
                     'Accept' => 'application/json',
-                ])->get($this->baseUrl . '/' . $cnpj);
+                ])
+                ->timeout(10)
+                ->get($this->baseUrl . '/' . $cnpj);
 
             if ($response->successful()) {
                 return $response->json();
             }
 
-            Log::error('Erro na consulta CNPJ Estagee: ' . $response->status(), [
+            // Tenta fallback com v1
+            $fallbackUrl = 'https://api.estagee.com.br/receita/v1/cnpj';
+            $responseFallback = Http::withoutVerifying()
+                ->withHeaders([
+                    'Authorization' => 'Bearer ' . $this->token,
+                    'Accept' => 'application/json',
+                ])
+                ->timeout(10)
+                ->get($fallbackUrl . '/' . $cnpj);
+
+            if ($responseFallback->successful()) {
+                return $responseFallback->json();
+            }
+
+            Log::error('Erro na consulta CNPJ Estagee (Base e Fallback): ' . $response->status(), [
                 'cnpj' => $cnpj,
-                'response' => $response->body()
+                'response_base' => $response->body(),
+                'status_base' => $response->status(),
+                'status_fallback' => $responseFallback->status(),
+                'response_fallback' => $responseFallback->body()
             ]);
 
             return ['error' => 'Não foi possível localizar os dados deste CNPJ.'];

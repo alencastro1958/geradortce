@@ -82,8 +82,16 @@
                                     <input type="email" name="email" id="email" value="{{ old('email') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
                                 </div>
                                 <div>
+                                    <label for="email_secundario" class="block text-sm font-medium text-gray-700 mb-1">E-mail Secundário</label>
+                                    <input type="email" name="email_secundario" id="email_secundario" value="{{ old('email_secundario') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
+                                </div>
+                                <div>
                                     <label for="telefone" class="block text-sm font-medium text-gray-700 mb-1">Telefone Comercial</label>
                                     <input type="text" name="telefone" id="telefone" value="{{ old('telefone') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
+                                </div>
+                                <div>
+                                    <label for="telefone_secundario" class="block text-sm font-medium text-gray-700 mb-1">Telefone Secundário</label>
+                                    <input type="text" name="telefone_secundario" id="telefone_secundario" value="{{ old('telefone_secundario') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
                                 </div>
                             </div>
                         </div>

@@ -34,12 +34,15 @@ class EmpresaConcedenteController extends Controller
             'estado' => 'nullable|string|max:2',
             'cep' => 'nullable|string|max:10',
             'telefone' => 'nullable|string|max:255',
+            'telefone_secundario' => 'nullable|string|max:255',
             'email' => 'nullable|email|max:255',
+            'email_secundario' => 'nullable|email|max:255',
             'responsavel_legal_nome' => 'nullable|string|max:255',
             'responsavel_legal_cargo' => 'nullable|string|max:255',
             'responsavel_legal_cpf' => 'nullable|string|max:255',
             'responsavel_legal_rg' => 'nullable|string|max:255',
-            'whatsapp' => 'nullable|string|max:255',
+            'responsavel_legal_email' => 'nullable|email|max:255',
+            'responsavel_legal_whatsapp' => 'nullable|string|max:255',
             'autoriza_envio_mensagens' => 'nullable|boolean',
         ];
 
@@ -72,12 +75,15 @@ class EmpresaConcedenteController extends Controller
             'estado' => 'nullable|string|max:2',
             'cep' => 'nullable|string|max:10',
             'telefone' => 'nullable|string|max:255',
+            'telefone_secundario' => 'nullable|string|max:255',
             'email' => 'nullable|email|max:255',
+            'email_secundario' => 'nullable|email|max:255',
             'responsavel_legal_nome' => 'nullable|string|max:255',
             'responsavel_legal_cargo' => 'nullable|string|max:255',
             'responsavel_legal_cpf' => 'nullable|string|max:255',
             'responsavel_legal_rg' => 'nullable|string|max:255',
-            'whatsapp' => 'nullable|string|max:255',
+            'responsavel_legal_email' => 'nullable|email|max:255',
+            'responsavel_legal_whatsapp' => 'nullable|string|max:255',
             'autoriza_envio_mensagens' => 'nullable|boolean',
         ];
 

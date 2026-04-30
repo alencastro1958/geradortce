@@ -78,8 +78,16 @@
                                     <input type="email" name="email" id="email" value="{{ old('email', $empresa->email) }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
                                 </div>
                                 <div>
+                                    <label for="email_secundario" class="block text-sm font-medium text-gray-700 mb-1">E-mail Secundário</label>
+                                    <input type="email" name="email_secundario" id="email_secundario" value="{{ old('email_secundario', $empresa->email_secundario) }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
+                                </div>
+                                <div>
                                     <label for="telefone" class="block text-sm font-medium text-gray-700 mb-1">Telefone</label>
                                     <input type="text" name="telefone" id="telefone" value="{{ old('telefone', $empresa->telefone) }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
+                                </div>
+                                <div>
+                                    <label for="telefone_secundario" class="block text-sm font-medium text-gray-700 mb-1">Telefone Secundário</label>
+                                    <input type="text" name="telefone_secundario" id="telefone_secundario" value="{{ old('telefone_secundario', $empresa->telefone_secundario) }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
                                 </div>
                             </div>
                         </div>
@@ -93,13 +101,29 @@
                                 Responsáveis
                             </h3>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
+                                <div class="col-span-2">
                                     <label for="responsavel_legal_nome" class="block text-sm font-medium text-gray-700 mb-1">Nome do Responsável Legal</label>
                                     <input type="text" name="responsavel_legal_nome" id="responsavel_legal_nome" value="{{ old('responsavel_legal_nome', $empresa->responsavel_legal_nome) }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
                                 </div>
                                 <div>
                                     <label for="responsavel_legal_cargo" class="block text-sm font-medium text-gray-700 mb-1">Cargo do Responsável</label>
                                     <input type="text" name="responsavel_legal_cargo" id="responsavel_legal_cargo" value="{{ old('responsavel_legal_cargo', $empresa->responsavel_legal_cargo) }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
+                                </div>
+                                <div>
+                                    <label for="responsavel_legal_cpf" class="block text-sm font-medium text-gray-700 mb-1">CPF</label>
+                                    <input type="text" name="responsavel_legal_cpf" id="responsavel_legal_cpf" value="{{ old('responsavel_legal_cpf', $empresa->responsavel_legal_cpf) }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md" placeholder="000.000.000-00">
+                                </div>
+                                <div>
+                                    <label for="responsavel_legal_rg" class="block text-sm font-medium text-gray-700 mb-1">RG</label>
+                                    <input type="text" name="responsavel_legal_rg" id="responsavel_legal_rg" value="{{ old('responsavel_legal_rg', $empresa->responsavel_legal_rg) }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
+                                </div>
+                                <div>
+                                    <label for="responsavel_legal_email" class="block text-sm font-medium text-gray-700 mb-1">E-mail do Responsável</label>
+                                    <input type="email" name="responsavel_legal_email" id="responsavel_legal_email" value="{{ old('responsavel_legal_email', $empresa->responsavel_legal_email) }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
+                                </div>
+                                <div>
+                                    <label for="responsavel_legal_whatsapp" class="block text-sm font-medium text-gray-700 mb-1">WhatsApp</label>
+                                    <input type="text" name="responsavel_legal_whatsapp" id="responsavel_legal_whatsapp" value="{{ old('responsavel_legal_whatsapp', $empresa->responsavel_legal_whatsapp) }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md" placeholder="(00) 00000-0000">
                                 </div>
                                 <div>
                                     <label for="supervisor_estagio_nome" class="block text-sm font-medium text-gray-700 mb-1">Nome do Supervisor de Estágio</label>
