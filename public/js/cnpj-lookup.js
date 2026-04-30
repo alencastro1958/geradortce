@@ -98,9 +98,27 @@ document.addEventListener('DOMContentLoaded', function() {
         };
 
         function preencherCamposComData(data) {
+            console.log('Preenchendo campos com os dados:', data);
+            
+            // Tenta preencher o campo "nome" (ID usado em Seguradoras e Agentes de Integração)
+            const nomeCalculado = data.razao_social || data.nome || data.nome_fantasia || data.fantasia;
+            preencherCampo('nome', nomeCalculado);
+            
+            // Outros campos
             preencherCampo('razao_social', data.razao_social || data.nome);
             preencherCampo('nome_fantasia', data.nome_fantasia || data.fantasia);
-            preencherCampo('endereco', data.logradouro ? `${data.logradouro}, ${data.numero}` : data.endereco);
+            
+            // Endereço formatado
+            let enderecoFormatado = '';
+            if (data.logradouro) {
+                enderecoFormatado = data.logradouro;
+                if (data.numero) enderecoFormatado += ', ' + data.numero;
+                if (data.complemento) enderecoFormatado += ' - ' + data.complemento;
+            } else {
+                enderecoFormatado = data.endereco || '';
+            }
+            preencherCampo('endereco', enderecoFormatado);
+            
             preencherCampo('bairro', data.bairro);
             preencherCampo('cidade', data.cidade || data.municipio);
             preencherCampo('estado', data.estado || data.uf);
