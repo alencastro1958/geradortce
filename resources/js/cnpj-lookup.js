@@ -71,10 +71,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 .then(r => r.json())
                 .then(data => {
                     if (data.error) {
-                        // Não mostramos alerta em caso de falha de comunicação silenciosa no blur, 
-                        // apenas se o usuário forçou a busca (ex: enter)
-                        console.error(data.error);
-                        if (window.lastEvent === 'Enter') alert(data.error);
+                        console.error('Busca CNPJ:', data.error);
+                        // Não interrompe com alert, apenas loga e permite manual
                     } else {
                         preencherCampo('razao_social', data.razao_social || data.nome);
                         preencherCampo('nome_fantasia', data.nome_fantasia || data.fantasia);
