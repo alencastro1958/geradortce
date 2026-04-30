@@ -67,28 +67,45 @@ document.addEventListener('DOMContentLoaded', function() {
             // Feedback visual de carregamento
             input.classList.add('opacity-50', 'cursor-wait');
             
-            fetch(`/api/consultar-cnpj?cnpj=${cnpjLimpo}`)
-                .then(r => r.json())
-                .then(data => {
-                    if (data.error) {
-                        console.error('Busca CNPJ:', data.error);
-                        // Não interrompe com alert, apenas loga e permite manual
-                    } else {
-                        preencherCampo('razao_social', data.razao_social || data.nome);
-                        preencherCampo('nome_fantasia', data.nome_fantasia || data.fantasia);
-                        preencherCampo('endereco', data.logradouro ? `${data.logradouro}, ${data.numero}` : data.endereco);
-                        preencherCampo('bairro', data.bairro);
-                        preencherCampo('cidade', data.cidade || data.municipio);
-                        preencherCampo('estado', data.estado || data.uf);
-                        preencherCampo('cep', data.cep);
-                    }
+            // TENTATIVA 1: Busca direta pelo Navegador (Bypassa bloqueios da VPS)
+            fetch(`https://brasilapi.com.br/api/cnpj/v1/${cnpjLimpo}`)
+                .then(r => {
+                    if (!r.ok) throw new Error('Falha no browser fetch');
+                    return r.json();
                 })
-                .catch(err => console.error('Erro na requisição:', err))
+                .then(data => {
+                    preencherCamposComData(data);
+                })
+                .catch(err => {
+                    console.warn('Busca direta via browser falhou ou bloqueada por CORS, tentando via servidor...', err);
+                    
+                    // TENTATIVA 2: Via Servidor (Backup)
+                    fetch(`/api/consultar-cnpj?cnpj=${cnpjLimpo}`)
+                        .then(r => r.json())
+                        .then(data => {
+                            if (!data.error) {
+                                preencherCamposComData(data);
+                            } else {
+                                console.error('Erro no servidor:', data.error);
+                            }
+                        })
+                        .catch(err => console.error('Erro total na requisição:', err));
+                })
                 .finally(() => {
                     input.classList.remove('opacity-50', 'cursor-wait');
                     window.lastEvent = null;
                 });
         };
+
+        function preencherCamposComData(data) {
+            preencherCampo('razao_social', data.razao_social || data.nome);
+            preencherCampo('nome_fantasia', data.nome_fantasia || data.fantasia);
+            preencherCampo('endereco', data.logradouro ? `${data.logradouro}, ${data.numero}` : data.endereco);
+            preencherCampo('bairro', data.bairro);
+            preencherCampo('cidade', data.cidade || data.municipio);
+            preencherCampo('estado', data.estado || data.uf);
+            preencherCampo('cep', data.cep);
+        }
 
         // Busca ao pressionar Enter
         input.addEventListener('keydown', function(e) {
