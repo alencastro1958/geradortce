@@ -27,11 +27,11 @@
 <body>
     <div class="text-center mb-2">
         @if(file_exists(public_path('images/AlencastroEstagios.png')))
-        <img src="{{ public_path('images/AlencastroEstagios.png') }}" alt="Alencastro Estágios" style="max-width: 200px;">
+        <img src="{{ public_path('images/AlencastroEstagios.png') }}" alt="Alencastro Estágios" style="max-width: 220px;">
         @else
         <p class="bold uppercase" style="font-size: 14pt;">ALENCASTRO CONSULTORIA-ESTÁGIOS</p>
         @endif
-        <p style="font-size: 9pt;">www.alencastroestagios.com.br | diogo@alencastroestagios.com.br</p>
+        <p style="font-size: 9pt;">www.rotacerta-aprendizagem.com.br | admin@rotacerta-aprendizagem.com.br</p>
     </div>
 
     <div class="text-center mb-2">
