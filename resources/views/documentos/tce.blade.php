@@ -10,7 +10,7 @@
         }
         html {
             margin-top: 4.0cm;
-            margin-bottom: 1.0cm;
+            margin-bottom: 1.2cm;
             margin-left: 1.5cm;
             margin-right: 2.5cm;
         }
@@ -163,7 +163,7 @@
         <p>Diogo Luís Alencastro da Silva</p>
     </div>
 
-    <div style="position: fixed; bottom: 0.5cm; left: 1.5cm; right: 2.5cm; text-align: center; font-size: 8pt; border-top: 1px solid #ccc; padding-top: 5px;">
+    <div style="position: fixed; bottom: 0.3cm; left: 1.5cm; right: 2.5cm; text-align: center; font-size: 8pt; border-top: 1px solid #ccc; padding-top: 3px;">
         <p>www.rotacerta-aprendizagem.com.br | admin@rotacerta-aprendizagem.com.br | (48) 99203-9611</p>
     </div>
 </body>
