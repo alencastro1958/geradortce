@@ -19,7 +19,6 @@ class Seguradora extends Model
     protected function casts(): array
     {
         return [
-            'cnpj' => Encrypted::class,
             'inicio_vigencia' => 'date',
             'fim_vigencia' => 'date',
             'valor_cobertura' => 'decimal:2',

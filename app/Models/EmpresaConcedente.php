@@ -20,11 +20,7 @@ class EmpresaConcedente extends Model
 
     protected function casts(): array
     {
-        return [
-            'cnpj' => Encrypted::class,
-            'responsavel_legal_cargo' => Encrypted::class,
-            'supervisor_estagio_cargo' => Encrypted::class,
-        ];
+        return [];
     }
 
     public function user(): BelongsTo

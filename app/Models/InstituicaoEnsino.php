@@ -19,9 +19,7 @@ class InstituicaoEnsino extends Model
 
     protected function casts(): array
     {
-        return [
-            'cnpj' => Encrypted::class,
-        ];
+        return [];
     }
 
     public function user(): BelongsTo

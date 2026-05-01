@@ -21,10 +21,7 @@ class Estagiario extends Model
     protected function casts(): array
     {
         return [
-            'cpf' => Encrypted::class,
-            'rg' => Encrypted::class,
             'data_nascimento' => 'date',
-            'responsavel_legal_cpf' => Encrypted::class,
         ];
     }
 
