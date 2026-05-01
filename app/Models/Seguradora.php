@@ -7,18 +7,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-readonly class Seguradora extends Model
+class Seguradora extends Model
 {
     use HasFactory;
-
-    protected $table = 'seguradoras';
 
     protected $fillable = [
         'nome', 'cnpj', 'contato_nome', 'telefone', 'email', 'apolice_numero',
         'valor_cobertura', 'inicio_vigencia', 'fim_vigencia', 'endereco', 'bairro', 'cidade', 'estado', 'cep'
     ];
-
-    protected $hidden = ['id', 'created_at', 'updated_at'];
 
     protected function casts(): array
     {

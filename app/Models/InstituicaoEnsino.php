@@ -8,18 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-readonly class InstituicaoEnsino extends Model
+class InstituicaoEnsino extends Model
 {
     use HasFactory;
-
-    protected $table = 'instituicao_ensinos';
 
     protected $fillable = [
         'user_id', 'cnpj', 'nome', 'endereco', 'bairro', 'cidade', 'estado',
         'cep', 'telefone', 'email', 'responsavel_nome', 'responsavel_cargo'
     ];
-
-    protected $hidden = ['id', 'created_at', 'updated_at'];
 
     protected function casts(): array
     {

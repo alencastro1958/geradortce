@@ -8,19 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-readonly class Estagio extends Model
+class Estagio extends Model
 {
     use HasFactory;
-
-    protected $table = 'estagios';
 
     protected $fillable = [
         'estagiario_id', 'empresa_concedente_id', 'instituicao_ensino_id', 'seguradora_id',
         'data_inicio', 'data_fim', 'carga_horaria_semanal', 'valor_bolsa', 'valor_auxilio_transporte',
         'atividades', 'status', 'horario_inicio', 'horario_fim', 'intervalo', 'apolice_numero'
     ];
-
-    protected $hidden = ['id', 'created_at', 'updated_at'];
 
     protected function casts(): array
     {
