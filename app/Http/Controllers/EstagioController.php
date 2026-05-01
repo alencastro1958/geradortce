@@ -8,7 +8,9 @@ use App\Models\Estagiario;
 use App\Models\EmpresaConcedente;
 use App\Models\InstituicaoEnsino;
 use App\Models\Seguradora;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class EstagioController extends Controller
 {
@@ -93,5 +95,27 @@ class EstagioController extends Controller
         $estagio->delete();
 
         return redirect()->route('estagios.index')->with('success', 'Estágio removido com sucesso.');
+    }
+
+    public function gerarDocumento(Estagio $estagio)
+    {
+        $estagio->load(['estagiario', 'empresaConcedente', 'instituicaoEnsino', 'seguradora']);
+
+        $pdf = Pdf::loadView('documentos.tce', compact('estagio'));
+
+        $nomeArquivo = 'TCE_' . $estagio->estagiario->cpf . '_' . date('YmdHis') . '.pdf';
+        $caminho = 'documentos/' . $nomeArquivo;
+        
+        Storage::put($caminho, $pdf->output());
+
+        Documento::create([
+            'estagio_id' => $estagio->id,
+            'tipo' => 'TCE',
+            'nome_arquivo' => $nomeArquivo,
+            'caminho_arquivo' => $caminho,
+            'status' => 'gerado',
+        ]);
+
+        return redirect()->route('estagios.show', $estagio->id)->with('success', 'Documento TCE gerado com sucesso.');
     }
 }
