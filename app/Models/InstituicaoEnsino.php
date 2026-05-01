@@ -13,8 +13,11 @@ class InstituicaoEnsino extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id', 'cnpj', 'nome', 'endereco', 'bairro', 'cidade', 'estado',
-        'cep', 'telefone', 'email', 'responsavel_nome', 'responsavel_cargo'
+        'user_id', 'cnpj', 'razao_social', 'nome_fantasia', 'endereco', 'bairro', 'cidade', 'estado',
+        'cep', 'telefone', 'telefone_secundario', 'email', 'email_secundario',
+        'responsavel_legal_nome', 'responsavel_legal_cargo', 'responsavel_legal_cpf',
+        'responsavel_legal_rg', 'responsavel_legal_email', 'responsavel_legal_whatsapp',
+        'mantenedora', 'contato_nome', 'tipo_instituicao'
     ];
 
     protected function casts(): array
