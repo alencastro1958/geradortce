@@ -102,10 +102,9 @@ class EstagioController extends Controller
         $tipo = $request->get('tipo', 'tce');
         $estagio->load(['estagiario', 'empresaConcedente', 'instituicaoEnsino', 'seguradora']);
 
-        $nomeView = 'documentos.tce';
-        $nomeFile = 'TCE_' . $estagio->id . '_' . date('YmdHis');
+        $pdf = Pdf::loadView('documentos.tce', compact('estagio'));
 
-        $pdf = Pdf::loadView($nomeView, compact('estagio'));
+        $nomeFile = 'TCE_' . $estagio->id . '_' . date('YmdHis');
 
         return $pdf->setPaper('a4')->stream($nomeFile . '.pdf');
     }
