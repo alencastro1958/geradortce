@@ -31,58 +31,7 @@
         @else
         <p class="bold uppercase" style="font-size: 14pt;">ALENCASTRO CONSULTORIA-ESTÁGIOS</p>
         @endif
-        <p style="font-size: 9pt;">www.rotacerta-aprendizagem.com.br | admin@rotacerta-aprendizagem.com.br</p>
-    </div>
-
-    <div class="text-center mb-2">
-        <p class="bold uppercase" style="font-size: 12pt;">TERMO DE COMPROMISSO DE ESTÁGIO - TCE</p>
-        <p style="font-size: 8pt;">(De acordo com o disposto da lei n.º 6.494/77 e no respective decreto de regulamentação n.º 87.497/82)</p>
-        <p style="font-size: 8pt;">(Condições de Realização de Estágio)</p>
-    </div>
-
-    <p class="mb-1 text-justify">TERMO DE COMPROMISSO DE ESTÁGIO, instrumento jurídico cujo objetivo é formalizar as condições para realização de estágio, definido como ato educativo escolar supervisionado, desenvolvido no ambiente de trabalho, que visa a preparação para o trabalho produtivo do estudante, nos termos da Lei nº 11.788, de 25/09/2008, (Publicada no D.O.U. de 26.09.2008) que entre si celebram as partes a seguir nomeadas:</p>
-
-    <p class="bold mb-1 mt-2">INSTITUIÇÃO DE ENSINO</p>
-    <p><span class="bold">Razão Social:</span> {{ $estagio->instituicaoEnsino->razao_social }} <span class="linha"></span> <span class="bold">CNPJ:</span> {{ $estagio->instituicaoEnsino->cnpj }}</p>
-    @if($estagio->instituicaoEnsino->mantenedora)
-    <p><span class="bold">Mantenedora:</span> {{ $estagio->instituicaoEnsino->mantenedora }}</p>
-    @endif
-    <p><span class="bold">Endereço:</span> {{ $estagio->instituicaoEnsino->endereco }}
-    @if($estagio->instituicaoEnsino->complemento), {{ $estagio->instituicaoEnsino->complemento }}@endif - {{ $estagio->instituicaoEnsino->bairro }} - CEP: {{ $estagio->instituicaoEnsino->cep }}</p>
-    <p><span class="bold">Cidade:</span> {{ $estagio->instituicaoEnsino->cidade }} <span class="linha-curta"></span> <span class="bold">Estado:</span> {{ $estagio->instituicaoEnsino->estado }}</p>
-    <p><span class="bold">Telefone:</span> {{ $estagio->instituicaoEnsino->telefone }} <span class="linha-curta"></span> <span class="bold">Email:</span> {{ $estagio->instituicaoEnsino->email }}</p>
-    <p><span class="bold">Responsável Legal:</span> {{ $estagio->instituicaoEnsino->responsavel_legal_nome }} <span class="linha-curta"></span> <span class="bold">CPF:</span> {{ $estagio->instituicaoEnsino->responsavel_legal_cpf }}</p>
-    @if($estagio->instituicaoEnsino->responsavel_legal_rg)
-    <p><span class="bold">RG nº:</span> {{ $estagio->instituicaoEnsino->responsavel_legal_rg }}</p>
-    @endif
-
-    <p class="bold mb-1 mt-3">UNIDADE CONCEDENTE DE ESTÁGIO</p>
-    <p><span class="bold">Razão Social:</span> {{ $estagio->empresaConcedente->razao_social }} <span class="linha"></span> <span class="bold">CNPJ:</span> {{ $estagio->empresaConcedente->cnpj }}</p>
-    @if($estagio->empresaConcedente->mantenedora)
-    <p><span class="bold">Mantenedora:</span> {{ $estagio->empresaConcedente->mantenedora }}</p>
-    @endif
-    <p><span class="bold">Endereço:</span> {{ $estagio->empresaConcedente->endereco }}
-    @if($estagio->empresaConcedente->complemento), {{ $estagio->empresaConcedente->complemento }}@endif - {{ $estagio->empresaConcedente->bairro }} - CEP: {{ $estagio->empresaConcedente->cep }}</p>
-    <p><span class="bold">Cidade:</span> {{ $estagio->empresaConcedente->cidade }} <span class="linha-curta"></span> <span class="bold">Estado:</span> {{ $estagio->empresaConcedente->estado }}</p>
-    <p><span class="bold">Telefone:</span> {{ $estagio->empresaConcedente->telefone }} <span class="linha-curta"></span> <span class="bold">Email:</span> {{ $estagio->empresaConcedente->email }}</p>
-    <p><span class="bold">Responsável Legal:</span> {{ $estagio->empresaConcedente->responsavel_legal_nome }} <span class="linha-curta"></span> <span class="bold">CPF:</span> {{ $estagio->empresaConcedente->responsavel_legal_cpf }}</p>
-    @if($estagio->empresaConcedente->responsavel_legal_rg)
-    <p><span class="bold">RG nº:</span> {{ $estagio->empresaConcedente->responsavel_legal_rg }}</p>
-    @endif
-
-    <p class="bold mb-1 mt-3">ESTAGIÁRIO</p>
-    <p><span class="bold">Nome:</span> {{ $estagio->estagiario->nome }} <span class="linha"></span> <span class="bold">CPF:</span> {{ $estagio->estagiario->cpf }}
-    @if($estagio->estagiario->rg) <span class="bold">RG nº:</span> {{ $estagio->estagiario->rg }}@endif</p>
-    <p><span class="bold">Endereço:</span> {{ $estagio->estagiario->endereco }}
-    @if($estagio->estagiario->complemento), {{ $estagio->estagiario->complemento }}@endif - {{ $estagio->estagiario->bairro }} - CEP: {{ $estagio->estagiario->cep }}</p>
-    <p><span class="bold">Cidade:</span> {{ $estagio->estagiario->cidade }} <span class="linha-curta"></span> <span class="bold">Estado:</span> {{ $estagio->estagiario->estado }}</p>
-    <p><span class="bold">Telefone:</span> {{ $estagio->estagiario->telefone }} <span class="linha-curta"></span> <span class="bold">Email:</span> {{ $estagio->estagiario->email }}</p>
-    <p><span class="bold">Curso:</span> {{ $estagio->estagiario->curso }} <span class="linha-curta"></span> <span class="bold">Semestre/Período/Série:</span> {{ $estagio->estagiario->semestre_atual ?? $estagio->estagiario->periodo ?? '___' }} <span class="linha-curta"></span> <span class="bold">Matrícula nº:</span> {{ $estagio->estagiario->matricula ?? '___' }}</p>
-    <p><span class="bold">Data de Início:</span> {{ $estagio->data_inicio->format('d/m/Y') }} <span class="linha-curta"></span> <span class="bold">Data de Conclusão:</span> {{ $estagio->data_fim->format('d/m/Y') }}</p>
-
-    <p class="bold mb-1 mt-3">AGENTE DE INTEGRAÇÃO - ALENCASTRO CONSULTORIA</p>
-    <p><span class="bold">Razão Social:</span> DIOGO LUÍS ALENCASTRO DA SILVA-ME <span class="linha-curta"></span> <span class="bold">CNPJ:</span> 18.785.582/0001-24</p>
-    <p><span class="bold">Contato:</span> (48) 99111-8686 | diogo@alencastroconsultoria.com.br</p>
+<p style="font-size: 9pt;">www.rotacerta-aprendizagem.com.br | admin@rotacerta-aprendizagem.com.br | (48) 99203-9611</p>
     <p><span class="bold">Responsável Legal:</span> Diogo Luís Alencastro da Silva</p>
 
     <p class="mb-2 mt-2">Conforme as cláusulas e condições seguintes:</p>
@@ -157,7 +106,7 @@
         <p><span class="bold">ALENCASTRO CONSULTORIA-ESTÁGIOS</span></p>
         <p>Agente de Integração</p>
         <p>Diogo Luís Alencastro da Silva</p>
-        <p>diogo@alencastroestagios.com.br</p>
+        <p>diogo@rotacerta-aprendizagem.com.br</p>
     </div>
 </body>
 </html>
