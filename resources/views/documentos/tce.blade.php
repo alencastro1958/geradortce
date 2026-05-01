@@ -26,7 +26,7 @@
 </head>
 <body>
     <div class="text-center mb-2">
-        <p class="bold uppercase" style="font-size: 14pt;">ALENCASTRO CONSULTORIA-ESTÁGIOS</p>
+        <img src="{{ asset('images/Alencastro Estagios.png') }}" alt="Alencastro Estágios" style="max-width: 200px;">
         <p style="font-size: 9pt;">www.alencastroestagios.com.br | diogo@alencastroestagios.com.br</p>
     </div>
 
