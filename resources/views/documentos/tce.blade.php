@@ -5,7 +5,7 @@
     <title>Termo de Compromisso de Estágio - TCE</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: Arial, sans-serif; font-size: 10pt; line-height: 1.4; padding: 15px; max-width: 800px; margin: 0 auto; }
+        body { font-family: Arial, sans-serif; font-size: 10pt; line-height: 1.4; padding: 15px 15px 15px 30px; max-width: 800px; margin: 0 auto; }
         .text-center { text-align: center; }
         .text-right { text-align: right; }
         .text-justify { text-align: justify; }
