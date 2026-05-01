@@ -5,20 +5,9 @@
     <title>Termo de Compromisso de Estágio - TCE</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        @page { margin: 1cm 1.5cm 1cm 2.5cm; }
-        body { font-family: Arial, sans-serif; font-size: 10pt; line-height: 1.4; }
-        .text-center { text-align: center; }
-        .text-right { text-align: right; }
-        .text-justify { text-align: justify; }
-        .bold { font-weight: bold; }
-        .mb-0 { margin-bottom: 0; }
-        .mb-1 { margin-bottom: 6px; }
-        .mb-2 { margin-bottom: 10px; }
-        .mb-3 { margin-bottom: 15px; }
-        .mt-1 { margin-top: 6px; }
-        .mt-2 { margin-top: 10px; }
-        .mt-3 { margin-top: 15px; }
-        p { margin-bottom: 4px; }
+@page { margin: 1cm 1.5cm 1cm 2.5cm; }
+        body { font-family: Arial, sans-serif; font-size: 10pt; line-height: 1.4; padding-left: 2.5cm; padding-right: 1.5cm; }
+        p { margin-bottom: 4px; text-align: justify; }
         .linha { border-bottom: 1px solid #000; display: inline-block; min-width: 180px; }
         .linha-curta { border-bottom: 1px solid #000; display: inline-block; min-width: 80px; }
         .linha-media { border-bottom: 1px solid #000; display: inline-block; min-width: 120px; }
