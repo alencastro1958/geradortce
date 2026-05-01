@@ -16,7 +16,7 @@ class EmpresaConcedente extends Model
         'user_id', 'cnpj', 'razao_social', 'nome_fantasia', 'endereco', 'complemento', 'bairro',
         'cidade', 'estado', 'cep', 'telefone', 'email', 'responsavel_legal_nome',
         'responsavel_legal_cargo', 'responsavel_legal_cpf', 'responsavel_legal_rg',
-        'supervisor_estagio_nome', 'supervisor_estagio_cargo', 'supervisor_estagio_cpf', 'supervisor_estagio_email', 'supervisor_estagio_telefone',
+        'supervisor_estagio_nome', 'supervisor_estagio_cargo', 'supervisor_estagio_formacao', 'supervisor_estagio_cpf', 'supervisor_estagio_email', 'supervisor_estagio_telefone',
         'mantenedora'
     ];
 
