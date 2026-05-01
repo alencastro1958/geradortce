@@ -5,9 +5,30 @@
     <title>Termo de Compromisso de Estágio - TCE</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-@page { margin: 1cm 1.5cm 1cm 2.5cm; }
-        body { font-family: Arial, sans-serif; font-size: 10pt; line-height: 1.4; padding-left: 2.5cm; padding-right: 1.5cm; }
+        @page {
+            size: A4;
+            margin: 4.0cm 2.5cm 1.0cm 1.5cm;
+            /* Margens aplicadas: E=1,5cm | D=2,5cm | T=4,0cm | B=1,0cm | Papel: A4 */
+            margin-header: 0;
+            margin-footer: 0;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 10pt;
+            line-height: 1.4;
+        }
         p { margin-bottom: 4px; text-align: justify; }
+        .text-center { text-align: center; }
+        .text-right { text-align: right; }
+        .text-left { text-align: left; }
+        .bold { font-weight: bold; }
+        .mb-0 { margin-bottom: 0; }
+        .mb-1 { margin-bottom: 6px; }
+        .mb-2 { margin-bottom: 10px; }
+        .mb-3 { margin-bottom: 15px; }
+        .mt-1 { margin-top: 6px; }
+        .mt-2 { margin-top: 10px; }
+        .mt-3 { margin-top: 15px; }
         .linha { border-bottom: 1px solid #000; display: inline-block; min-width: 180px; }
         .linha-curta { border-bottom: 1px solid #000; display: inline-block; min-width: 80px; }
         .linha-media { border-bottom: 1px solid #000; display: inline-block; min-width: 120px; }
@@ -15,20 +36,38 @@
         .assinatura-centro { width: 100%; text-align: center; margin-top: 30px; }
         .clear { clear: both; }
         .uppercase { text-transform: uppercase; }
-        .espaco { display: inline-block; }
-        .campo { border-bottom: 1px solid #000; }
-        .footer { position: fixed; bottom: 0.5cm; left: 2.5cm; right: 1.5cm; text-align: center; font-size: 8pt; border-top: 1px solid #ccc; padding-top: 5px; }
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4.0cm;
+            text-align: center;
+            padding-top: 0.5cm;
+        }
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1.0cm;
+            text-align: center;
+            font-size: 8pt;
+            border-top: 1px solid #ccc;
+            padding-top: 5px;
+            line-height: 1.0cm;
+        }
     </style>
 </head>
 <body>
-    <div class="text-center mb-2">
+    <header>
         @if(file_exists(public_path('images/AlencastroEstagios.png')))
         <img src="{{ public_path('images/AlencastroEstagios.png') }}" alt="Alencastro Estágios" style="max-width: 180px;">
         @else
         <p class="bold uppercase" style="font-size: 14pt;">ALENCASTRO CONSULTORIA-ESTÁGIOS</p>
         @endif
         <p class="bold uppercase mt-1">Termo de Compromisso de Estágio - TCE</p>
-    </div>
+    </header>
 
     <p class="text-justify mb-2">(De acordo com o disposto da lei n.º 6.494/77 e no respectivo decreto de regulamentação n.º 87.497/82)</p>
     <p class="text-center mb-2">(Condições de Realização de Estágio)</p>
@@ -86,7 +125,7 @@
 
     <p class="bold mt-2">CLÁUSULA QUINTA:</p>
     <p>O estágio terá jornada de até {{ $estagio->carga_horaria_semanal }} ({{ $estagio->carga_horaria_semanal }}) horas semanais, de segunda a sexta-feira, no horário das {{ $estagio->horario_inicio ?? '08' }}h{{ $estagio->horario_inicio_minuto ?? '00' }} às {{ $estagio->horario_fim ?? '14' }}h{{ $estagio->horario_fim_minuto ?? '00' }}, compreendendo {{ $estagio->carga_horaria_semanal / 5 }} horas diárias.</p>
-    <p><span class="bold">Par��grafo Único:</span> Nos períodos de avaliação de aprendizagem da Instituição de Ensino, comprovados mediante calendário acadêmico, a carga horária será reduzida à metade, conforme determina o § 1º do Art. 10 da Lei nº 11.788/2008.</p>
+    <p><span class="bold">Parágrafo Único:</span> Nos períodos de avaliação de aprendizagem da Instituição de Ensino, comprovados mediante calendário acadêmico, a carga horária será reduzida à metade, conforme determina o § 1º do Art. 10 da Lei nº 11.788/2008.</p>
 
     <p class="bold mt-2">CLÁUSULA SEXTA:</p>
     <p>A UNIDADE CONCEDENTE pagará mensalmente, diretamente à ESTAGIÁRIA, a importância de R$ {{ number_format($estagio->valor_bolsa ?? 0, 2, ',', '.') }} ({{ $estagio->valor_bolsa ? number_format($estagio->valor_bolsa, 2, ',', '.') : '___' }} reais) a título de Bolsa-Auxílio. Este pagamento será efetuado até o quinto dia útil subsequente ao fechamento da folha de frequência da estagiária.</p>
@@ -98,7 +137,7 @@
     <p>No período de vigência do presente TCE, o(a) ESTAGIÁRIO(A) terá cobertura de Seguro de Acidentes Pessoais, contratado pela Unidade Concedente junto à Seguradora {{ $estagio->seguradora->nome ?? '___' }}, Apólice nº {{ $estagio->apolice_numero ?? $estagio->seguradora->apolice_numero ?? '___' }} ({{ $estagio->seguradora->cnpj ?? '___' }}), com capital segurado de R$ {{ number_format($estagio->seguradora->capital_segurado ?? $estagio->seguradora->valor_cobertura ?? 0, 2, ',', '.') }}, para Morte Acidental ou Invalidez Permanente Total ou Parcial por Acidente, nos termos do Inciso IV do Art. 9º da Lei nº 11.788/2008.</p>
 
     <p class="bold mt-2">CLÁUSULA OITAVA:</p>
-    <p>São obrigações da UNIDADE CONCEDENTE: a) Elaborar programa de estágio compatível com o currículo escolar; b) Ofertar instalações adequadas para atividades de aprendizagem social, profissional e cultural; c) Indicar funcionário de seu quadro de pessoal, com formação ou experiência profissional na área de conhecimento do curso da estagiária, para orientar e supervisionar até 10 (dez) estagiários simultaneamente; d) Fornecer subsídios à INSTITUIÇÃO DE ENSINO para acompanhamento, coordenação e avaliação do estágio; e) Elaborar relatório de estágio semestralmente, disponibilizado pelo AGENTE DE INTEGRAÇÃO, nos prazos e padrões estabelecidos; f) Entregar, por ocasião do desligamento, termo de realização de estágio com indicação resumida das atividades, períodos e avaliação de desempenho; g) Reduzir a carga horária do estágio à metade nos períodos de avaliação de aprendizagem da Instituição de Ensino; h) Conceder recesso conforme disposto na Cláusula Sexta, Parágrafo Terceiro; i) Aplicar ao(à) estagiário(a) a legislação de saúde e segurança do trabalho; j) Informar todas as normas de Segurança do Trabalho, fornecendo EPIs/EPCs quando necessário, vedando a exposição a riscos sem a devida proteção.</p>
+    <p>São obrigações da UNIDADE CONCEDENTE: a) Elaborar programa de estágio compatível com o currículo escolar; b) Ofertar instalações adequadas para atividades de aprendizagem social, profissional e cultural; c) Indicar funcionário de seu quadro de pessoal, com formação ou experiência profissional na área de conhecimento do curso da estagiária, para orientar e supervisionar até 10 (dez) estagiários simultaneamente; d) Fornecer subsídios à INSTITUIÇÃO DE ENSINO para acompanhamento, coordenação e avaliação do estágio; e) Elaborar relatório de estágio semestralmente, disponibilizado pelo AGENTE DE INTEGRAÇÃO, nos prazos e padrões estabelecidos; f) Entregar, por ocasião do desligamento, termo de realização de estágio com indication resumida das atividades, períodos e avaliação de desempenho; g) Reduzir a carga horária do estágio à metade nos períodos de avaliação de aprendizagem da Instituição de Ensino; h) Conceder recesso conforme disposto na Cláusula Sexta, Parágrafo Terceiro; i) Aplicar ao(à) estagiário(a) a legislação de saúde e segurança do trabalho; j) Informar todas as normas de Segurança do Trabalho, fornecendo EPIs/EPCs quando necessário, vedando a exposição a riscos sem a devida proteção.</p>
 
     <p class="bold mt-2">CLÁUSULA NONA:</p>
     <p>O(A) ESTAGIÁRIO(A) obriga-se a: a) Cumprir com empenho a programação de estágio; b) Conhecer e cumprir as normas da UNIDADE CONCEDENTE, salvaguardando o sigilo de informações; c) Elaborar relatório de estágio semestralmente, conforme modelo do AGENTE DE INTEGRAÇÃO, obtendo a assinatura do supervisor e entregando-o nos canais indicados; d) Comunicar imediatamente ao AGENTE DE INTEGRAÇÃO e à UNIDADE CONCEDENTE casos de trancamento de matrícula, desistência, reprovação ou transferência institucional; e) Cumprir as normas de Segurança do Trabalho, utilizando os equipamentos de proteção individual/coletiva fornecidos.</p>
@@ -140,8 +179,8 @@
         <p>Diogo Luís Alencastro da Silva</p>
     </div>
 
-    <div class="footer">
+    <footer>
         <p>www.rotacerta-aprendizagem.com.br | admin@rotacerta-aprendizagem.com.br | (48) 99203-9611</p>
-    </div>
+    </footer>
 </body>
 </html>
