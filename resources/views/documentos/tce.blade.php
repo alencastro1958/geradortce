@@ -6,19 +6,18 @@
     <style>
         @page {
             size: A4;
-            sheet-size: A4;
-        }
-        html {
             margin-top: 4.0cm;
-            margin-bottom: 1.2cm;
-            margin-left: 2.5cm;
-            margin-right: 1.5cm;
+            margin-right: 2.5cm;
+            margin-bottom: 1.0cm;
+            margin-left: 1.5cm;
         }
         body {
+            margin: 0;
             font-family: Arial, sans-serif;
             font-size: 10pt;
             line-height: 1.4;
             text-align: justify;
+            padding-bottom: 1.0cm;
         }
         p {
             margin-bottom: 4px;
@@ -41,15 +40,25 @@
         .assinatura-centro { width: 100%; text-align: center; margin-top: 30px; }
         .clear { clear: both; }
         .uppercase { text-transform: uppercase; }
+        .logo {
+            position: fixed;
+            top: 2.0cm;
+            left: 1.5cm;
+            right: 2.5cm;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
-    <div class="text-center mb-2">
+    <div class="logo">
         @if(file_exists(public_path('images/AlencastroEstagios.png')))
-        <img src="{{ public_path('images/AlencastroEstagios.png') }}" alt="Alencastro Estágios" style="max-width: 180px;">
+        <img src="{{ public_path('images/AlencastroEstagios.png') }}" alt="Alencastro Estágios" style="max-width: 220px;">
         @else
         <p class="bold uppercase" style="font-size: 14pt;">ALENCASTRO CONSULTORIA-ESTÁGIOS</p>
         @endif
+    </div>
+
+    <div class="text-center mb-2">
         <p class="bold uppercase mt-1">Termo de Compromisso de Estágio - TCE</p>
     </div>
 
@@ -163,7 +172,7 @@
         <p>Diogo Luís Alencastro da Silva</p>
     </div>
 
-    <div style="position: fixed; bottom: 0.3cm; left: 2.5cm; right: 1.5cm; text-align: center; font-size: 8pt; border-top: 1px solid #ccc; padding-top: 3px;">
+    <div style="position: fixed; bottom: 0.3cm; left: 1.5cm; right: 2.5cm; text-align: center; font-size: 8pt; border-top: 1px solid #ccc; padding-top: 3px;">
         <p>www.rotacerta-aprendizagem.com.br | admin@rotacerta-aprendizagem.com.br | (48) 99203-9611</p>
     </div>
 </body>
