@@ -5,33 +5,76 @@
     <title>Termo de Compromisso de Estágio - TCE</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: Arial, sans-serif; font-size: 10pt; line-height: 1.4; padding: 15px 15px 15px 30px; max-width: 800px; margin: 0 auto; }
+        @page { margin: 1.5cm 1cm 1cm 2cm; }
+        body { font-family: Arial, sans-serif; font-size: 10pt; line-height: 1.4; }
         .text-center { text-align: center; }
         .text-right { text-align: right; }
         .text-justify { text-align: justify; }
         .bold { font-weight: bold; }
-        .mb-1 { margin-bottom: 8px; }
-        .mb-2 { margin-bottom: 12px; }
+        .mb-0 { margin-bottom: 0; }
+        .mb-1 { margin-bottom: 6px; }
+        .mb-2 { margin-bottom: 10px; }
         .mb-3 { margin-bottom: 15px; }
-        .mt-2 { margin-top: 12px; }
+        .mt-1 { margin-top: 6px; }
+        .mt-2 { margin-top: 10px; }
         .mt-3 { margin-top: 15px; }
-        p { margin-bottom: 5px; }
-        .linha { border-bottom: 1px solid #000; display: inline-block; min-width: 200px; }
-        .linha-curta { border-bottom: 1px solid #000; display: inline-block; min-width: 100px; }
-        .assinatura { width: 45%; float: left; text-align: center; margin-top: 25px; }
-        .assinatura-centro { width: 100%; text-align: center; margin-top: 25px; }
+        p { margin-bottom: 4px; }
+        .linha { border-bottom: 1px solid #000; display: inline-block; min-width: 180px; }
+        .linha-curta { border-bottom: 1px solid #000; display: inline-block; min-width: 80px; }
+        .linha-media { border-bottom: 1px solid #000; display: inline-block; min-width: 120px; }
+        .assinatura { width: 45%; float: left; text-align: center; margin-top: 30px; }
+        .assinatura-centro { width: 100%; text-align: center; margin-top: 30px; }
         .clear { clear: both; }
         .uppercase { text-transform: uppercase; }
+        .espaco { display: inline-block; }
+        .campo { border-bottom: 1px solid #000; }
+        .footer { position: fixed; bottom: 0.5cm; left: 2cm; right: 1cm; text-align: center; font-size: 8pt; border-top: 1px solid #ccc; padding-top: 5px; }
     </style>
 </head>
 <body>
     <div class="text-center mb-2">
         @if(file_exists(public_path('images/AlencastroEstagios.png')))
-        <img src="{{ public_path('images/AlencastroEstagios.png') }}" alt="Alencastro Estágios" style="max-width: 220px;">
+        <img src="{{ public_path('images/AlencastroEstagios.png') }}" alt="Alencastro Estágios" style="max-width: 180px;">
         @else
         <p class="bold uppercase" style="font-size: 14pt;">ALENCASTRO CONSULTORIA-ESTÁGIOS</p>
         @endif
-<p style="font-size: 9pt;">www.rotacerta-aprendizagem.com.br | admin@rotacerta-aprendizagem.com.br | (48) 99203-9611</p>
+        <p class="bold uppercase mt-1">Termo de Compromisso de Estágio - TCE</p>
+    </div>
+
+    <p class="text-justify mb-2">(De acordo com o disposto da lei n.º 6.494/77 e no respectivo decreto de regulamentação n.º 87.497/82)</p>
+    <p class="text-center mb-2">(Condições de Realização de Estágio)</p>
+
+    <p class="text-justify mb-2">TERMO DE COMPROMISSO DE ESTÁGIO, instrumento jurídico cujo objetivo é formalizar as condições para realização de estágio, definido como ato educativo escolar supervisionado, desenvolvido no ambiente de trabalho, que visa a preparação para o trabalho produtivo do estudante, nos termos da Lei nº 11.788, de 25/09/2008, (Publicada no D.O.U. de 26.09.2008) que entre si celebram as partes a seguir nomeadas:</p>
+
+    <p class="bold mt-2 mb-1">INSTITUIÇÃO DE ENSINO</p>
+    <p><span class="bold">Razão Social:</span> <span class="linha">{{ $estagio->instituicaoEnsino->razao_social ?? '________________________' }}</span> <span class="bold">CNPJ:</span> <span class="linha-curta">{{ $estagio->instituicaoEnsino->cnpj ?? '____________' }}</span></p>
+    <p><span class="bold">Mantenedora:</span> <span class="linha-media">{{ $estagio->instituicaoEnsino->mantenedora ?? '_________________' }}</span></p>
+    <p><span class="bold">Endereço:</span> <span class="linha">{{ $estagio->instituicaoEnsino->endereco ?? '________________________' }}</span> <span class="bold">Complemento:</span> <span class="linha-curta">{{ $estagio->instituicaoEnsino->complemento ?? '____' }}</span> <span class="bold">Bairro:</span> <span class="linha-curta">{{ $estagio->instituicaoEnsino->bairro ?? '___________' }}</span> <span class="bold">CEP:</span> <span class="linha-curta">{{ $estagio->instituicaoEnsino->cep ?? '___.___-___' }}</span></p>
+    <p><span class="bold">Cidade:</span> <span class="linha">{{ $estagio->instituicaoEnsino->cidade ?? '________________________' }}</span> <span class="bold">Estado:</span> <span class="linha-curta">{{ $estagio->instituicaoEnsino->estado ?? '___' }}</span></p>
+    <p><span class="bold">Telefone:</span> <span class="linha-curta">{{ $estagio->instituicaoEnsino->telefone ?? '(__) _____-____' }}</span> <span class="bold">Email:</span> <span class="linha">{{ $estagio->instituicaoEnsino->email ?? '________________________' }}</span></p>
+    <p><span class="bold">Responsável Legal:</span> <span class="linha">{{ $estagio->instituicaoEnsino->responsavel_legal ?? '________________________' }}</span> <span class="bold">CPF:</span> <span class="linha-curta">___.___.___-__</span> <span class="bold">RG nº:</span> <span class="linha-curta">_____________</span></p>
+
+    <p class="bold mt-2 mb-1">UNIDADE CONCEDENTE DE ESTÁGIO</p>
+    <p><span class="bold">Razão Social:</span> <span class="linha">{{ $estagio->empresaConcedente->razao_social ?? '________________________' }}</span> <span class="bold">CNPJ:</span> <span class="linha-curta">{{ $estagio->empresaConcedente->cnpj ?? '__.___.___/____-__' }}</span></p>
+    <p><span class="bold">Mantenedora:</span> <span class="linha-media">{{ $estagio->empresaConcedente->mantenedora ?? '_________________' }}</span></p>
+    <p><span class="bold">Endereço:</span> <span class="linha">{{ $estagio->empresaConcedente->endereco ?? '________________________' }}</span> <span class="bold">Complemento:</span> <span class="linha-curta">{{ $estagio->empresaConcedente->complemento ?? '____' }}</span> <span class="bold">Bairro:</span> <span class="linha-curta">{{ $estagio->empresaConcedente->bairro ?? '___________' }}</span> <span class="bold">CEP:</span> <span class="linha-curta">{{ $estagio->empresaConcedente->cep ?? '___.___-___' }}</span></p>
+    <p><span class="bold">Cidade:</span> <span class="linha">{{ $estagio->empresaConcedente->cidade ?? '________________________' }}</span> <span class="bold">Estado:</span> <span class="linha-curta">{{ $estagio->empresaConcedente->estado ?? '___' }}</span></p>
+    <p><span class="bold">Telefone:</span> <span class="linha-curta">{{ $estagio->empresaConcedente->telefone ?? '(__) _____-____' }}</span> <span class="bold">Email:</span> <span class="linha">{{ $estagio->empresaConcedente->email ?? '________________________' }}</span></p>
+    <p><span class="bold">Responsável Legal:</span> <span class="linha">{{ $estagio->empresaConcedente->responsavel_legal ?? '________________________' }}</span> <span class="bold">CPF:</span> <span class="linha-curta">___.___.___-__</span> <span class="bold">RG nº:</span> <span class="linha-curta">_____________</span></p>
+
+    <p class="bold mt-2 mb-1">ESTAGIÁRIO</p>
+    <p><span class="bold">Nome:</span> <span class="linha">{{ $estagio->estagiario->nome }}</span> <span class="bold">CPF:</span> <span class="linha-curta">{{ $estagio->estagiario->cpf ?? '___.___.___-__' }}</span> <span class="bold">RG nº:</span> <span class="linha-curta">{{ $estagio->estagiario->rg ?? '_____________' }}</span></p>
+    <p><span class="bold">Endereço:</span> <span class="linha">{{ $estagio->estagiario->endereco ?? '________________________' }}</span> <span class="bold">Complemento:</span> <span class="linha-curta">{{ $estagio->estagiario->complemento ?? '____' }}</span> <span class="bold">Bairro:</span> <span class="linha-curta">{{ $estagio->estagiario->bairro ?? '___________' }}</span> <span class="bold">CEP:</span> <span class="linha-curta">{{ $estagio->estagiario->cep ?? '___.___-___' }}</span></p>
+    <p><span class="bold">Cidade:</span> <span class="linha">{{ $estagio->estagiario->cidade ?? '________________________' }}</span> <span class="bold">Estado:</span> <span class="linha-curta">{{ $estagio->estagiario->estado ?? '___' }}</span></p>
+    <p><span class="bold">Telefone:</span> <span class="linha-curta">{{ $estagio->estagiario->telefone ?? '(__) _____-____' }}</span> <span class="bold">Email:</span> <span class="linha">{{ $estagio->estagiario->email ?? '________________________' }}</span></p>
+    <p><span class="bold">Curso:</span> <span class="linha">{{ $estagio->estagiario->curso }}</span> <span class="bold">Semestre/Período/Série:</span> <span class="linha-curta">{{ $estagio->estagiario->semestre_atual ?? $estagio->estagiario->periodo ?? '___' }}</span> <span class="bold">Matrícula nº:</span> <span class="linha-curta">{{ $estagio->estagiario->matricula ?? '___' }}</span></p>
+    <p><span class="bold">Data de Início:</span> <span class="linha-curta">{{ $estagio->data_inicio->format('d/m/Y') }}</span> <span class="bold">Data de Conclusão:</span> <span class="linha-curta">{{ $estagio->data_fim->format('d/m/Y') }}</span></p>
+
+    <p class="bold mt-2 mb-1">AGENTE DE INTEGRAÇÃO - ALENCASTRO CONSULTORIA</p>
+    <p><span class="bold">Razão Social:</span> DIOGO LUÍS ALENCASTRO DA SILVA-ME <span class="linha"></span> <span class="bold">CNPJ:</span> 18.785.582/0001-24</p>
+    <p><span class="bold">Endereço:</span> Av. Mauro Ramos, 1722 Aptº 92 - Bloco 08 <span class="bold">Bairro:</span> Centro <span class="bold">CEP:</span> 88020-304</p>
+    <p><span class="bold">Cidade:</span> Florianópolis <span class="bold">Estado:</span> Santa Catarina</p>
+    <p><span class="bold">Telefone:</span> (48) 99203-9611 <span class="bold">Email:</span> admin@rotacerta-aprendizagem.com.br</p>
     <p><span class="bold">Responsável Legal:</span> Diogo Luís Alencastro da Silva</p>
 
     <p class="mb-2 mt-2">Conforme as cláusulas e condições seguintes:</p>
@@ -46,7 +89,7 @@
     <p class="mt-2"><span class="bold">PARÁGRAFO SEGUNDO:</span> A INSTITUIÇÃO DE ENSINO declara que as atividades acima relacionadas são compatíveis com a programação curricular do curso de {{ $estagio->estagiario->curso }}, para o qual há previsão de estágio curricular.</p>
 
     <p class="bold mt-2">CLÁUSULA TERCEIRA:</p>
-    <p>Atuará como Supervisora de Estágio na Unidade Concedente: {{ $estagio->empresaConcedente->supervisor_estagio_nome ?? '___' }}, {{ $estagio->empresaConcedente->supervisor_estagio_cargo ?? 'Cargo' }}, {{ $estagio->empresaConcedente->supervisor_estagio_formacao ?? 'formação' }}, CPF: {{ $estagio->empresaConcedente->supervisor_estagio_cpf ?? '___' }}, e-mail: {{ $estagio->empresaConcedente->supervisor_estagio_email ?? '___' }}, telefone: {{ $estagio->empresaConcedente->supervisor_estagio_telefone ?? '___' }}.</p>
+    <p>Atuará como Supervisor(a) de Estágio na Unidade Concedente: {{ $estagio->empresaConcedente->supervisor_estagio_nome ?? '___' }}, {{ $estagio->empresaConcedente->supervisor_estagio_cargo ?? 'Cargo' }}, {{ $estagio->empresaConcedente->supervisor_estagio_formacao ?? 'formação' }}, CPF: {{ $estagio->empresaConcedente->supervisor_estagio_cpf ?? '___' }}, e-mail: {{ $estagio->empresaConcedente->supervisor_estagio_email ?? '___' }}, telefone: {{ $estagio->empresaConcedente->supervisor_estagio_telefone ?? '___' }}.</p>
 
     <p class="bold mt-2">CLÁUSULA QUARTA:</p>
     <p>A duração do estágio será de {{ $estagio->data_inicio->diffInMonths($estagio->data_fim) }} ({{ $estagio->data_inicio->diffInMonths($estagio->data_fim) }}) meses, com início em {{ $estagio->data_inicio->format('d/m/Y') }} e término previsto em {{ $estagio->data_fim->format('d/m/Y') }}.</p>
@@ -54,7 +97,7 @@
 
     <p class="bold mt-2">CLÁUSULA QUINTA:</p>
     <p>O estágio terá jornada de até {{ $estagio->carga_horaria_semanal }} ({{ $estagio->carga_horaria_semanal }}) horas semanais, de segunda a sexta-feira, no horário das {{ $estagio->horario_inicio ?? '08' }}h{{ $estagio->horario_inicio_minuto ?? '00' }} às {{ $estagio->horario_fim ?? '14' }}h{{ $estagio->horario_fim_minuto ?? '00' }}, compreendendo {{ $estagio->carga_horaria_semanal / 5 }} horas diárias.</p>
-    <p><span class="bold">Parágrafo Único:</span> Nos períodos de avaliação de aprendizagem da Instituição de Ensino, comprovados mediante calendário acadêmico, a carga horária será reduzida à metade, conforme determina o § 1º do Art. 10 da Lei nº 11.788/2008.</p>
+    <p><span class="bold">Par��grafo Único:</span> Nos períodos de avaliação de aprendizagem da Instituição de Ensino, comprovados mediante calendário acadêmico, a carga horária será reduzida à metade, conforme determina o § 1º do Art. 10 da Lei nº 11.788/2008.</p>
 
     <p class="bold mt-2">CLÁUSULA SEXTA:</p>
     <p>A UNIDADE CONCEDENTE pagará mensalmente, diretamente à ESTAGIÁRIA, a importância de R$ {{ number_format($estagio->valor_bolsa ?? 0, 2, ',', '.') }} ({{ $estagio->valor_bolsa ? number_format($estagio->valor_bolsa, 2, ',', '.') : '___' }} reais) a título de Bolsa-Auxílio. Este pagamento será efetuado até o quinto dia útil subsequente ao fechamento da folha de frequência da estagiária.</p>
@@ -106,7 +149,10 @@
         <p><span class="bold">ALENCASTRO CONSULTORIA-ESTÁGIOS</span></p>
         <p>Agente de Integração</p>
         <p>Diogo Luís Alencastro da Silva</p>
-        <p>diogo@rotacerta-aprendizagem.com.br</p>
+    </div>
+
+    <div class="footer">
+        <p>www.rotacerta-aprendizagem.com.br | admin@rotacerta-aprendizagem.com.br | (48) 99203-9611</p>
     </div>
 </body>
 </html>
