@@ -97,8 +97,22 @@ class EstagioController extends Controller
         return redirect()->route('estagios.index')->with('success', 'Estágio removido com sucesso.');
     }
 
-    public function gerarDocumento(Estagio $estagio)
+    public function gerarDocumento(Request $request, Estagio $estagio)
     {
+        $tipo = $request->get('tipo', 'tce');
+        $estagio->load(['estagiario', 'empresaConcedente', 'instituicaoEnsino', 'seguradora']);
+
+        $nomeView = 'documentos.tce';
+        $nomeFile = 'TCE_' . $estagio->id . '_' . date('YmdHis');
+
+        $pdf = Pdf::loadView($nomeView, compact('estagio'));
+
+        return $pdf->setPaper('a4')->stream($nomeFile . '.pdf');
+    }
+
+    public function baixarDocumento(Request $request, Estagio $estagio)
+    {
+        $tipo = $request->get('tipo', 'tce');
         $estagio->load(['estagiario', 'empresaConcedente', 'instituicaoEnsino', 'seguradora']);
 
         $pdf = Pdf::loadView('documentos.tce', compact('estagio'));
@@ -116,6 +130,6 @@ class EstagioController extends Controller
             'status' => 'gerado',
         ]);
 
-        return redirect()->route('estagios.show', $estagio->id)->with('success', 'Documento TCE gerado com sucesso.');
+        return $pdf->setPaper('a4')->download($nomeArquivo);
     }
 }

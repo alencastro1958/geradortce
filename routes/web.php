@@ -34,6 +34,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('estagios', \App\Http\Controllers\EstagioController::class);
     Route::get('estagios/{estagio}/gerar-documento', [\App\Http\Controllers\EstagioController::class, 'gerarDocumento'])->name('estagios.gerar-documento');
+    Route::get('estagios/{estagio}/baixar-documento', [\App\Http\Controllers\EstagioController::class, 'baixarDocumento'])->name('estagios.baixar-documento');
 
     // API de Consulta CNPJ
     Route::get('/api/consultar-cnpj', [\App\Http\Controllers\CnpjController::class, 'consultar'])->name('api.consultar-cnpj');
