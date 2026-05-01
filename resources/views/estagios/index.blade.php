@@ -86,6 +86,30 @@
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3v10a3 3 0 003-3v-1M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-6-6l6-6m0 0l6 6m-6-6v12a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2" />
                                                     </svg>
                                                 </a>
+                                                <!-- Certificado -->
+                                                <a href="{{ route('estagios.gerar-documento', $estagio->id) }}?tipo=certificado" target="_blank" class="p-2 text-yellow-600 hover:bg-yellow-50 rounded-lg transition-all" title="Certificado">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                    </svg>
+                                                </a>
+                                                <!-- Relatório -->
+                                                <a href="{{ route('estagios.gerar-documento', $estagio->id) }}?tipo=relatorio" target="_blank" class="p-2 text-orange-600 hover:bg-orange-50 rounded-lg transition-all" title="Relatório">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                                    </svg>
+                                                </a>
+                                                <!-- Convênio IES -->
+                                                <a href="{{ route('estagios.gerar-documento', $estagio->id) }}?tipo=convenio_ies" target="_blank" class="p-2 text-purple-600 hover:bg-purple-50 rounded-lg transition-all" title="Convênio IES">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                                                    </svg>
+                                                </a>
+                                                <!-- Convênio Empresa -->
+                                                <a href="{{ route('estagios.gerar-documento', $estagio->id) }}?tipo=convenio_empresa" target="_blank" class="p-2 text-pink-600 hover:bg-pink-50 rounded-lg transition-all" title="Convênio Empresa">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                                                    </svg>
+                                                </a>
                                                 <a href="{{ route('estagios.edit', $estagio->id) }}" class="p-2 text-indigo-600 hover:bg-indigo-50 rounded-lg transition-all" title="Editar">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />

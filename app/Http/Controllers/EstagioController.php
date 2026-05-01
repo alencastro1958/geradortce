@@ -102,9 +102,18 @@ class EstagioController extends Controller
         $tipo = $request->get('tipo', 'tce');
         $estagio->load(['estagiario', 'empresaConcedente', 'instituicaoEnsino', 'seguradora']);
 
-        $pdf = Pdf::loadView('documentos.tce', compact('estagio'));
+        $views = [
+            'tce' => 'documentos.tce',
+            'certificado' => 'documentos.certificado',
+            'relatorio' => 'documentos.relatorio',
+            'convenio_ies' => 'documentos.convenio_ies',
+            'convenio_empresa' => 'documentos.convenio_empresa',
+        ];
 
-        $nomeFile = 'TCE_' . $estagio->id . '_' . date('YmdHis');
+        $nomeView = $views[$tipo] ?? 'documentos.tce';
+        $nomeFile = strtoupper($tipo) . '_' . $estagio->id . '_' . date('YmdHis');
+
+        $pdf = Pdf::loadView($nomeView, compact('estagio'));
 
         return $pdf->setPaper('a4')->stream($nomeFile . '.pdf');
     }
@@ -114,16 +123,25 @@ class EstagioController extends Controller
         $tipo = $request->get('tipo', 'tce');
         $estagio->load(['estagiario', 'empresaConcedente', 'instituicaoEnsino', 'seguradora']);
 
-        $pdf = Pdf::loadView('documentos.tce', compact('estagio'));
+        $views = [
+            'tce' => 'documentos.tce',
+            'certificado' => 'documentos.certificado',
+            'relatorio' => 'documentos.relatorio',
+            'convenio_ies' => 'documentos.convenio_ies',
+            'convenio_empresa' => 'documentos.convenio_empresa',
+        ];
 
-        $nomeArquivo = 'TCE_' . $estagio->estagiario->cpf . '_' . date('YmdHis') . '.pdf';
-        $caminho = 'documentos/' . $nomeArquivo;
+        $nomeView = $views[$tipo] ?? 'documentos.tce';
+        $nomeArquivo = strtoupper($tipo) . '_' . $estagio->estagiario->cpf . '_' . date('YmdHis') . '.pdf';
         
+        $pdf = Pdf::loadView($nomeView, compact('estagio'));
+
+        $caminho = 'documentos/' . $nomeArquivo;
         Storage::put($caminho, $pdf->output());
 
         Documento::create([
             'estagio_id' => $estagio->id,
-            'tipo' => 'TCE',
+            'tipo' => strtoupper($tipo),
             'nome_arquivo' => $nomeArquivo,
             'caminho_arquivo' => $caminho,
             'status' => 'gerado',

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Relatório Semestral de Estágio</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Times New Roman', Times, serif; font-size: 12pt; line-height: 1.6; padding: 30px; }
+        .text-center { text-align: center; }
+        .text-right { text-align: right; }
+        .bold { font-weight: bold; }
+        .underline { text-decoration: underline; }
+        .mb-1 { margin-bottom: 15px; }
+        .mb-2 { margin-bottom: 25px; }
+        .mb-3 { margin-bottom: 35px; }
+        .mt-2 { margin-top: 20px; }
+        p { margin-bottom: 8px; }
+    </style>
+</head>
+<body>
+    <div class="text-center mb-2">
+        <h1 class="bold">RELATÓRIO SEMESTRAL DE ESTÁGIO</h1>
+    </div>
+
+    <div class="mb-2">
+        <p><span class="bold">1. DADOS DO ESTAGIÁRIO:</span></p>
+        <p>Nome: {{ $estagio->estagiario->nome }}</p>
+        <p>CPF: {{ $estagio->estagiario->cpf }} | RG: {{ $estagio->estagiario->rg }}</p>
+        <p>Curso: {{ $estagio->estagiario->curso }}</p>
+        <p>Período: {{ $estagio->estagiario->periodo ?? 'Não especificado' }}</p>
+    </div>
+
+    <div class="mb-2">
+        <p><span class="bold">2. DADOS DA EMPRESA:</span></p>
+        <p>Razão Social: {{ $estagio->empresaConcedente->razao_social }}</p>
+        <p>CNPJ: {{ $estagio->empresaConcedente->cnpj }}</p>
+        <p>Endereço: {{ $estagio->empresaConcedente->endereco }}, {{ $estagio->empresaConcedente->bairro }} - {{ $estagio->empresaConcedente->cidade }}/{{ $estagio->empresaConcedente->estado }}</p>
+        <p>Supervisor: {{ $estagio->empresaConcedente->supervisor_estagio_nome ?? 'Não informado' }}</p>
+    </div>
+
+    <div class="mb-2">
+        <p><span class="bold">3. PERÍODO DO RELATÓRIO:</span></p>
+        <p>Data de Início do Estágio: {{ $estagio->data_inicio->format('d/m/Y') }}</p>
+        <p>Data de Término: {{ $estagio->data_fim->format('d/m/Y') }}</p>
+    </div>
+
+    <div class="mb-2">
+        <p><span class="bold">4. ATIVIDADES DESENVOLVIDAS NESTE PERÍODO:</span></p>
+        <p>{{ $estagio->atividades ?? 'Atividades compatíveis com a área de formação.' }}</p>
+    </div>
+
+    <div class="mb-2">
+        <p><span class="bold">5. AVALIAÇÃO DO DESEMPENHO:</span></p>
+        <p>( ) Excelente ( ) Bom ( ) Regular ( ) Insuficiente</p>
+    </div>
+
+    <div class="mb-2">
+        <p><span class="bold">6. OBSERVAÇÕES:</span></p>
+        <p>_______________________________________________________________</p>
+    </div>
+
+    <div class="mb-3 mt-2">
+        <p class="text-right">{{ $estagio->empresaConcedente->cidade }}, {{ now()->format('d') }} de {{ now()->format('M') }} de {{ now()->format('Y') }}</p>
+    </div>
+
+    <div class="mb-1 text-center">
+        <p class="underline">&nbsp;</p>
+        <p>Assinatura do Supervisor de Estágio</p>
+    </div>
+</body>
+</html>
