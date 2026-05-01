@@ -26,7 +26,11 @@
 </head>
 <body>
     <div class="text-center mb-2">
+        @if(file_exists(public_path('images/Alencastro Estagios.png')))
         <img src="{{ public_path('images/Alencastro Estagios.png') }}" alt="Alencastro Estágios" style="max-width: 200px;">
+        @else
+        <p class="bold uppercase" style="font-size: 14pt;">ALENCASTRO CONSULTORIA-ESTÁGIOS</p>
+        @endif
         <p style="font-size: 9pt;">www.alencastroestagios.com.br | diogo@alencastroestagios.com.br</p>
     </div>
 
