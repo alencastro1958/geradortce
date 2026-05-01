@@ -26,8 +26,7 @@
 </head>
 <body>
     <div class="text-center mb-2">
-        <p class="bold uppercase" style="font-size: 14pt;">ALENCASTRO CONSULTORIA-ESTÁGIOS</p>
-        <p style="font-size: 10pt;">Agência de Integração de Estágios</p>
+        <img src="{{ asset('images/alencastro-estagios.png') }}" alt="Alencastro Estágios" style="max-width: 200px; max-height: 80px;">
         <p style="font-size: 9pt;">www.alencastroestagios.com.br | diogo@alencastroestagios.com.br</p>
     </div>
 
@@ -79,6 +78,7 @@
 
     <p class="bold mb-1 mt-3">AGENTE DE INTEGRAÇÃO - ALENCASTRO CONSULTORIA</p>
     <p><span class="bold">Razão Social:</span> DIOGO LUÍS ALENCASTRO DA SILVA-ME <span class="linha-curta"></span> <span class="bold">CNPJ:</span> 18.785.582/0001-24</p>
+    <p><img src="{{ asset('images/logo-pequena.png') }}" alt="Alencastro" style="max-height: 30px; vertical-align: middle;"></p>
     <p><span class="bold">Endereço:</span> Av. Mauro Ramos, 1722 Aptº 92 - Bloco 08 <span class="linha-curta"></span> <span class="bold">Bairro:</span> Centro <span class="linha-curta"></span> <span class="bold">CEP:</span> 88020-304</p>
     <p><span class="bold">Cidade:</span> Florianópolis <span class="linha-curta"></span> <span class="bold">Estado:</span> Santa Catarina</p>
     <p><span class="bold">Telefone:</span> (48) 99111-8686 <span class="linha-curta"></span> <span class="bold">Email:</span> diogo@alencastroconsultoria.com.br</p>
