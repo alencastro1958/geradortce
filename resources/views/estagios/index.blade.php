@@ -48,7 +48,7 @@
                                         </td>
                                         <td class="px-6 py-4">
                                             <div class="text-sm text-gray-900 font-medium">{{ $estagio->empresaConcedente->nome_fantasia }}</div>
-                                            <div class="text-xs text-gray-500 italic">{{ $estagio->instituicaoEnsino->nome }}</div>
+                                            <div class="text-xs text-gray-500 italic">{{ $estagio->instituicaoEnsino->nome_fantasia ?? $estagio->instituicaoEnsino->razao_social }}</div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-600">

@@ -55,7 +55,7 @@
                                     <option value="">Selecione a instituição</option>
                                     @foreach($instituicoes as $instituicao)
                                         <option value="{{ $instituicao->id }}" {{ old('instituicao_ensino_id') == $instituicao->id ? 'selected' : '' }}>
-                                            {{ $instituicao->nome }}
+                                            {{ $instituicao->nome_fantasia ?? $instituicao->razao_social }}
                                         </option>
                                     @endforeach
                                 </select>

@@ -7,7 +7,7 @@
 
     <div style="text-align: justify; font-size: 16px; line-height: 2; margin: 40px;">
         Certificamos para os devidos fins que o(a) estudante <strong>{{ $estagio->estagiario->nome }}</strong>, 
-        regularmente matriculado(a) no curso de {{ $estagio->estagiario->curso }} da <strong>{{ $estagio->instituicaoEnsino->nome }}</strong>, 
+        regularmente matriculado(a) no curso de {{ $estagio->estagiario->curso }} da <strong>{{ $estagio->instituicaoEnsino->nome_fantasia ?? $estagio->instituicaoEnsino->razao_social }}</strong>, 
         realizou estágio profissional na empresa <strong>{{ $estagio->empresaConcedente->razao_social }}</strong>, 
         no período de {{ \Carbon\Carbon::parse($estagio->data_inicio)->format('d/m/Y') }} a {{ \Carbon\Carbon::parse($estagio->data_fim)->format('d/m/Y') }}, 
         com carga horária total aproximada de {{ $estagio->carga_horaria_semanal * \Carbon\Carbon::parse($estagio->data_inicio)->diffInWeeks(\Carbon\Carbon::parse($estagio->data_fim)) }} horas.

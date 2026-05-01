@@ -51,9 +51,10 @@
                             <div>
                                 <label for="instituicao_ensino_id" class="block text-sm font-bold text-gray-700 mb-2">Instituição de Ensino *</label>
                                 <select name="instituicao_ensino_id" id="instituicao_ensino_id" required class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow">
+                                    <option value="">Selecione a instituição</option>
                                     @foreach($instituicoes as $instituicao)
                                         <option value="{{ $instituicao->id }}" {{ old('instituicao_ensino_id', $estagio->instituicao_ensino_id) == $instituicao->id ? 'selected' : '' }}>
-                                            {{ $instituicao->nome }}
+                                            {{ $instituicao->nome_fantasia ?? $instituicao->razao_social }}
                                         </option>
                                     @endforeach
                                 </select>

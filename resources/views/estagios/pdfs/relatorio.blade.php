@@ -46,7 +46,7 @@
             <tr>
                 <td colspan="2" style="padding-top: 50px;">
                     <div class="signature-line"></div><br>
-                    {{ $estagio->instituicaoEnsino->nome }}<br>
+                    {{ $estagio->instituicaoEnsino->nome_fantasia ?? $estagio->instituicaoEnsino->razao_social }}<br>
                     (Instituição de Ensino)
                 </td>
             </tr>

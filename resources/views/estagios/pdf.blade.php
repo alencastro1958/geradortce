@@ -153,7 +153,7 @@
         <table class="data-table">
             <tr>
                 <td class="label">Instituição:</td>
-                <td>{{ $estagio->instituicaoEnsino->nome }}</td>
+                <td>{{ $estagio->instituicaoEnsino->nome_fantasia ?? $estagio->instituicaoEnsino->razao_social }}</td>
             </tr>
             <tr>
                 <td class="label">CNPJ:</td>
@@ -216,7 +216,7 @@
             (ESTAGIÁRIO)
         </div>
         <div class="signature-box">
-            {{ $estagio->instituicaoEnsino->nome }}<br>
+            {{ $estagio->instituicaoEnsino->nome_fantasia ?? $estagio->instituicaoEnsino->razao_social }}<br>
             (INSTITUIÇÃO DE ENSINO)
         </div>
         @if($estagio->estagiario->responsavel_legal_nome)

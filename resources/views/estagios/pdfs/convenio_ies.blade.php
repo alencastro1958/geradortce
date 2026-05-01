@@ -28,7 +28,7 @@
     <table>
         <tr>
             <td class="label">Razão Social:</td>
-            <td>{{ $estagio->instituicaoEnsino->nome }}</td>
+            <td>{{ $estagio->instituicaoEnsino->nome_fantasia ?? $estagio->instituicaoEnsino->razao_social }}</td>
         </tr>
         <tr>
             <td class="label">CNPJ:</td>
@@ -63,7 +63,7 @@
                 </td>
                 <td>
                     <div class="signature-line"></div><br>
-                    {{ $estagio->instituicaoEnsino->nome }}<br>
+                    {{ $estagio->instituicaoEnsino->nome_fantasia ?? $estagio->instituicaoEnsino->razao_social }}<br>
                     (Instituição de Ensino)
                 </td>
             </tr>
