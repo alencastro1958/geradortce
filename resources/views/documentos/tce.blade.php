@@ -4,23 +4,28 @@
     <meta charset="UTF-8">
     <title>Termo de Compromisso de Estágio - TCE</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
         @page {
             size: A4;
-            margin: 4.0cm 2.5cm 1.0cm 1.5cm;
-            /* Margens aplicadas: E=1,5cm | D=2,5cm | T=4,0cm | B=1,0cm | Papel: A4 */
-            margin-header: 0;
-            margin-footer: 0;
+            sheet-size: A4;
+        }
+        html {
+            margin-top: 4.0cm;
+            margin-bottom: 1.0cm;
+            margin-left: 1.5cm;
+            margin-right: 2.5cm;
         }
         body {
             font-family: Arial, sans-serif;
             font-size: 10pt;
             line-height: 1.4;
+            text-align: justify;
         }
-        p { margin-bottom: 4px; text-align: justify; }
+        p {
+            margin-bottom: 4px;
+            text-align: justify;
+        }
         .text-center { text-align: center; }
         .text-right { text-align: right; }
-        .text-left { text-align: left; }
         .bold { font-weight: bold; }
         .mb-0 { margin-bottom: 0; }
         .mb-1 { margin-bottom: 6px; }
@@ -36,40 +41,19 @@
         .assinatura-centro { width: 100%; text-align: center; margin-top: 30px; }
         .clear { clear: both; }
         .uppercase { text-transform: uppercase; }
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4.0cm;
-            text-align: center;
-            padding-top: 0.5cm;
-        }
-        footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 1.0cm;
-            text-align: center;
-            font-size: 8pt;
-            border-top: 1px solid #ccc;
-            padding-top: 5px;
-            line-height: 1.0cm;
-        }
     </style>
 </head>
 <body>
-    <header>
+    <div class="text-center mb-2">
         @if(file_exists(public_path('images/AlencastroEstagios.png')))
         <img src="{{ public_path('images/AlencastroEstagios.png') }}" alt="Alencastro Estágios" style="max-width: 180px;">
         @else
         <p class="bold uppercase" style="font-size: 14pt;">ALENCASTRO CONSULTORIA-ESTÁGIOS</p>
         @endif
         <p class="bold uppercase mt-1">Termo de Compromisso de Estágio - TCE</p>
-    </header>
+    </div>
 
-    <p class="text-justify mb-2">(De acordo com o disposto da lei n.º 6.494/77 e no respectivo decreto de regulamentação n.º 87.497/82)</p>
+    <p class="text-justify mb-2">(De acordo com o disposto da lei n.º 6.494/77 e no respective decreto de regulamentação n.º 87.497/82)</p>
     <p class="text-center mb-2">(Condições de Realização de Estágio)</p>
 
     <p class="text-justify mb-2">TERMO DE COMPROMISSO DE ESTÁGIO, instrumento jurídico cujo objetivo é formalizar as condições para realização de estágio, definido como ato educativo escolar supervisionado, desenvolvido no ambiente de trabalho, que visa a preparação para o trabalho produtivo do estudante, nos termos da Lei nº 11.788, de 25/09/2008, (Publicada no D.O.U. de 26.09.2008) que entre si celebram as partes a seguir nomeadas:</p>
@@ -108,10 +92,10 @@
     <p class="mb-2 mt-2">Conforme as cláusulas e condições seguintes:</p>
 
     <p class="bold">CLÁUSULA PRIMEIRA:</p>
-    <p class="text-justify">A UNIDADE CONCEDENTE, neste ato, admite o(a) ESTAGIÁRIO(A) acima qualificado(a), observando as cláusulas do Termo de Convênio firmado com o AGENTE DE INTEGRAÇÃO, a legislação vigente (Lei nº 11.788/2008) e demais disposições estabelecidas pela INSTITUIÇÃO DE ENSINO.</p>
+    <p>A UNIDADE CONCEDENTE, neste ato, admite o(a) ESTAGIÁRIO(A) acima qualificado(a), observando as cláusulas do Termo de Convênio firmado com o AGENTE DE INTEGRAÇÃO, a legislação vigente (Lei nº 11.788/2008) e demais disposições estabelecidas pela INSTITUIÇÃO DE ENSINO.</p>
 
     <p class="bold mt-2">CLÁUSULA SEGUNDA:</p>
-    <p class="text-justify">O estágio de estudantes da INSTITUIÇÃO DE ENSINO junto à UNIDADE CONCEDENTE, de caráter obrigatório ou não, deve propiciar a complementação do ensino e da aprendizagem profissional, especialmente na(s) área(s) do(s) respective(s) curso(s), visando à experiência prática complementar, em consonância com o currículo e horários escolares, conforme art. 1º da Lei nº 11.788/2008.</p>
+    <p>O estágio de estudantes da INSTITUIÇÃO DE ENSINO junto à UNIDADE CONCEDENTE, de caráter obrigatório ou não, deve propiciar a complementação do ensino e da aprendizagem profissional, especialmente na(s) área(s) do(s) respective(s) curso(s), visando à experiência prática complementar, em consonância com o currículo e horários escolares, conforme art. 1º da Lei nº 11.788/2008.</p>
     <p class="mt-2"><span class="bold">PARÁGRAFO PRIMEIRO:</span> O(A) ESTAGIÁRIO(A) desenvolverá as seguintes atividades, com foco pedagógico e educacional: O propósito do estágio é proporcionar à discente sua inserção na área de: {{ $estagio->estagiario->curso }}</p>
     <p>Descrição das atividades: {{ $estagio->atividades ?? 'À combinar com o supervisor de estágio' }}</p>
     <p class="mt-2"><span class="bold">PARÁGRAFO SEGUNDO:</span> A INSTITUIÇÃO DE ENSINO declara que as atividades acima relacionadas são compatíveis com a programação curricular do curso de {{ $estagio->estagiario->curso }}, para o qual há previsão de estágio curricular.</p>
@@ -137,10 +121,10 @@
     <p>No período de vigência do presente TCE, o(a) ESTAGIÁRIO(A) terá cobertura de Seguro de Acidentes Pessoais, contratado pela Unidade Concedente junto à Seguradora {{ $estagio->seguradora->nome ?? '___' }}, Apólice nº {{ $estagio->apolice_numero ?? $estagio->seguradora->apolice_numero ?? '___' }} ({{ $estagio->seguradora->cnpj ?? '___' }}), com capital segurado de R$ {{ number_format($estagio->seguradora->capital_segurado ?? $estagio->seguradora->valor_cobertura ?? 0, 2, ',', '.') }}, para Morte Acidental ou Invalidez Permanente Total ou Parcial por Acidente, nos termos do Inciso IV do Art. 9º da Lei nº 11.788/2008.</p>
 
     <p class="bold mt-2">CLÁUSULA OITAVA:</p>
-    <p>São obrigações da UNIDADE CONCEDENTE: a) Elaborar programa de estágio compatível com o currículo escolar; b) Ofertar instalações adequadas para atividades de aprendizagem social, profissional e cultural; c) Indicar funcionário de seu quadro de pessoal, com formação ou experiência profissional na área de conhecimento do curso da estagiária, para orientar e supervisionar até 10 (dez) estagiários simultaneamente; d) Fornecer subsídios à INSTITUIÇÃO DE ENSINO para acompanhamento, coordenação e avaliação do estágio; e) Elaborar relatório de estágio semestralmente, disponibilizado pelo AGENTE DE INTEGRAÇÃO, nos prazos e padrões estabelecidos; f) Entregar, por ocasião do desligamento, termo de realização de estágio com indication resumida das atividades, períodos e avaliação de desempenho; g) Reduzir a carga horária do estágio à metade nos períodos de avaliação de aprendizagem da Instituição de Ensino; h) Conceder recesso conforme disposto na Cláusula Sexta, Parágrafo Terceiro; i) Aplicar ao(à) estagiário(a) a legislação de saúde e segurança do trabalho; j) Informar todas as normas de Segurança do Trabalho, fornecendo EPIs/EPCs quando necessário, vedando a exposição a riscos sem a devida proteção.</p>
+    <p>São obrigações da UNIDADE CONCEDENTE: a) Elaborar programa de estágio compatível com o currículo escolar; b) Ofertar instalações adequadas para atividades de aprendizagem social, profissional e cultural; c) Indicar funcionário de seu quadro de pessoal, com formação ou experiência profissional na área de conhecimento do curso da estagiária, para orientar e supervisionar até 10 (dez) estagiários simultaneamente; d) Fornecer subsídios à INSTITUIÇÃO DE ENSINO para acompanhamento, coordenação e avaliação do estágio; e) Elaborar relatório de estágio semestralmente, disponibilizado pelo AGENTE DE INTEGRAÇÃO, nos prazos e padrões estabelecidos; f) Entregar, por ocasião do desligamento, termo de realização de estágio com indicação resumida das atividades, períodos e avaliação de desempenho; g) Reduzir a carga horária do estágio à metade nos períodos de avaliação de aprendizagem da Instituição de Ensino; h) Conceder recesso conforme disposto na Cláusula Sexta, Parágrafo Terceiro; i) Aplicar ao(à) estagiário(a) a legislação de saúde e segurança do trabalho; j) Informar todas as normas de Segurança do Trabalho, fornecendo EPIs/EPCs quando necessário, vedando a exposição a riscos sem a devida proteção.</p>
 
     <p class="bold mt-2">CLÁUSULA NONA:</p>
-    <p>O(A) ESTAGIÁRIO(A) obriga-se a: a) Cumprir com empenho a programação de estágio; b) Conhecer e cumprir as normas da UNIDADE CONCEDENTE, salvaguardando o sigilo de informações; c) Elaborar relatório de estágio semestralmente, conforme modelo do AGENTE DE INTEGRAÇÃO, obtendo a assinatura do supervisor e entregando-o nos canais indicados; d) Comunicar imediatamente ao AGENTE DE INTEGRAÇÃO e à UNIDADE CONCEDENTE casos de trancamento de matrícula, desistência, reprovação ou transferência institucional; e) Cumprir as normas de Segurança do Trabalho, utilizando os equipamentos de proteção individual/coletiva fornecidos.</p>
+    <p>O(A) ESTAGIÁRIO(A) obriga-se a: a) Cumprir com enimho a programação de estágio; b) Conhecer e cumprir as normas da UNIDADE CONCEDENTE, salvaguardando o sigilo de informações; c) Elaborar relatório de estágio semestralmente, conforme modelo do AGENTE DE INTEGRAÇÃO, obtendo a assinatura do supervisor e entregue-o nos canais indicadas; d) Comunicar imediatamente ao AGENTE DE INTEGRAÇÃO e à UNIDADE CONCEDENTE casos de trancamento de matrícula, desistência, reprovação ou transferência institucional; e) Cumprir as normas de Segurança do Trabalho, utilizando os equipamentos de proteção individual/coletiva fornecidos.</p>
 
     <p class="bold mt-2">CLÁUSULA DÉCIMA:</p>
     <p>O presente TERMO DE COMPROMISSO DE ESTÁGIO será encerrado: a) Automaticamente ao término do prazo estipulado; b) Por livre manifestação de vontade da UNIDADE CONCEDENTE ou do(a) ESTAGIÁRIO(A), mediante aviso prévio por escrito de, no mínimo, 7 (sete) dias; c) Mediante comprovação de rendimento insatisfatório ou descumprimento das normas disciplinares; d) Ao término do curso, mediante comunicação formal da data de colação de grau/formatura pelo(a) estudante; e) Por descumprimento das cláusulas deste instrumento ou da legislação pertinente.</p>
@@ -179,8 +163,8 @@
         <p>Diogo Luís Alencastro da Silva</p>
     </div>
 
-    <footer>
+    <div style="position: fixed; bottom: 0.5cm; left: 1.5cm; right: 2.5cm; text-align: center; font-size: 8pt; border-top: 1px solid #ccc; padding-top: 5px;">
         <p>www.rotacerta-aprendizagem.com.br | admin@rotacerta-aprendizagem.com.br | (48) 99203-9611</p>
-    </footer>
+    </div>
 </body>
 </html>
