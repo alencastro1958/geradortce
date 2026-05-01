@@ -26,7 +26,7 @@
 </head>
 <body>
     <div class="text-center mb-2">
-        <img src="{{ asset('images/Alencastro Estagios.png') }}" alt="Alencastro Estágios" style="max-width: 200px;">
+        <img src="{{ public_path('images/Alencastro Estagios.png') }}" alt="Alencastro Estágios" style="max-width: 200px;">
         <p style="font-size: 9pt;">www.alencastroestagios.com.br | diogo@alencastroestagios.com.br</p>
     </div>
 
