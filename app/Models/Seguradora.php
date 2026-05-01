@@ -13,7 +13,7 @@ class Seguradora extends Model
 
     protected $fillable = [
         'nome', 'cnpj', 'contato_nome', 'telefone', 'email', 'apolice_numero',
-        'valor_cobertura', 'inicio_vigencia', 'fim_vigencia', 'endereco', 'bairro', 'cidade', 'estado', 'cep'
+        'valor_cobertura', 'capital_segurado', 'inicio_vigencia', 'fim_vigencia', 'endereco', 'bairro', 'cidade', 'estado', 'cep'
     ];
 
     protected function casts(): array
