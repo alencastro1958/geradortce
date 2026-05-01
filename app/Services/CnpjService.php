@@ -2,100 +2,85 @@
 
 namespace App\Services;
 
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
 class CnpjService
 {
-    protected $token;
-    protected $baseUrl;
+    protected string $token;
+    protected string $baseUrl;
+    protected int $cacheTtl = 86400;
 
     public function __construct()
     {
         $this->token = config('services.cnpj.token');
-        // URL base padrão da API Estagee para Receita
-        $this->baseUrl = 'https://api.estagee.com.br/receita/cnpj';
+        $this->baseUrl = config('services.cnpj.base_url', 'https://api.estagee.com.br/receita/cnpj');
     }
 
-    public function consultar($cnpj)
+    public function consultar(string $cnpj): array
     {
-        // Remove caracteres não numéricos
         $cnpj = preg_replace('/[^0-9]/', '', $cnpj);
 
-        try {
-            $response = Http::withoutVerifying()
-                ->withHeaders([
-                    'Authorization' => 'Bearer ' . $this->token,
-                    'Accept' => 'application/json',
-                ])
-                ->timeout(10)
-                ->get($this->baseUrl . '/' . $cnpj);
+        $cacheKey = "cnpj:{$cnpj}";
 
-            if ($response->successful()) {
-                return $response->json();
+        return Cache::remember($cacheKey, $this->cacheTtl, function () use ($cnpj) {
+            return $this->fetchFromApis($cnpj);
+        });
+    }
+
+    protected function fetchFromApis(string $cnpj): array
+    {
+        $apis = [
+            'estagee' => [
+                'url' => $this->baseUrl . '/' . $cnpj,
+                'headers' => ['Authorization' => 'Bearer ' . $this->token],
+            ],
+            'minhareceita' => [
+                'url' => 'https://minhareceita.org/' . $cnpj,
+                'headers' => [],
+            ],
+            'brasilapi_v2' => [
+                'url' => 'https://brasilapi.com.br/api/cnpj/v2/' . $cnpj,
+                'headers' => [],
+            ],
+        ];
+
+        foreach ($apis as $api) {
+            try {
+                $response = Http::withoutVerifying()
+                    ->withHeaders($api['headers'])
+                    ->timeout(10)
+                    ->get($api['url']);
+
+                if ($response->successful()) {
+                    return $this->normalizeResponse($response->json());
+                }
+            } catch (\Exception $e) {
+                Log::warning("Falha na API {$api['url']}: " . $e->getMessage());
             }
-
-            // TENTATIVA 3: Minha Receita (Backup ultra-resiliente)
-            $minhaReceitaUrl = 'https://minhareceita.org';
-            $responseMR = Http::withoutVerifying()->timeout(10)->get($minhaReceitaUrl . '/' . $cnpj);
-            if ($responseMR->successful()) {
-                $data = $responseMR->json();
-                return [
-                    'razao_social' => $data['razao_social'] ?? $data['nome'],
-                    'nome_fantasia' => $data['nome_fantasia'] ?? $data['fantasia'] ?? null,
-                    'logradouro' => $data['logradouro'],
-                    'numero' => $data['numero'],
-                    'bairro' => $data['bairro'],
-                    'cidade' => $data['municipio'],
-                    'estado' => $data['uf'],
-                    'cep' => $data['cep'],
-                ];
-            }
-
-            // TENTATIVA 4: BrasilAPI v2
-            $brasilApiV2 = 'https://brasilapi.com.br/api/cnpj/v2';
-            $responseV2 = Http::withoutVerifying()
-                ->timeout(10)
-                ->get($brasilApiV2 . '/' . $cnpj);
-
-            if ($responseV2->successful()) {
-                $data = $responseV2->json();
-                return [
-                    'razao_social' => $data['razao_social'] ?? $data['nome'],
-                    'nome_fantasia' => $data['nome_fantasia'] ?? $data['fantasia'] ?? null,
-                    'logradouro' => $data['logradouro'],
-                    'numero' => $data['numero'],
-                    'bairro' => $data['bairro'],
-                    'cidade' => $data['municipio'],
-                    'estado' => $data['uf'],
-                    'cep' => $data['cep'],
-                ];
-            }
-
-            // Tenta fallback com BrasilAPI v1
-            $brasilApiUrl = 'https://brasilapi.com.br/api/cnpj/v1';
-            $responseBrasil = Http::withoutVerifying()
-                ->timeout(10)
-                ->get($brasilApiUrl . '/' . $cnpj);
-
-            if ($responseBrasil->successful()) {
-                $data = $responseBrasil->json();
-                return [
-                    'razao_social' => $data['razao_social'] ?? $data['nome'],
-                    'nome_fantasia' => $data['nome_fantasia'] ?? $data['fantasia'] ?? null,
-                    'logradouro' => $data['logradouro'],
-                    'numero' => $data['numero'],
-                    'bairro' => $data['bairro'],
-                    'cidade' => $data['municipio'],
-                    'estado' => $data['uf'],
-                    'cep' => $data['cep'],
-                ];
-            }
-
-            return ['error' => 'Dados não encontrados. Por favor, preencha manualmente.'];
-        } catch (\Exception $e) {
-            Log::error('Falha de conexão com APIs de CNPJ: ' . $e->getMessage());
-            return ['error' => 'Serviço de busca indisponível no momento. Preencha manualmente.'];
         }
+
+        return ['error' => 'Dados não encontrados. Por favor, preencha manualmente.'];
+    }
+
+    protected function normalizeResponse(array $data): array
+    {
+        return [
+            'razao_social' => $data['razao_social'] ?? $data['nome'] ?? null,
+            'nome_fantasia' => $data['nome_fantasia'] ?? $data['fantasia'] ?? null,
+            'logradouro' => $data['logradouro'] ?? null,
+            'numero' => $data['numero'] ?? null,
+            'bairro' => $data['bairro'] ?? null,
+            'cidade' => $data['municipio'] ?? null,
+            'estado' => $data['uf'] ?? null,
+            'cep' => $data['cep'] ?? null,
+        ];
+    }
+
+    public function forget(string $cnpj): void
+    {
+        $cnpj = preg_replace('/[^0-9]/', '', $cnpj);
+        Cache::forget("cnpj:{$cnpj}");
     }
 }

@@ -44,7 +44,7 @@
                                     <tr class="hover:bg-blue-50/30 transition-colors duration-150">
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm font-bold text-gray-900">{{ $estagio->estagiario->nome }}</div>
-                                            <div class="text-xs text-gray-500">{{ $estagio->estagiario->cpf }}</div>
+                                            <div class="text-xs text-gray-500">CPF: {{ substr($estagio->estagiario->cpf, 0, 3) }}.***.***-**</div>
                                         </td>
                                         <td class="px-6 py-4">
                                             <div class="text-sm text-gray-900 font-medium">{{ $estagio->empresaConcedente->nome_fantasia }}</div>
@@ -59,15 +59,16 @@
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             @php
                                                 $statusClasses = [
-                                                    'pendente' => 'bg-yellow-100 text-yellow-800',
-                                                    'ativo' => 'bg-green-100 text-green-800',
-                                                    'concluido' => 'bg-blue-100 text-blue-800',
-                                                    'rescindido' => 'bg-red-100 text-red-800',
-                                                ];
-                                            @endphp
-                                            <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full {{ $statusClasses[$estagio->status] ?? 'bg-gray-100' }}">
-                                                {{ ucfirst($estagio->status) }}
-                                            </span>
+                                                'pendente' => 'bg-yellow-100 text-yellow-800',
+                                                'ativo' => 'bg-green-100 text-green-800',
+                                                'concluido' => 'bg-blue-100 text-blue-800',
+                                                'rescindido' => 'bg-red-100 text-red-800',
+                                            ];
+                                            $statusValue = $estagio->status instanceof \App\Enums\EstagioStatus ? $estagio->status->value : $estagio->status;
+                                        @endphp
+                                        <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full {{ $statusClasses[$statusValue] ?? 'bg-gray-100' }}">
+                                            {{ ucfirst($statusValue) }}
+                                        </span>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                             <div class="flex justify-end gap-2">
