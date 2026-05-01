@@ -12,11 +12,14 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-    Route::resource('instituicoes', \App\Http\Controllers\InstituicaoEnsinoController::class);
+    // Rotas explícitas para Instituições (corrigindo parâmetro)
+    Route::get('/instituicoes', [App\Http\Controllers\InstituicaoEnsinoController::class, 'index'])->name('instituicoes.index');
+    Route::post('/instituicoes', [App\Http\Controllers\InstituicaoEnsinoController::class, 'store'])->name('instituicoes.store');
+    Route::get('/instituicoes/criar', [App\Http\Controllers\InstituicaoEnsinoController::class, 'create'])->name('instituicoes.create');
+    Route::get('/instituicoes/{id}/editar', [App\Http\Controllers\InstituicaoEnsinoController::class, 'edit'])->name('instituicoes.edit');
+    Route::put('/instituicoes/{id}', [App\Http\Controllers\InstituicaoEnsinoController::class, 'update'])->name('instituicoes.update');
+    Route::delete('/instituicoes/{id}', [App\Http\Controllers\InstituicaoEnsinoController::class, 'destroy'])->name('instituicoes.destroy');
+    
     Route::resource('empresas', \App\Http\Controllers\EmpresaConcedenteController::class);
     Route::resource('estagiarios', \App\Http\Controllers\EstagiarioController::class);
     Route::get('seguradoras/{seguradora}/download', [\App\Http\Controllers\SeguradoraController::class, 'download'])->name('seguradoras.download');
