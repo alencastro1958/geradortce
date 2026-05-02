@@ -40,17 +40,10 @@
         .assinatura-centro { width: 100%; text-align: center; margin-top: 30px; }
         .clear { clear: both; }
         .uppercase { text-transform: uppercase; }
-        .logo {
-            position: fixed;
-            top: 2.0cm;
-            left: 1.5cm;
-            right: 2.5cm;
-            text-align: center;
-        }
     </style>
 </head>
 <body>
-    <div class="logo">
+    <div class="text-center mb-2">
         @if(file_exists(public_path('images/AlencastroEstagios.png')))
         <img src="{{ public_path('images/AlencastroEstagios.png') }}" alt="Alencastro Estágios" style="max-width: 220px;">
         @else
@@ -58,7 +51,6 @@
         @endif
     </div>
 
-    <div class="text-center mb-2">
         <p class="bold uppercase mt-1">Termo de Compromisso de Estágio - TCE</p>
     </div>
 
