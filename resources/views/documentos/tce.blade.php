@@ -40,10 +40,28 @@
         .assinatura-centro { width: 100%; text-align: center; margin-top: 30px; }
         .clear { clear: both; }
         .uppercase { text-transform: uppercase; }
+        .page-header {
+            position: fixed;
+            top: 0.5cm;
+            left: 1.5cm;
+            right: 2.5cm;
+            height: 3.0cm;
+            text-align: center;
+        }
+        .page-footer {
+            position: fixed;
+            bottom: 0.3cm;
+            left: 1.5cm;
+            right: 2.5cm;
+            text-align: center;
+            font-size: 8pt;
+            border-top: 1px solid #ccc;
+            padding-top: 3px;
+        }
     </style>
 </head>
 <body>
-    <div class="text-center mb-2">
+    <div class="page-header">
         @if(file_exists(public_path('images/AlencastroEstagios.png')))
         <img src="{{ public_path('images/AlencastroEstagios.png') }}" alt="Alencastro Estágios" style="max-width: 220px;">
         @else
@@ -51,6 +69,7 @@
         @endif
     </div>
 
+    <div class="text-center mb-2">
         <p class="bold uppercase mt-1">Termo de Compromisso de Estágio - TCE</p>
     </div>
 
@@ -164,7 +183,7 @@
         <p>Diogo Luís Alencastro da Silva</p>
     </div>
 
-    <div style="position: fixed; bottom: 0.3cm; left: 1.5cm; right: 2.5cm; text-align: center; font-size: 8pt; border-top: 1px solid #ccc; padding-top: 3px;">
+    <div class="page-footer">
         <p>www.rotacerta-aprendizagem.com.br | admin@rotacerta-aprendizagem.com.br | (48) 99203-9611</p>
     </div>
 </body>
