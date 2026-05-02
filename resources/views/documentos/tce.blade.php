@@ -71,6 +71,13 @@
         .assinaturas-stack .assinatura-centro p {
             margin-bottom: 2px;
         }
+        .assinatura-nome {
+            margin-bottom: 2px;
+        }
+        .assinatura-papel,
+        .assinatura-responsavel {
+            margin-top: 0;
+        }
     </style>
 </head>
 <body>
@@ -270,27 +277,27 @@
     <div class="assinaturas-stack" style="width: 100%; margin: 0 auto;">
     <div class="assinatura-centro mt-3" style="text-align: center;">
         <p class="underline mb-1">&nbsp;</p>
-        <p class="bold">{{ $estagio->empresaConcedente->razao_social }}</p>
-        <p>Unidade Concedente de Estágio</p>
+        <p class="bold assinatura-nome">{{ $estagio->empresaConcedente->razao_social }}</p>
+        <p class="assinatura-papel">Unidade Concedente de Estágio</p>
     </div>
 
     <div class="assinatura-centro mt-3" style="text-align: center;">
         <p class="underline mb-1">&nbsp;</p>
-        <p class="bold">{{ $estagio->instituicaoEnsino->razao_social }}</p>
-        <p>Instituição de Ensino</p>
+        <p class="bold assinatura-nome">{{ $estagio->instituicaoEnsino->razao_social }}</p>
+        <p class="assinatura-papel">Instituição de Ensino</p>
     </div>
 
     <div class="assinatura-centro mt-3" style="text-align: center;">
         <p class="underline mb-1">&nbsp;</p>
-        <p class="bold">{{ $estagio->estagiario->nome }}</p>
-        <p>Estagiário(a)</p>
+        <p class="bold assinatura-nome">{{ $estagio->estagiario->nome }}</p>
+        <p class="assinatura-papel">Estagiário(a)</p>
     </div>
 
     <div class="assinatura-centro mt-3" style="text-align: center;">
         <p class="underline mb-1">&nbsp;</p>
-        <p class="bold">ALENCASTRO CONSULTORIA-ESTÁGIOS</p>
-        <p>Agente de Integração</p>
-        <p>Diogo Luís Alencastro da Silva</p>
+        <p class="bold assinatura-nome">ALENCASTRO CONSULTORIA-ESTÁGIOS</p>
+        <p class="assinatura-papel">Agente de Integração</p>
+        <p class="assinatura-responsavel">Diogo Luís Alencastro da Silva</p>
     </div>
     </div>
 
