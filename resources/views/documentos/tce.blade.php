@@ -255,19 +255,17 @@
 
     <p class="mt-3">{{ $estagio->empresaConcedente->cidade ?? 'Cidade' }}, {{ now()->format('d') }} de {{ now()->translatedFormat('F') }} de {{ now()->format('Y') }}.</p>
 
-    <div class="assinatura" style="text-align: center;">
+    <div class="assinatura-centro mt-3" style="text-align: center;">
         <p class="underline mb-1">&nbsp;</p>
         <p><span class="bold">Unidade Concedente de Estágio</span></p>
         <p>{{ $estagio->empresaConcedente->razao_social }}</p>
     </div>
 
-    <div class="assinatura" style="text-align: center;">
+    <div class="assinatura-centro mt-3" style="text-align: center;">
         <p class="underline mb-1">&nbsp;</p>
         <p><span class="bold">Instituição de Ensino</span></p>
         <p>{{ $estagio->instituicaoEnsino->razao_social }}</p>
     </div>
-
-    <div class="clear"></div>
 
     <div class="assinatura-centro mt-3" style="text-align: center;">
         <p class="underline mb-1">&nbsp;</p>
