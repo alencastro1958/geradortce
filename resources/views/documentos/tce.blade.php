@@ -17,7 +17,7 @@
             font-size: 10pt;
             line-height: 1.4;
             text-align: justify;
-            padding-top: 4.0cm;
+            padding-top: 0;
             padding-bottom: 1.0cm;
         }
         p {
