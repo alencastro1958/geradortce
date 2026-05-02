@@ -24,7 +24,7 @@
         p { margin-bottom: 8px; text-align: justify; }
         .page-header {
             position: fixed;
-            top: 1.5cm;
+            top: -2.5cm;
             left: 1.5cm;
             right: 2.5cm;
             height: 3.0cm;
