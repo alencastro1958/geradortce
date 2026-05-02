@@ -70,9 +70,9 @@
         @endif
     </div>
 
-    <div class="text-center mb-2">
-        <p class="bold uppercase mt-1">Termo de Compromisso de Estágio - TCE</p>
-        <p class="mt-1">(De acordo com o disposto da lei n.º 6.494/77 e no respective decreto de regulamentação n.º 87.497/82)</p>
+    <div class="text-center mb-2" style="width: 100%;">
+        <p class="bold uppercase mt-1 text-center">Termo de Compromisso de Estágio - TCE</p>
+        <p class="mt-1 text-center">(De acordo com o disposto da lei n.º 6.494/77 e no respective decreto de regulamentação n.º 87.497/82)</p>
     </div>
 
     <p class="text-justify mb-2">TERMO DE COMPROMISSO DE ESTÁGIO, instrumento jurídico cujo objetivo é formalizar as condições para realização de estágio, definido como ato educativo escolar supervisionado, desenvolvido no ambiente de trabalho, que visa a preparação para o trabalho produtivo do estudante, nos termos da Lei nº 11.788, de 25/09/2008, (Publicada no D.O.U. de 26.09.2008) que entre si celebram as partes a seguir nomeadas:</p>
