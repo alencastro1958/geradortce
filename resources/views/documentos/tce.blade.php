@@ -62,6 +62,9 @@
         .assinaturas-stack {
             text-align: center;
         }
+        .assinaturas-stack p {
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -258,7 +261,7 @@
 
     <p class="mt-3">{{ $estagio->empresaConcedente->cidade ?? 'Cidade' }}, {{ now()->format('d') }} de {{ now()->translatedFormat('F') }} de {{ now()->format('Y') }}.</p>
 
-    <div class="assinaturas-stack">
+    <div class="assinaturas-stack" style="width: 100%; margin: 0 auto;">
     <div class="assinatura-centro mt-3" style="text-align: center;">
         <p class="underline mb-1">&nbsp;</p>
         <p><span class="bold">Unidade Concedente de Estágio</span></p>
