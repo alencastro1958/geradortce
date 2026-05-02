@@ -77,29 +77,135 @@
 
     <p class="text-justify mb-2">TERMO DE COMPROMISSO DE ESTÁGIO, instrumento jurídico cujo objetivo é formalizar as condições para realização de estágio, definido como ato educativo escolar supervisionado, desenvolvido no ambiente de trabalho, que visa a preparação para o trabalho produtivo do estudante, nos termos da Lei nº 11.788, de 25/09/2008, (Publicada no D.O.U. de 26.09.2008) que entre si celebram as partes a seguir nomeadas:</p>
 
+    @php
+        $instituicao = $estagio->instituicaoEnsino;
+        $empresa = $estagio->empresaConcedente;
+        $estagiario = $estagio->estagiario;
+        $semestre = $estagiario?->semestre_atual ?? $estagiario?->periodo;
+    @endphp
+
     <p class="bold mt-2 mb-1">INSTITUIÇÃO DE ENSINO</p>
-    <p><span class="bold">Razão Social:</span> <span class="linha">{{ $estagio->instituicaoEnsino->razao_social ?? '________________________' }}</span> <span class="bold">CNPJ:</span> <span class="linha-curta">{{ $estagio->instituicaoEnsino->cnpj ?? '____________' }}</span></p>
-    <p><span class="bold">Mantenedora:</span> <span class="linha-media">{{ $estagio->instituicaoEnsino->mantenedora ?? '_________________' }}</span></p>
-    <p><span class="bold">Endereço:</span> <span class="linha">{{ $estagio->instituicaoEnsino->endereco ?? '________________________' }}</span> <span class="bold">Complemento:</span> <span class="linha-curta">{{ $estagio->instituicaoEnsino->complemento ?? '____' }}</span> <span class="bold">Bairro:</span> <span class="linha-curta">{{ $estagio->instituicaoEnsino->bairro ?? '___________' }}</span> <span class="bold">CEP:</span> <span class="linha-curta">{{ $estagio->instituicaoEnsino->cep ?? '___.___-___' }}</span></p>
-    <p><span class="bold">Cidade:</span> <span class="linha">{{ $estagio->instituicaoEnsino->cidade ?? '________________________' }}</span> <span class="bold">Estado:</span> <span class="linha-curta">{{ $estagio->instituicaoEnsino->estado ?? '___' }}</span></p>
-    <p><span class="bold">Telefone:</span> <span class="linha-curta">{{ $estagio->instituicaoEnsino->telefone ?? '(__) _____-____' }}</span> <span class="bold">Email:</span> <span class="linha">{{ $estagio->instituicaoEnsino->email ?? '________________________' }}</span></p>
-    <p><span class="bold">Responsável Legal:</span> <span class="linha">{{ $estagio->instituicaoEnsino->responsavel_legal ?? '________________________' }}</span> <span class="bold">CPF:</span> <span class="linha-curta">___.___.___-__</span> <span class="bold">RG nº:</span> <span class="linha-curta">_____________</span></p>
+    @if($instituicao?->razao_social)
+        <p><span class="bold">Razão Social:</span> {{ $instituicao->razao_social }}</p>
+    @endif
+    @if($instituicao?->cnpj)
+        <p><span class="bold">CNPJ:</span> {{ $instituicao->cnpj }}</p>
+    @endif
+    @if($instituicao?->mantenedora)
+        <p><span class="bold">Mantenedora:</span> {{ $instituicao->mantenedora }}</p>
+    @endif
+    @if($instituicao?->endereco)
+        <p><span class="bold">Endereço:</span> {{ $instituicao->endereco }}</p>
+    @endif
+    @if($instituicao?->complemento)
+        <p><span class="bold">Complemento:</span> {{ $instituicao->complemento }}</p>
+    @endif
+    @if($instituicao?->bairro)
+        <p><span class="bold">Bairro:</span> {{ $instituicao->bairro }}</p>
+    @endif
+    @if($instituicao?->cep)
+        <p><span class="bold">CEP:</span> {{ $instituicao->cep }}</p>
+    @endif
+    @if($instituicao?->cidade)
+        <p><span class="bold">Cidade:</span> {{ $instituicao->cidade }}</p>
+    @endif
+    @if($instituicao?->estado)
+        <p><span class="bold">Estado:</span> {{ $instituicao->estado }}</p>
+    @endif
+    @if($instituicao?->telefone)
+        <p><span class="bold">Telefone:</span> {{ $instituicao->telefone }}</p>
+    @endif
+    @if($instituicao?->email)
+        <p><span class="bold">Email:</span> {{ $instituicao->email }}</p>
+    @endif
+    @if($instituicao?->responsavel_legal)
+        <p><span class="bold">Responsável Legal:</span> {{ $instituicao->responsavel_legal }}</p>
+    @endif
 
     <p class="bold mt-2 mb-1">UNIDADE CONCEDENTE DE ESTÁGIO</p>
-    <p><span class="bold">Razão Social:</span> <span class="linha">{{ $estagio->empresaConcedente->razao_social ?? '________________________' }}</span> <span class="bold">CNPJ:</span> <span class="linha-curta">{{ $estagio->empresaConcedente->cnpj ?? '__.___.___/____-__' }}</span></p>
-    <p><span class="bold">Mantenedora:</span> <span class="linha-media">{{ $estagio->empresaConcedente->mantenedora ?? '_________________' }}</span></p>
-    <p><span class="bold">Endereço:</span> <span class="linha">{{ $estagio->empresaConcedente->endereco ?? '________________________' }}</span> <span class="bold">Complemento:</span> <span class="linha-curta">{{ $estagio->empresaConcedente->complemento ?? '____' }}</span> <span class="bold">Bairro:</span> <span class="linha-curta">{{ $estagio->empresaConcedente->bairro ?? '___________' }}</span> <span class="bold">CEP:</span> <span class="linha-curta">{{ $estagio->empresaConcedente->cep ?? '___.___-___' }}</span></p>
-    <p><span class="bold">Cidade:</span> <span class="linha">{{ $estagio->empresaConcedente->cidade ?? '________________________' }}</span> <span class="bold">Estado:</span> <span class="linha-curta">{{ $estagio->empresaConcedente->estado ?? '___' }}</span></p>
-    <p><span class="bold">Telefone:</span> <span class="linha-curta">{{ $estagio->empresaConcedente->telefone ?? '(__) _____-____' }}</span> <span class="bold">Email:</span> <span class="linha">{{ $estagio->empresaConcedente->email ?? '________________________' }}</span></p>
-    <p><span class="bold">Responsável Legal:</span> <span class="linha">{{ $estagio->empresaConcedente->responsavel_legal ?? '________________________' }}</span> <span class="bold">CPF:</span> <span class="linha-curta">___.___.___-__</span> <span class="bold">RG nº:</span> <span class="linha-curta">_____________</span></p>
+    @if($empresa?->razao_social)
+        <p><span class="bold">Razão Social:</span> {{ $empresa->razao_social }}</p>
+    @endif
+    @if($empresa?->cnpj)
+        <p><span class="bold">CNPJ:</span> {{ $empresa->cnpj }}</p>
+    @endif
+    @if($empresa?->endereco)
+        <p><span class="bold">Endereço:</span> {{ $empresa->endereco }}</p>
+    @endif
+    @if($empresa?->complemento)
+        <p><span class="bold">Complemento:</span> {{ $empresa->complemento }}</p>
+    @endif
+    @if($empresa?->bairro)
+        <p><span class="bold">Bairro:</span> {{ $empresa->bairro }}</p>
+    @endif
+    @if($empresa?->cep)
+        <p><span class="bold">CEP:</span> {{ $empresa->cep }}</p>
+    @endif
+    @if($empresa?->cidade)
+        <p><span class="bold">Cidade:</span> {{ $empresa->cidade }}</p>
+    @endif
+    @if($empresa?->estado)
+        <p><span class="bold">Estado:</span> {{ $empresa->estado }}</p>
+    @endif
+    @if($empresa?->telefone)
+        <p><span class="bold">Telefone:</span> {{ $empresa->telefone }}</p>
+    @endif
+    @if($empresa?->email)
+        <p><span class="bold">Email:</span> {{ $empresa->email }}</p>
+    @endif
+    @if($empresa?->responsavel_legal)
+        <p><span class="bold">Responsável Legal:</span> {{ $empresa->responsavel_legal }}</p>
+    @endif
 
     <p class="bold mt-2 mb-1">ESTAGIÁRIO</p>
-    <p><span class="bold">Nome:</span> <span class="linha">{{ $estagio->estagiario->nome }}</span> <span class="bold">CPF:</span> <span class="linha-curta">{{ $estagio->estagiario->cpf ?? '___.___.___-__' }}</span> <span class="bold">RG nº:</span> <span class="linha-curta">{{ $estagio->estagiario->rg ?? '_____________' }}</span></p>
-    <p><span class="bold">Endereço:</span> <span class="linha">{{ $estagio->estagiario->endereco ?? '________________________' }}</span> <span class="bold">Complemento:</span> <span class="linha-curta">{{ $estagio->estagiario->complemento ?? '____' }}</span> <span class="bold">Bairro:</span> <span class="linha-curta">{{ $estagio->estagiario->bairro ?? '___________' }}</span> <span class="bold">CEP:</span> <span class="linha-curta">{{ $estagio->estagiario->cep ?? '___.___-___' }}</span></p>
-    <p><span class="bold">Cidade:</span> <span class="linha">{{ $estagio->estagiario->cidade ?? '________________________' }}</span> <span class="bold">Estado:</span> <span class="linha-curta">{{ $estagio->estagiario->estado ?? '___' }}</span></p>
-    <p><span class="bold">Telefone:</span> <span class="linha-curta">{{ $estagio->estagiario->telefone ?? '(__) _____-____' }}</span> <span class="bold">Email:</span> <span class="linha">{{ $estagio->estagiario->email ?? '________________________' }}</span></p>
-    <p><span class="bold">Curso:</span> <span class="linha">{{ $estagio->estagiario->curso }}</span> <span class="bold">Semestre/Período/Série:</span> <span class="linha-curta">{{ $estagio->estagiario->semestre_atual ?? $estagio->estagiario->periodo ?? '___' }}</span> <span class="bold">Matrícula nº:</span> <span class="linha-curta">{{ $estagio->estagiario->matricula ?? '___' }}</span></p>
-    <p><span class="bold">Data de Início:</span> <span class="linha-curta">{{ $estagio->data_inicio->format('d/m/Y') }}</span> <span class="bold">Data de Conclusão:</span> <span class="linha-curta">{{ $estagio->data_fim->format('d/m/Y') }}</span></p>
+    @if($estagiario?->nome)
+        <p><span class="bold">Nome:</span> {{ $estagiario->nome }}</p>
+    @endif
+    @if($estagiario?->cpf)
+        <p><span class="bold">CPF:</span> {{ $estagiario->cpf }}</p>
+    @endif
+    @if($estagiario?->rg)
+        <p><span class="bold">RG nº:</span> {{ $estagiario->rg }}</p>
+    @endif
+    @if($estagiario?->endereco)
+        <p><span class="bold">Endereço:</span> {{ $estagiario->endereco }}</p>
+    @endif
+    @if($estagiario?->complemento)
+        <p><span class="bold">Complemento:</span> {{ $estagiario->complemento }}</p>
+    @endif
+    @if($estagiario?->bairro)
+        <p><span class="bold">Bairro:</span> {{ $estagiario->bairro }}</p>
+    @endif
+    @if($estagiario?->cep)
+        <p><span class="bold">CEP:</span> {{ $estagiario->cep }}</p>
+    @endif
+    @if($estagiario?->cidade)
+        <p><span class="bold">Cidade:</span> {{ $estagiario->cidade }}</p>
+    @endif
+    @if($estagiario?->estado)
+        <p><span class="bold">Estado:</span> {{ $estagiario->estado }}</p>
+    @endif
+    @if($estagiario?->telefone)
+        <p><span class="bold">Telefone:</span> {{ $estagiario->telefone }}</p>
+    @endif
+    @if($estagiario?->email)
+        <p><span class="bold">Email:</span> {{ $estagiario->email }}</p>
+    @endif
+    @if($estagiario?->curso)
+        <p><span class="bold">Curso:</span> {{ $estagiario->curso }}</p>
+    @endif
+    @if($semestre)
+        <p><span class="bold">Semestre/Período/Série:</span> {{ $semestre }}</p>
+    @endif
+    @if($estagiario?->matricula)
+        <p><span class="bold">Matrícula nº:</span> {{ $estagiario->matricula }}</p>
+    @endif
+    @if($estagio->data_inicio)
+        <p><span class="bold">Data de Início:</span> {{ $estagio->data_inicio->format('d/m/Y') }}</p>
+    @endif
+    @if($estagio->data_fim)
+        <p><span class="bold">Data de Conclusão:</span> {{ $estagio->data_fim->format('d/m/Y') }}</p>
+    @endif
 
     <p class="bold mt-2 mb-1">AGENTE DE INTEGRAÇÃO - ALENCASTRO CONSULTORIA</p>
     <p><span class="bold">Razão Social:</span> DIOGO LUÍS ALENCASTRO DA SILVA-ME <span class="linha"></span> <span class="bold">CNPJ:</span> 18.785.582/0001-24</p>
@@ -116,11 +222,22 @@
     <p class="bold mt-2">CLÁUSULA SEGUNDA:</p>
     <p>O estágio de estudantes da INSTITUIÇÃO DE ENSINO junto à UNIDADE CONCEDENTE, de caráter obrigatório ou não, deve propiciar a complementação do ensino e da aprendizagem profissional, especialmente na(s) área(s) do(s) respective(s) curso(s), visando à experiência prática complementar, em consonância com o currículo e horários escolares, conforme art. 1º da Lei nº 11.788/2008.</p>
     <p class="mt-2"><span class="bold">PARÁGRAFO PRIMEIRO:</span> O(A) ESTAGIÁRIO(A) desenvolverá as seguintes atividades, com foco pedagógico e educacional: O propósito do estágio é proporcionar à discente sua inserção na área de: {{ $estagio->estagiario->curso }}</p>
-    <p>Descrição das atividades: {{ $estagio->atividades ?? 'À combinar com o supervisor de estágio' }}</p>
+    @if($estagio->atividades)
+        <p>Descrição das atividades: {{ $estagio->atividades }}</p>
+    @endif
     <p class="mt-2"><span class="bold">PARÁGRAFO SEGUNDO:</span> A INSTITUIÇÃO DE ENSINO declara que as atividades acima relacionadas são compatíveis com a programação curricular do curso de {{ $estagio->estagiario->curso }}, para o qual há previsão de estágio curricular.</p>
 
     <p class="bold mt-2">CLÁUSULA TERCEIRA:</p>
-    <p>Atuará como Supervisor(a) de Estágio na Unidade Concedente: {{ $estagio->empresaConcedente->supervisor_estagio_nome ?? '___' }}, {{ $estagio->empresaConcedente->supervisor_estagio_cargo ?? 'Cargo' }}, {{ $estagio->empresaConcedente->supervisor_estagio_formacao ?? 'formação' }}, CPF: {{ $estagio->empresaConcedente->supervisor_estagio_cpf ?? '___' }}, e-mail: {{ $estagio->empresaConcedente->supervisor_estagio_email ?? '___' }}, telefone: {{ $estagio->empresaConcedente->supervisor_estagio_telefone ?? '___' }}.</p>
+    @if($empresa?->supervisor_estagio_nome || $empresa?->supervisor_estagio_cargo || $empresa?->supervisor_estagio_formacao || $empresa?->supervisor_estagio_cpf || $empresa?->supervisor_estagio_email || $empresa?->supervisor_estagio_telefone)
+        <p>Atuará como Supervisor(a) de Estágio na Unidade Concedente:
+            @if($empresa?->supervisor_estagio_nome) {{ $empresa->supervisor_estagio_nome }}@endif
+            @if($empresa?->supervisor_estagio_cargo), {{ $empresa->supervisor_estagio_cargo }}@endif
+            @if($empresa?->supervisor_estagio_formacao), {{ $empresa->supervisor_estagio_formacao }}@endif
+            @if($empresa?->supervisor_estagio_cpf), CPF: {{ $empresa->supervisor_estagio_cpf }}@endif
+            @if($empresa?->supervisor_estagio_email), e-mail: {{ $empresa->supervisor_estagio_email }}@endif
+            @if($empresa?->supervisor_estagio_telefone), telefone: {{ $empresa->supervisor_estagio_telefone }}@endif.
+        </p>
+    @endif
 
     <p class="bold mt-2">CLÁUSULA QUARTA:</p>
     <p>A duração do estágio será de {{ $estagio->data_inicio->diffInMonths($estagio->data_fim) }} ({{ $estagio->data_inicio->diffInMonths($estagio->data_fim) }}) meses, com início em {{ $estagio->data_inicio->format('d/m/Y') }} e término previsto em {{ $estagio->data_fim->format('d/m/Y') }}.</p>
