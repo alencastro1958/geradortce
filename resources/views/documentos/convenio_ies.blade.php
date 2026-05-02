@@ -50,12 +50,58 @@
         <p class="bold uppercase" style="font-size: 14pt;">ALENCASTRO CONSULTORIA-ESTÁGIOS</p>
         @endif
     </div>
+    @php
+        $ies = $estagio->instituicaoEnsino;
+        $empresa = $estagio->empresaConcedente;
+        $iesCidadeEstado = trim(implode('/', array_filter([$ies?->cidade, $ies?->estado])));
+        $empresaCidadeEstado = trim(implode('/', array_filter([$empresa?->cidade, $empresa?->estado])));
+    @endphp
     <div class="text-center mb-2">
         <h1 class="bold">TERMΟ DE CONVÊNIO PARA REALIZAÇÃO DE ESTÁGIO</h1>
         <p>Obrigatório/não obrigatório</p>
     </div>
 
-    <p class="mb-1">Pelo presente instrumento, de um lado <span class="bold">{{ $estagio->instituicaoEnsino->razao_social }}</span>, pessoa jurídica de direito privado, com sede à {{ $estagio->instituicaoEnsino->endereco }}, {{ $estagio->instituicaoEnsino->bairro }} - {{ $estagio->instituicaoEnsino->cidade }}/{{ $estagio->instituicaoEnsino->estado }} - CEP: {{ $estagio->instituicaoEnsino->cep }}, representado por seu representante legal <span class="bold">{{ $estagio->instituicaoEnsino->responsavel_legal_nome }}</span>, <span class="bold">{{ $estagio->instituicaoEnsino->responsavel_legal_cargo }}</span>, portador(a) do CPF {{ $estagio->instituicaoEnsino->responsavel_legal_cpf }}, daquiopor diante denominado <span class="bold">CONCEDENTE</span> e, de outro, <span class="bold">{{ $estagio->empresaConcedente->razao_social }}</span>, pessoa jurídica de direito privado, com sede à {{ $estagio->empresaConcedente->endereco }}, {{ $estagio->empresaConcedente->bairro }} - {{ $estagio->empresaConcedente->cidade }}/{{ $estagio->empresaConcedente->estado }} - CEP: {{ $estagio->empresaConcedente->cep }}, representado por seu representante legal <span class="bold">{{ $estagio->empresaConcedente->responsavel_legal_nome }}</span>, <span class="bold">{{ $estagio->empresaConcedente->responsavel_legal_cargo }}</span>, portador(a) do CPF {{ $estagio->empresaConcedente->cnpj }}, daquiopor diante denominada <span class="bold">CONCEDENTE DO ESTÁGIO</span>, têm entre si como justo e acordado o presente Termo de Convênio para Realização de Estágio, mediante as seguintes cláusulas:</p>
+    <p class="mb-1">
+        Pelo presente instrumento, de um lado
+        @if($ies?->razao_social) <span class="bold">{{ $ies->razao_social }}</span>@endif,
+        pessoa jurídica de direito privado
+        @if($ies?->endereco || $ies?->bairro || $iesCidadeEstado || $ies?->cep)
+            , com sede à
+            @if($ies?->endereco) {{ $ies->endereco }}@endif
+            @if($ies?->bairro), {{ $ies->bairro }}@endif
+            @if($iesCidadeEstado) - {{ $iesCidadeEstado }}@endif
+            @if($ies?->cep) - CEP: {{ $ies->cep }}@endif
+        @endif
+        @if($ies?->responsavel_legal_nome)
+            , representado por seu representante legal <span class="bold">{{ $ies->responsavel_legal_nome }}</span>
+        @endif
+        @if($ies?->responsavel_legal_cargo)
+            , <span class="bold">{{ $ies->responsavel_legal_cargo }}</span>
+        @endif
+        @if($ies?->responsavel_legal_cpf)
+            , portador(a) do CPF {{ $ies->responsavel_legal_cpf }}
+        @endif
+        , denominado <span class="bold">CONCEDENTE</span> e, de outro,
+        @if($empresa?->razao_social) <span class="bold">{{ $empresa->razao_social }}</span>@endif,
+        pessoa jurídica de direito privado
+        @if($empresa?->endereco || $empresa?->bairro || $empresaCidadeEstado || $empresa?->cep)
+            , com sede à
+            @if($empresa?->endereco) {{ $empresa->endereco }}@endif
+            @if($empresa?->bairro), {{ $empresa->bairro }}@endif
+            @if($empresaCidadeEstado) - {{ $empresaCidadeEstado }}@endif
+            @if($empresa?->cep) - CEP: {{ $empresa->cep }}@endif
+        @endif
+        @if($empresa?->responsavel_legal_nome)
+            , representado por seu representante legal <span class="bold">{{ $empresa->responsavel_legal_nome }}</span>
+        @endif
+        @if($empresa?->responsavel_legal_cargo)
+            , <span class="bold">{{ $empresa->responsavel_legal_cargo }}</span>
+        @endif
+        @if($empresa?->responsavel_legal_cpf)
+            , portador(a) do CPF {{ $empresa->responsavel_legal_cpf }}
+        @endif
+        , denominada <span class="bold">CONCEDENTE DO ESTÁGIO</span>, têm entre si como justo e acordado o presente Termo de Convênio para Realização de Estágio, mediante as seguintes cláusulas:
+    </p>
 
     <div class="mb-2">
         <p><span class="bold">CLÁUSULA PRIMEIRA - DO OBJETO</span></p>

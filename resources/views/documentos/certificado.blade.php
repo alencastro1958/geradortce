@@ -50,22 +50,39 @@
         <p class="bold uppercase" style="font-size: 14pt;">ALENCASTRO CONSULTORIA-ESTÁGIOS</p>
         @endif
     </div>
+    @php
+        $estagiario = $estagio->estagiario;
+        $instituicaoNome = $estagio->instituicaoEnsino->nome_fantasia ?? $estagio->instituicaoEnsino->razao_social ?? null;
+        $empresaNome = $estagio->empresaConcedente->nome_fantasia ?? $estagio->empresaConcedente->razao_social ?? null;
+    @endphp
     <div class="text-center mb-2">
         <h1 class="uppercase bold">Certificado de Conclusão de Estágio</h1>
     </div>
 
     <div class="mb-2">
-        <p class="text-center">Certificamos para os devidos fins que <span class="bold">{{ $estagio->estagiario->nome }}</span>, regularmente matriculado(a) no curso de <span class="bold">{{ $estagio->estagiario->curso }}</span> da <span class="bold">{{ $estagio->instituicaoEnsino->nome_fantasia ?? $estagio->instituicaoEnsino->razao_social }}</span>, concluiu com êxito o estágio obrigatório/não obrigatório supervisionado(a) realizado(a) na empresa <span class="bold">{{ $estagio->empresaConcedente->nome_fantasia ?? $estagio->empresaConcedente->razao_social }}</span>.</p>
+        <p class="text-center">
+            Certificamos para os devidos fins que
+            @if($estagiario?->nome) <span class="bold">{{ $estagiario->nome }}</span>@endif
+            @if($estagiario?->curso), regularmente matriculado(a) no curso de <span class="bold">{{ $estagiario->curso }}</span>@endif
+            @if($instituicaoNome) da <span class="bold">{{ $instituicaoNome }}</span>@endif
+            @if($empresaNome), concluiu com êxito o estágio obrigatório/não obrigatório supervisionado(a) realizado(a) na empresa <span class="bold">{{ $empresaNome }}</span>@endif.
+        </p>
     </div>
 
     <div class="mb-2">
-        <p><span class="bold">Período de Réalização:</span> {{ $estagio->data_inicio->format('d/m/Y') }} a {{ $estagio->data_fim->format('d/m/Y') }}</p>
-        <p><span class="bold">Carga Horária:</span> {{ $estagio->carga_horaria_semanal }} horas semanais / {{ ($estagio->data_inicio->diffInDays($estagio->data_fim) / 7) * $estagio->carga_horaria_semanal }} horas totais</p>
+        @if($estagio->data_inicio && $estagio->data_fim)
+            <p><span class="bold">Período de Réalização:</span> {{ $estagio->data_inicio->format('d/m/Y') }} a {{ $estagio->data_fim->format('d/m/Y') }}</p>
+        @endif
+        @if($estagio->carga_horaria_semanal && $estagio->data_inicio && $estagio->data_fim)
+            <p><span class="bold">Carga Horária:</span> {{ $estagio->carga_horaria_semanal }} horas semanais / {{ ($estagio->data_inicio->diffInDays($estagio->data_fim) / 7) * $estagio->carga_horaria_semanal }} horas totais</p>
+        @endif
     </div>
 
     <div class="mb-2">
-        <p><span class="bold">Atividades Desenvolvidas:</span></p>
-        <p>{{ $estagio->atividades ?? 'Atividades compatíveis com a área de formação do estagiário.' }}</p>
+        @if($estagio->atividades)
+            <p><span class="bold">Atividades Desenvolvidas:</span></p>
+            <p>{{ $estagio->atividades }}</p>
+        @endif
     </div>
 
     <div class="mb-2">
@@ -76,15 +93,19 @@
         <p class="text-center">Este certificado é válido para todos os efeitos legais.</p>
     </div>
 
-    <div class="mb-3 mt-2">
-        <p class="text-right">{{ $estagio->instituicaoEnsino->cidade }}, {{ now()->format('d') }} de {{ now()->format('M') }} de {{ now()->format('Y') }}</p>
-    </div>
+    @if($estagio->instituicaoEnsino->cidade)
+        <div class="mb-3 mt-2">
+            <p class="text-right">{{ $estagio->instituicaoEnsino->cidade }}, {{ now()->format('d') }} de {{ now()->format('M') }} de {{ now()->format('Y') }}</p>
+        </div>
+    @endif
 
-    <div class="text-center mt-2">
-        <p class="underline mb-1">&nbsp;</p>
-        <p class="bold">{{ $estagio->instituicaoEnsino->responsavel_legal_nome }}</p>
-        <p>Coordenador(a) de Curso / Representante da IES</p>
-    </div>
+    @if($estagio->instituicaoEnsino->responsavel_legal_nome)
+        <div class="text-center mt-2">
+            <p class="underline mb-1">&nbsp;</p>
+            <p class="bold">{{ $estagio->instituicaoEnsino->responsavel_legal_nome }}</p>
+            <p>Coordenador(a) de Curso / Representante da IES</p>
+        </div>
+    @endif
 
     <div class="page-footer">
         <p>www.rotacerta-aprendizagem.com.br | admin@rotacerta-aprendizagem.com.br | (48) 99203-9611</p>

@@ -50,35 +50,65 @@
         <p class="bold uppercase" style="font-size: 14pt;">ALENCASTRO CONSULTORIA-ESTÁGIOS</p>
         @endif
     </div>
+    @php
+        $estagiario = $estagio->estagiario;
+        $empresa = $estagio->empresaConcedente;
+        $periodo = $estagiario?->periodo;
+    @endphp
     <div class="text-center mb-2">
         <h1 class="bold">RELATÓRIO SEMESTRAL DE ESTÁGIO</h1>
     </div>
 
     <div class="mb-2">
         <p><span class="bold">1. DADOS DO ESTAGIÁRIO:</span></p>
-        <p>Nome: {{ $estagio->estagiario->nome }}</p>
-        <p>CPF: {{ $estagio->estagiario->cpf }} | RG: {{ $estagio->estagiario->rg }}</p>
-        <p>Curso: {{ $estagio->estagiario->curso }}</p>
-        <p>Período: {{ $estagio->estagiario->periodo ?? 'Não especificado' }}</p>
+        @if($estagiario?->nome)
+            <p>Nome: {{ $estagiario->nome }}</p>
+        @endif
+        @if($estagiario?->cpf)
+            <p>CPF: {{ $estagiario->cpf }}</p>
+        @endif
+        @if($estagiario?->rg)
+            <p>RG: {{ $estagiario->rg }}</p>
+        @endif
+        @if($estagiario?->curso)
+            <p>Curso: {{ $estagiario->curso }}</p>
+        @endif
+        @if($periodo)
+            <p>Período: {{ $periodo }}</p>
+        @endif
     </div>
 
     <div class="mb-2">
         <p><span class="bold">2. DADOS DA EMPRESA:</span></p>
-        <p>Razão Social: {{ $estagio->empresaConcedente->razao_social }}</p>
-        <p>CNPJ: {{ $estagio->empresaConcedente->cnpj }}</p>
-        <p>Endereço: {{ $estagio->empresaConcedente->endereco }}, {{ $estagio->empresaConcedente->bairro }} - {{ $estagio->empresaConcedente->cidade }}/{{ $estagio->empresaConcedente->estado }}</p>
-        <p>Supervisor: {{ $estagio->empresaConcedente->supervisor_estagio_nome ?? 'Não informado' }}</p>
+        @if($empresa?->razao_social)
+            <p>Razão Social: {{ $empresa->razao_social }}</p>
+        @endif
+        @if($empresa?->cnpj)
+            <p>CNPJ: {{ $empresa->cnpj }}</p>
+        @endif
+        @if($empresa?->endereco || $empresa?->bairro || $empresa?->cidade || $empresa?->estado)
+            <p>Endereço: {{ $empresa->endereco }}{{ $empresa?->bairro ? ', ' . $empresa->bairro : '' }}{{ $empresa?->cidade || $empresa?->estado ? ' - ' : '' }}{{ $empresa->cidade }}{{ $empresa?->estado ? '/' . $empresa->estado : '' }}</p>
+        @endif
+        @if($empresa?->supervisor_estagio_nome)
+            <p>Supervisor: {{ $empresa->supervisor_estagio_nome }}</p>
+        @endif
     </div>
 
     <div class="mb-2">
         <p><span class="bold">3. PERÍODO DO RELATÓRIO:</span></p>
-        <p>Data de Início do Estágio: {{ $estagio->data_inicio->format('d/m/Y') }}</p>
-        <p>Data de Término: {{ $estagio->data_fim->format('d/m/Y') }}</p>
+        @if($estagio->data_inicio)
+            <p>Data de Início do Estágio: {{ $estagio->data_inicio->format('d/m/Y') }}</p>
+        @endif
+        @if($estagio->data_fim)
+            <p>Data de Término: {{ $estagio->data_fim->format('d/m/Y') }}</p>
+        @endif
     </div>
 
     <div class="mb-2">
-        <p><span class="bold">4. ATIVIDADES DESENVOLVIDAS NESTE PERÍODO:</span></p>
-        <p>{{ $estagio->atividades ?? 'Atividades compatíveis com a área de formação.' }}</p>
+        @if($estagio->atividades)
+            <p><span class="bold">4. ATIVIDADES DESENVOLVIDAS NESTE PERÍODO:</span></p>
+            <p>{{ $estagio->atividades }}</p>
+        @endif
     </div>
 
     <div class="mb-2">
@@ -91,9 +121,11 @@
         <p>_______________________________________________________________</p>
     </div>
 
-    <div class="mb-3 mt-2">
-        <p class="text-right">{{ $estagio->empresaConcedente->cidade }}, {{ now()->format('d') }} de {{ now()->format('M') }} de {{ now()->format('Y') }}</p>
-    </div>
+    @if($empresa?->cidade)
+        <div class="mb-3 mt-2">
+            <p class="text-right">{{ $empresa->cidade }}, {{ now()->format('d') }} de {{ now()->format('M') }} de {{ now()->format('Y') }}</p>
+        </div>
+    @endif
 
     <div class="mb-1 text-center">
         <p class="underline">&nbsp;</p>
