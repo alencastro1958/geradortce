@@ -65,6 +65,12 @@
         .assinaturas-stack p {
             text-align: center;
         }
+        .assinaturas-stack .assinatura-centro {
+            margin-top: 12px;
+        }
+        .assinaturas-stack .assinatura-centro p {
+            margin-bottom: 4px;
+        }
     </style>
 </head>
 <body>
