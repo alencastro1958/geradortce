@@ -8,9 +8,9 @@
         @page {
             size: A4;
             margin-top: 4.0cm;
-            margin-right: 2.5cm;
+            margin-right: 1.5cm;
             margin-bottom: 1.0cm;
-            margin-left: 1.5cm;
+            margin-left: 2.5cm;
         }
         body { margin: 0; font-family: 'Times New Roman', Times, serif; font-size: 12pt; line-height: 1.6; padding-top: 0; padding-bottom: 1.0cm; }
         .text-center { text-align: center; }
@@ -25,16 +25,16 @@
         .page-header {
             position: fixed;
             top: -2.5cm;
-            left: 1.5cm;
-            right: 2.5cm;
+            left: 2.5cm;
+            right: 1.5cm;
             height: 3.0cm;
             text-align: center;
         }
         .page-footer {
             position: fixed;
             bottom: 0.3cm;
-            left: 1.5cm;
-            right: 2.5cm;
+            left: 2.5cm;
+            right: 1.5cm;
             text-align: center;
             font-size: 8pt;
             border-top: 1px solid #ccc;
