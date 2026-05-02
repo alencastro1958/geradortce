@@ -76,6 +76,7 @@
     </div>
 
     <p class="text-justify mb-2">TERMO DE COMPROMISSO DE ESTÁGIO, instrumento jurídico cujo objetivo é formalizar as condições para realização de estágio, definido como ato educativo escolar supervisionado, desenvolvido no ambiente de trabalho, que visa a preparação para o trabalho produtivo do estudante, nos termos da Lei nº 11.788, de 25/09/2008, (Publicada no D.O.U. de 26.09.2008) que entre si celebram as partes a seguir nomeadas:</p>
+    <p class="mb-2"></p>
 
     @php
         $instituicao = $estagio->instituicaoEnsino;
@@ -91,18 +92,18 @@
     @if($instituicao?->mantenedora)
         <p><span class="bold">Mantenedora:</span> {{ $instituicao->mantenedora }}</p>
     @endif
-    @if($instituicao?->endereco || $instituicao?->complemento || $instituicao?->bairro || $instituicao?->cep)
+    @if($instituicao?->endereco || $instituicao?->complemento || $instituicao?->bairro)
         <p>
             @if($instituicao?->endereco)<span class="bold">Endereço:</span> {{ $instituicao->endereco }}@endif
             @if($instituicao?->complemento) <span class="bold">Complemento:</span> {{ $instituicao->complemento }}@endif
             @if($instituicao?->bairro) <span class="bold">Bairro:</span> {{ $instituicao->bairro }}@endif
-            @if($instituicao?->cep) <span class="bold">CEP:</span> {{ $instituicao->cep }}@endif
         </p>
     @endif
-    @if($instituicao?->cidade || $instituicao?->estado)
+    @if($instituicao?->cidade || $instituicao?->estado || $instituicao?->cep)
         <p>
             @if($instituicao?->cidade)<span class="bold">Cidade:</span> {{ $instituicao->cidade }}@endif
             @if($instituicao?->estado) <span class="bold">Estado:</span> {{ $instituicao->estado }}@endif
+            @if($instituicao?->cep) <span class="bold">CEP:</span> {{ $instituicao->cep }}@endif
         </p>
     @endif
     @if($instituicao?->telefone || $instituicao?->email)
@@ -111,6 +112,7 @@
             @if($instituicao?->email) <span class="bold">Email:</span> {{ $instituicao->email }}@endif
         </p>
     @endif
+    <p class="mb-2"></p>
     @if($instituicao?->responsavel_legal)
         <p><span class="bold">Responsável Legal:</span> {{ $instituicao->responsavel_legal }}</p>
     @endif
@@ -119,18 +121,18 @@
     @if($empresa?->razao_social || $empresa?->cnpj)
         <p><span class="bold">Razão Social:</span> {{ $empresa->razao_social }} @if($empresa?->cnpj)<span class="bold">CNPJ:</span> {{ $empresa->cnpj }}@endif</p>
     @endif
-    @if($empresa?->endereco || $empresa?->complemento || $empresa?->bairro || $empresa?->cep)
+    @if($empresa?->endereco || $empresa?->complemento || $empresa?->bairro)
         <p>
             @if($empresa?->endereco)<span class="bold">Endereço:</span> {{ $empresa->endereco }}@endif
             @if($empresa?->complemento) <span class="bold">Complemento:</span> {{ $empresa->complemento }}@endif
             @if($empresa?->bairro) <span class="bold">Bairro:</span> {{ $empresa->bairro }}@endif
-            @if($empresa?->cep) <span class="bold">CEP:</span> {{ $empresa->cep }}@endif
         </p>
     @endif
-    @if($empresa?->cidade || $empresa?->estado)
+    @if($empresa?->cidade || $empresa?->estado || $empresa?->cep)
         <p>
             @if($empresa?->cidade)<span class="bold">Cidade:</span> {{ $empresa->cidade }}@endif
             @if($empresa?->estado) <span class="bold">Estado:</span> {{ $empresa->estado }}@endif
+            @if($empresa?->cep) <span class="bold">CEP:</span> {{ $empresa->cep }}@endif
         </p>
     @endif
     @if($empresa?->telefone || $empresa?->email)
@@ -139,11 +141,12 @@
             @if($empresa?->email) <span class="bold">Email:</span> {{ $empresa->email }}@endif
         </p>
     @endif
+    <p class="mb-2"></p>
     @if($empresa?->responsavel_legal)
         <p><span class="bold">Responsável Legal:</span> {{ $empresa->responsavel_legal }}</p>
     @endif
 
-    <p class="bold mt-2 mb-1">ESTAGIÁRIO</p>
+    <p class="bold mt-2 mb-1">ESTAGIÁRIO(A)</p>
     @if($estagiario?->nome || $estagiario?->cpf || $estagiario?->rg)
         <p>
             @if($estagiario?->nome)<span class="bold">Nome:</span> {{ $estagiario->nome }}@endif
@@ -151,18 +154,18 @@
             @if($estagiario?->rg) <span class="bold">RG nº:</span> {{ $estagiario->rg }}@endif
         </p>
     @endif
-    @if($estagiario?->endereco || $estagiario?->complemento || $estagiario?->bairro || $estagiario?->cep)
+    @if($estagiario?->endereco || $estagiario?->complemento || $estagiario?->bairro)
         <p>
             @if($estagiario?->endereco)<span class="bold">Endereço:</span> {{ $estagiario->endereco }}@endif
             @if($estagiario?->complemento) <span class="bold">Complemento:</span> {{ $estagiario->complemento }}@endif
             @if($estagiario?->bairro) <span class="bold">Bairro:</span> {{ $estagiario->bairro }}@endif
-            @if($estagiario?->cep) <span class="bold">CEP:</span> {{ $estagiario->cep }}@endif
         </p>
     @endif
-    @if($estagiario?->cidade || $estagiario?->estado)
+    @if($estagiario?->cidade || $estagiario?->estado || $estagiario?->cep)
         <p>
             @if($estagiario?->cidade)<span class="bold">Cidade:</span> {{ $estagiario->cidade }}@endif
             @if($estagiario?->estado) <span class="bold">Estado:</span> {{ $estagiario->estado }}@endif
+            @if($estagiario?->cep) <span class="bold">CEP:</span> {{ $estagiario->cep }}@endif
         </p>
     @endif
     @if($estagiario?->telefone || $estagiario?->email)
@@ -184,15 +187,17 @@
             @if($estagio->data_fim) <span class="bold">Data de Conclusão:</span> {{ $estagio->data_fim->format('d/m/Y') }}@endif
         </p>
     @endif
+    <p class="mb-2"></p>
 
     <p class="bold mt-2 mb-1">AGENTE DE INTEGRAÇÃO - ALENCASTRO CONSULTORIA</p>
     <p><span class="bold">Razão Social:</span> DIOGO LUÍS ALENCASTRO DA SILVA-ME <span class="bold">CNPJ:</span> 18.785.582/0001-24</p>
-    <p><span class="bold">Endereço:</span> Av. Mauro Ramos, 1722 Aptº 92 - Bloco 08 <span class="bold">Bairro:</span> Centro <span class="bold">CEP:</span> 88020-304</p>
-    <p><span class="bold">Cidade:</span> Florianópolis <span class="bold">Estado:</span> Santa Catarina</p>
+    <p><span class="bold">Endereço:</span> Av. Mauro Ramos, 1722 Aptº 92 - Bloco 08 <span class="bold">Bairro:</span> Centro</p>
+    <p><span class="bold">Cidade:</span> Florianópolis <span class="bold">Estado:</span> Santa Catarina <span class="bold">CEP:</span> 88020-304</p>
     <p><span class="bold">Telefone:</span> (48) 99203-9611 <span class="bold">Email:</span> admin@rotacerta-aprendizagem.com.br</p>
     <p><span class="bold">Responsável Legal:</span> Diogo Luís Alencastro da Silva</p>
 
     <p class="mb-2 mt-2">Conforme as cláusulas e condições seguintes:</p>
+    <p class="mb-2"></p>
 
     <p class="bold">CLÁUSULA PRIMEIRA:</p>
     <p>A UNIDADE CONCEDENTE, neste ato, admite o(a) ESTAGIÁRIO(A) acima qualificado(a), observando as cláusulas do Termo de Convênio firmado com o AGENTE DE INTEGRAÇÃO, a legislação vigente (Lei nº 11.788/2008) e demais disposições estabelecidas pela INSTITUIÇÃO DE ENSINO.</p>
