@@ -208,7 +208,7 @@
     @endif
 
     <p class="bold mt-2 mb-1">AGENTE DE INTEGRAÇÃO - ALENCASTRO CONSULTORIA</p>
-    <p><span class="bold">Razão Social:</span> DIOGO LUÍS ALENCASTRO DA SILVA-ME <span class="linha"></span> <span class="bold">CNPJ:</span> 18.785.582/0001-24</p>
+    <p><span class="bold">Razão Social:</span> DIOGO LUÍS ALENCASTRO DA SILVA-ME <span class="bold">CNPJ:</span> 18.785.582/0001-24</p>
     <p><span class="bold">Endereço:</span> Av. Mauro Ramos, 1722 Aptº 92 - Bloco 08 <span class="bold">Bairro:</span> Centro <span class="bold">CEP:</span> 88020-304</p>
     <p><span class="bold">Cidade:</span> Florianópolis <span class="bold">Estado:</span> Santa Catarina</p>
     <p><span class="bold">Telefone:</span> (48) 99203-9611 <span class="bold">Email:</span> admin@rotacerta-aprendizagem.com.br</p>
