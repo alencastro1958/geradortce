@@ -29,13 +29,27 @@
                 var digits = value.replace(/\D/g, '').slice(0, 12);
                 var len = digits.length;
                 if (len === 0) return '';
+
+                // Constrói prefixo DDD
                 var r = '(' + digits.slice(0, Math.min(2, len));
                 if (len <= 2) return r;
-                r += ') ' + digits.slice(2, 3);
-                if (len <= 3) return r;
-                r += ' ' + digits.slice(3, Math.min(8, len));
-                if (len <= 8) return r;
-                r += '-' + digits.slice(8, 12);
+                r += ') ';
+
+                if (len <= 10) {
+                    // 10 dígitos: (xx) xxxx-xxxx
+                    r += digits.slice(2, Math.min(6, len));
+                    if (len > 6) r += '-' + digits.slice(6, 10);
+                } else if (len === 11) {
+                    // 11 dígitos: (xx) x xxxx-xxxx
+                    r += digits.slice(2, 3);
+                    r += ' ' + digits.slice(3, Math.min(7, len));
+                    if (len > 7) r += '-' + digits.slice(7, 11);
+                } else {
+                    // 12 dígitos: (xx) xx xxxx-xxxx
+                    r += digits.slice(2, 4);
+                    r += ' ' + digits.slice(4, Math.min(8, len));
+                    if (len > 8) r += '-' + digits.slice(8, 12);
+                }
                 return r;
             }
 
@@ -44,7 +58,7 @@
                     if (input.dataset.phoneMasked) return;
                     input.dataset.phoneMasked = '1';
                     if (input.value) input.value = applyPhoneMask(input.value);
-                    input.placeholder = '(00) 0 00000-0000';
+                    input.placeholder = '(00) 0000-0000 / (00) 0 0000-0000';
                     input.setAttribute('maxlength', '17');
                     input.addEventListener('input', function () {
                         this.value = applyPhoneMask(this.value);
