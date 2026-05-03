@@ -12,7 +12,7 @@ class Seguradora extends Model
     use HasFactory;
 
     protected $fillable = [
-        'nome', 'razao_social', 'cnpj', 'contato_nome', 'telefone', 'email', 'apolice_numero', 'arquivo_apolice',
+        'nome', 'razao_social', 'cnpj', 'contato_nome', 'contato_fone', 'contato_email', 'observacoes', 'telefone', 'email', 'apolice_numero', 'arquivo_apolice',
         'valor_cobertura', 'capital_segurado', 'inicio_vigencia', 'fim_vigencia',
         'susep_vida_em_grupo', 'susep_acidentes_pessoais', 'capital_morte_acidental', 'capital_morte_acidental_extenso',
         'endereco', 'logradouro', 'numero', 'complemento', 'bairro', 'cidade', 'estado', 'cep'

@@ -54,6 +54,10 @@ class StoreEmpresaConcedenteRequest extends FormRequest
             'supervisor_email' => $this->emailRule(),
             'supervisor_telefone_whatsapp' => 'nullable|string|max:20',
             'supervisor_registro_profissional' => 'nullable|string|max:100',
+            'contato_nome' => 'nullable|string|max:255',
+            'contato_fone' => 'nullable|string|max:255',
+            'contato_email' => 'nullable|email|max:255',
+            'observacoes' => 'nullable|string',
         ];
     }
 

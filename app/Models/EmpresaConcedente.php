@@ -22,7 +22,7 @@ class EmpresaConcedente extends Model
         'supervisor_registro_profissional',
         'supervisor_estagio_nome', 'supervisor_estagio_cargo', 'supervisor_estagio_formacao',
         'supervisor_estagio_cpf', 'supervisor_estagio_email', 'supervisor_estagio_telefone',
-        'mantenedora'
+        'mantenedora', 'contato_nome', 'contato_fone', 'contato_email', 'observacoes'
     ];
 
     protected function casts(): array

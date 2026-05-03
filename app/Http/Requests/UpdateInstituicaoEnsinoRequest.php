@@ -51,6 +51,10 @@ class UpdateInstituicaoEnsinoRequest extends FormRequest
             'responsavel_legal_rg' => 'nullable|string|max:255',
             'responsavel_legal_email' => $this->emailRule(),
             'responsavel_legal_whatsapp' => 'nullable|string|max:255',
+            'contato_nome' => 'nullable|string|max:255',
+            'contato_fone' => 'nullable|string|max:255',
+            'contato_email' => 'nullable|email|max:255',
+            'observacoes' => 'nullable|string',
         ];
     }
 

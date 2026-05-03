@@ -17,7 +17,7 @@ class InstituicaoEnsino extends Model
         'bairro', 'cidade', 'estado', 'cep', 'telefone', 'telefone_secundario', 'email', 'email_secundario',
         'responsavel_legal_nome', 'responsavel_legal_cargo', 'responsavel_legal_cpf',
         'responsavel_legal_rg', 'responsavel_legal_email', 'responsavel_legal_whatsapp',
-        'mantenedora', 'contato_nome', 'tipo_instituicao'
+        'mantenedora', 'contato_nome', 'contato_fone', 'contato_email', 'observacoes', 'tipo_instituicao'
     ];
 
     protected function casts(): array

@@ -145,6 +145,34 @@
                             </div>
                         </div>
 
+                        <!-- Pessoa de Contato -->
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-900 border-b pb-2 mb-6 mt-8 flex items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-500" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                                </svg>
+                                Pessoa de Contato
+                            </h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="col-span-2 md:col-span-1">
+                                    <label for="contato_nome" class="block text-sm font-medium text-gray-700 mb-1">Nome</label>
+                                    <input type="text" name="contato_nome" id="contato_nome" value="{{ old('contato_nome') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
+                                </div>
+                                <div>
+                                    <label for="contato_fone" class="block text-sm font-medium text-gray-700 mb-1">Fone</label>
+                                    <input type="text" name="contato_fone" id="contato_fone" value="{{ old('contato_fone') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
+                                </div>
+                                <div>
+                                    <label for="contato_email" class="block text-sm font-medium text-gray-700 mb-1">E-mail</label>
+                                    <input type="email" name="contato_email" id="contato_email" value="{{ old('contato_email') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
+                                </div>
+                                <div class="col-span-2">
+                                    <label for="observacoes" class="block text-sm font-medium text-gray-700 mb-1">Observações</label>
+                                    <textarea name="observacoes" id="observacoes" rows="3" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">{{ old('observacoes') }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="flex items-center justify-end gap-4 pt-6 mt-8 border-t border-gray-100">
                             <a href="{{ route('instituicoes.index') }}" class="px-6 py-3 rounded-xl font-medium text-gray-700 hover:bg-gray-100 transition-colors duration-200">
                                 Cancelar

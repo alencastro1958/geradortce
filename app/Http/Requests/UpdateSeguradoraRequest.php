@@ -47,6 +47,10 @@ class UpdateSeguradoraRequest extends FormRequest
             'capital_morte_acidental' => 'nullable|numeric',
             'capital_morte_acidental_extenso' => 'nullable|string|max:255',
             'arquivo_apolice' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
+            'contato_nome' => 'nullable|string|max:255',
+            'contato_fone' => 'nullable|string|max:255',
+            'contato_email' => 'nullable|email|max:255',
+            'observacoes' => 'nullable|string',
         ];
     }
 
