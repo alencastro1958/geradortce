@@ -123,10 +123,16 @@
                         <!-- Representante Legal -->
                         @php $ufs = ['AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA','PB','PR','PE','PI','RJ','RN','RS','RO','RR','SC','SP','SE','TO']; @endphp
                         <div>
-                            <h3 class="text-lg font-semibold text-gray-900 border-b pb-2 mb-6 mt-8 flex items-center gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" /></svg>
-                                Representante Legal
-                            </h3>
+                            <div class="flex items-center justify-between border-b pb-2 mb-6 mt-8">
+                                <h3 class="text-lg font-semibold text-gray-900 flex items-center gap-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" /></svg>
+                                    Representante Legal
+                                </h3>
+                                <a href="/representantes/instituicao/{{ $instituicao->id }}/criar" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium text-white bg-green-600 hover:bg-green-500 transition-colors">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
+                                    Incluir Novo Representante Legal
+                                </a>
+                            </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div class="col-span-2">
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Nome</label>
