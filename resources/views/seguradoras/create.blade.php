@@ -93,11 +93,11 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
                                 <label for="susep_vida_em_grupo" class="block text-sm font-medium text-gray-700 mb-1">Processo SUSEP Vida em Grupo</label>
-                                <input type="text" name="susep_vida_em_grupo" id="susep_vida_em_grupo" value="{{ old('susep_vida_em_grupo') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                <input type="text" name="susep_vida_em_grupo" id="susep_vida_em_grupo" value="{{ old('susep_vida_em_grupo') }}" placeholder="Ex: 001-065570/95" maxlength="30" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                             </div>
                             <div>
                                 <label for="susep_acidentes_pessoais" class="block text-sm font-medium text-gray-700 mb-1">Processo SUSEP Acidentes Pessoais</label>
-                                <input type="text" name="susep_acidentes_pessoais" id="susep_acidentes_pessoais" value="{{ old('susep_acidentes_pessoais') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                <input type="text" name="susep_acidentes_pessoais" id="susep_acidentes_pessoais" value="{{ old('susep_acidentes_pessoais') }}" placeholder="Ex: 10.003496/01-54" maxlength="30" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                             </div>
                         </div>
 
