@@ -253,7 +253,7 @@
                                 </svg>
                                 Representantes Legais
                             </h3>
-                            <a href="{{ route('representantes.create', ['tipo' => 'seguradora', 'entidadeId' => $seguradora->id]) }}" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium text-white bg-green-600 hover:bg-green-500 transition-colors">
+                            <a href="/representantes/seguradora/{{ $seguradora->id }}/criar" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium text-white bg-green-600 hover:bg-green-500 transition-colors">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
                                 Incluir Representante Legal
                             </a>
@@ -292,8 +292,8 @@
                                                 @endif
                                             </td>
                                             <td class="px-4 py-3 text-right">
-                                                <a href="{{ route('representantes.edit', $rep) }}" class="inline-flex items-center px-3 py-1 rounded-lg text-xs font-medium text-green-700 bg-green-50 hover:bg-green-100 mr-2">Editar</a>
-                                                <form method="POST" action="{{ route('representantes.destroy', $rep) }}" class="inline" onsubmit="return confirm('Confirmar exclusão?')">
+                                                <a href="/representantes/{{ $rep->id }}/editar" class="inline-flex items-center px-3 py-1 rounded-lg text-xs font-medium text-green-700 bg-green-50 hover:bg-green-100 mr-2">Editar</a>
+                                                <form method="POST" action="/representantes/{{ $rep->id }}" class="inline" onsubmit="return confirm('Confirmar exclusão?')">
                                                     @csrf @method('DELETE')
                                                     <button type="submit" class="inline-flex items-center px-3 py-1 rounded-lg text-xs font-medium text-red-700 bg-red-50 hover:bg-red-100">Excluir</button>
                                                 </form>
