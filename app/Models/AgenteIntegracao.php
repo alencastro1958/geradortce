@@ -11,4 +11,11 @@ class AgenteIntegracao extends Model
 
     protected $table = 'agente_integracao';
     protected $guarded = [];
+
+    protected function casts(): array
+    {
+        return [
+            'responsavel_legal_data_nascimento' => 'date',
+        ];
+    }
 }
