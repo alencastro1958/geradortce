@@ -27,7 +27,7 @@
                         <ul class="list-disc list-inside text-sm text-red-700">@foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul>
                     </div>
                 @endif
-                <form method="POST" action="{{ route('representantes.store', [$tipo, $entidade->id]) }}" class="space-y-6">
+                <form method="POST" action="/representantes/{{ $tipo }}/{{ $entidade->id }}" class="space-y-6">
                     @csrf
                     @include('representantes._form', ['representante' => null])
                     <div class="flex justify-end gap-4 pt-6 border-t">
