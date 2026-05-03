@@ -125,16 +125,10 @@ document.addEventListener('DOMContentLoaded', function() {
             preencherCampo('razao_social', data.razao_social || data.nome);
             preencherCampo('nome_fantasia', data.nome_fantasia || data.fantasia);
             
-            // Endereço formatado
-            let enderecoFormatado = '';
-            if (data.logradouro) {
-                enderecoFormatado = data.logradouro;
-                if (data.numero) enderecoFormatado += ', ' + data.numero;
-                if (data.complemento) enderecoFormatado += ' - ' + data.complemento;
-            } else {
-                enderecoFormatado = data.endereco || '';
-            }
-            preencherCampo('endereco', enderecoFormatado);
+            preencherCampo('logradouro', data.logradouro || null);
+            preencherCampo('numero', data.numero || null);
+            preencherCampo('complemento', data.complemento || null);
+            preencherCampo('endereco', montarEndereco(data.logradouro, data.numero, data.complemento, data.endereco));
             
             preencherCampo('bairro', data.bairro);
             preencherCampo('cidade', data.cidade || data.municipio);
@@ -167,7 +161,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 .then(res => res.json())
                 .then(data => {
                     if (!data.erro) {
-                        preencherCampo('endereco', data.logradouro);
+                        preencherCampo('logradouro', data.logradouro);
+                        preencherCampo('endereco', montarEndereco(data.logradouro, null, null, null));
                         preencherCampo('bairro', data.bairro);
                         preencherCampo('cidade', data.localidade);
                         preencherCampo('estado', data.uf);
@@ -191,5 +186,13 @@ document.addEventListener('DOMContentLoaded', function() {
             campo.value = valor;
             campo.dispatchEvent(new Event('input'));
         }
+    }
+
+    function montarEndereco(logradouro, numero, complemento, enderecoFallback) {
+        if (!logradouro) return enderecoFallback || null;
+        let endereco = logradouro;
+        if (numero) endereco += `, ${numero}`;
+        if (complemento) endereco += ` - ${complemento}`;
+        return endereco;
     }
 });

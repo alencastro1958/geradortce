@@ -13,10 +13,15 @@ class EmpresaConcedente extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id', 'cnpj', 'razao_social', 'nome_fantasia', 'endereco', 'complemento', 'bairro',
-        'cidade', 'estado', 'cep', 'telefone', 'email', 'responsavel_legal_nome',
-        'responsavel_legal_cargo', 'responsavel_legal_cpf', 'responsavel_legal_rg',
-        'supervisor_estagio_nome', 'supervisor_estagio_cargo', 'supervisor_estagio_formacao', 'supervisor_estagio_cpf', 'supervisor_estagio_email', 'supervisor_estagio_telefone',
+        'user_id', 'cnpj', 'razao_social', 'nome_fantasia', 'endereco', 'logradouro', 'numero', 'complemento',
+        'bairro', 'cidade', 'estado', 'cep', 'telefone', 'telefone_secundario', 'email', 'email_secundario',
+        'responsavel_legal_nome', 'responsavel_legal_cargo', 'responsavel_legal_cpf', 'responsavel_legal_rg',
+        'responsavel_legal_email', 'responsavel_legal_whatsapp', 'autoriza_envio_mensagens',
+        'supervisor_nome', 'supervisor_cargo', 'supervisor_formacao', 'supervisor_tempo_atividade',
+        'supervisor_cpf', 'supervisor_rg', 'supervisor_email', 'supervisor_telefone_whatsapp',
+        'supervisor_registro_profissional',
+        'supervisor_estagio_nome', 'supervisor_estagio_cargo', 'supervisor_estagio_formacao',
+        'supervisor_estagio_cpf', 'supervisor_estagio_email', 'supervisor_estagio_telefone',
         'mantenedora'
     ];
 

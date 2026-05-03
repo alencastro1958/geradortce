@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\InstituicaoEnsino;
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreInstituicaoEnsinoRequest;
+use App\Http\Requests\UpdateInstituicaoEnsinoRequest;
 
 class InstituicaoEnsinoController extends Controller
 {
@@ -18,14 +19,23 @@ class InstituicaoEnsinoController extends Controller
         return view('instituicoes.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreInstituicaoEnsinoRequest $request)
     {
-        $validated = $request->validate([
-            'cnpj' => 'required|unique:instituicao_ensinos,cnpj',
-            'razao_social' => 'required|string|max:255',
-            'nome_fantasia' => 'nullable|string|max:255',
-            'endereco' => 'nullable|string|max:255',
-        ]);
+        $validated = $request->validated();
+
+        $logradouro = $request->input('logradouro');
+        if ($logradouro) {
+            $numero = $request->input('numero');
+            $complemento = $request->input('complemento');
+            $endereco = $logradouro;
+            if ($numero) {
+                $endereco .= ', ' . $numero;
+            }
+            if ($complemento) {
+                $endereco .= ' - ' . $complemento;
+            }
+            $validated['endereco'] = $endereco;
+        }
 
         InstituicaoEnsino::create($validated);
 
@@ -38,16 +48,24 @@ class InstituicaoEnsinoController extends Controller
         return view('instituicoes.edit', compact('instituicao'));
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateInstituicaoEnsinoRequest $request, $id)
     {
         $instituicao = InstituicaoEnsino::findOrFail($id);
+        $validated = $request->validated();
 
-        $validated = $request->validate([
-            'cnpj' => 'required|unique:instituicao_ensinos,cnpj,' . $id,
-            'razao_social' => 'required|string|max:255',
-            'nome_fantasia' => 'nullable|string|max:255',
-            'endereco' => 'nullable|string|max:255',
-        ]);
+        $logradouro = $request->input('logradouro');
+        if ($logradouro) {
+            $numero = $request->input('numero');
+            $complemento = $request->input('complemento');
+            $endereco = $logradouro;
+            if ($numero) {
+                $endereco .= ', ' . $numero;
+            }
+            if ($complemento) {
+                $endereco .= ' - ' . $complemento;
+            }
+            $validated['endereco'] = $endereco;
+        }
 
         $instituicao->update($validated);
 

@@ -34,6 +34,10 @@
                                     <input type="text" name="razao_social" id="razao_social" value="{{ old('razao_social', $empresa->razao_social) }}" required class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
                                     @error('razao_social') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
                                 </div>
+                                <div class="col-span-2">
+                                    <label for="mantenedora" class="block text-sm font-medium text-gray-700 mb-1">Instituição Mantenedora</label>
+                                    <input type="text" name="mantenedora" id="mantenedora" value="{{ old('mantenedora', $empresa->mantenedora) }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
+                                </div>
                                 <div>
                                     <label for="nome_fantasia" class="block text-sm font-medium text-gray-700 mb-1">Nome Fantasia</label>
                                     <input type="text" name="nome_fantasia" id="nome_fantasia" value="{{ old('nome_fantasia', $empresa->nome_fantasia) }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
@@ -56,8 +60,16 @@
                             </h3>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div class="col-span-2">
-                                    <label for="endereco" class="block text-sm font-medium text-gray-700 mb-1">Endereço Completo</label>
-                                    <input type="text" name="endereco" id="endereco" value="{{ old('endereco', $empresa->endereco) }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
+                                    <label for="logradouro" class="block text-sm font-medium text-gray-700 mb-1">Logradouro</label>
+                                    <input type="text" name="logradouro" id="logradouro" value="{{ old('logradouro', $empresa->logradouro) }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
+                                </div>
+                                <div>
+                                    <label for="numero" class="block text-sm font-medium text-gray-700 mb-1">Nº do Logradouro</label>
+                                    <input type="text" name="numero" id="numero" value="{{ old('numero', $empresa->numero) }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
+                                </div>
+                                <div>
+                                    <label for="complemento" class="block text-sm font-medium text-gray-700 mb-1">Complemento</label>
+                                    <input type="text" name="complemento" id="complemento" value="{{ old('complemento', $empresa->complemento) }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
                                 </div>
                                 <div>
                                     <label for="bairro" class="block text-sm font-medium text-gray-700 mb-1">Bairro</label>
@@ -141,6 +153,10 @@
                                         <div>
                                             <label for="supervisor_cargo" class="block text-sm font-medium text-gray-700 mb-1">Cargo</label>
                                             <input type="text" name="supervisor_cargo" id="supervisor_cargo" value="{{ old('supervisor_cargo', $empresa->supervisor_cargo) }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
+                                        </div>
+                                        <div>
+                                            <label for="supervisor_formacao" class="block text-sm font-medium text-gray-700 mb-1">Formação</label>
+                                            <input type="text" name="supervisor_formacao" id="supervisor_formacao" value="{{ old('supervisor_formacao', $empresa->supervisor_formacao) }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
                                         </div>
                                         <div>
                                             <label for="supervisor_tempo_atividade" class="block text-sm font-medium text-gray-700 mb-1">Tempo de atividade na função</label>

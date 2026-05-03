@@ -74,8 +74,16 @@
                                     <input type="text" name="telefone" id="telefone" value="{{ old('telefone', $estagiario->telefone) }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md" placeholder="(00) 00000-0000">
                                 </div>
                                 <div class="col-span-2">
-                                    <label for="endereco" class="block text-sm font-medium text-gray-700 mb-1">Endereço</label>
-                                    <input type="text" name="endereco" id="endereco" value="{{ old('endereco', $estagiario->endereco) }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
+                                    <label for="logradouro" class="block text-sm font-medium text-gray-700 mb-1">Logradouro</label>
+                                    <input type="text" name="logradouro" id="logradouro" value="{{ old('logradouro', $estagiario->logradouro) }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
+                                </div>
+                                <div>
+                                    <label for="numero" class="block text-sm font-medium text-gray-700 mb-1">Nº do Logradouro</label>
+                                    <input type="text" name="numero" id="numero" value="{{ old('numero', $estagiario->numero) }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
+                                </div>
+                                <div>
+                                    <label for="complemento" class="block text-sm font-medium text-gray-700 mb-1">Complemento</label>
+                                    <input type="text" name="complemento" id="complemento" value="{{ old('complemento', $estagiario->complemento) }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
                                 </div>
                                 <div>
                                     <label for="bairro" class="block text-sm font-medium text-gray-700 mb-1">Bairro</label>
@@ -113,8 +121,16 @@
                                     <input type="text" name="matricula" id="matricula" value="{{ old('matricula', $estagiario->matricula) }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
                                 </div>
                                 <div>
-                                    <label for="semestre_atual" class="block text-sm font-medium text-gray-700 mb-1">Semestre Atual</label>
-                                    <input type="number" name="semestre_atual" id="semestre_atual" value="{{ old('semestre_atual', $estagiario->semestre_atual) }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
+                                    <label for="semestre_periodo_serie" class="block text-sm font-medium text-gray-700 mb-1">Semestre/Período/Série</label>
+                                    <input type="text" name="semestre_periodo_serie" id="semestre_periodo_serie" value="{{ old('semestre_periodo_serie', $estagiario->semestre_periodo_serie) }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
+                                </div>
+                                <div>
+                                    <label for="curso_data_inicio" class="block text-sm font-medium text-gray-700 mb-1">Data de Início do Curso (Mês/Ano)</label>
+                                    <input type="text" name="curso_data_inicio" id="curso_data_inicio" value="{{ old('curso_data_inicio', $estagiario->curso_data_inicio) }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md" placeholder="MM/AAAA">
+                                </div>
+                                <div>
+                                    <label for="curso_data_conclusao_prevista" class="block text-sm font-medium text-gray-700 mb-1">Data de Conclusão Prevista (Mês/Ano)</label>
+                                    <input type="text" name="curso_data_conclusao_prevista" id="curso_data_conclusao_prevista" value="{{ old('curso_data_conclusao_prevista', $estagiario->curso_data_conclusao_prevista) }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md" placeholder="MM/AAAA">
                                 </div>
                             </div>
                         </div>

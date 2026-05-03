@@ -101,7 +101,22 @@
         $instituicao = $estagio->instituicaoEnsino;
         $empresa = $estagio->empresaConcedente;
         $estagiario = $estagio->estagiario;
-        $semestre = $estagiario?->semestre_atual ?? $estagiario?->periodo;
+        $semestre = $estagiario?->semestre_periodo_serie ?? $estagiario?->semestre_atual ?? $estagiario?->periodo;
+        $instituicaoEndereco = $instituicao?->logradouro
+            ? trim($instituicao->logradouro . ($instituicao->numero ? ', ' . $instituicao->numero : '') . ($instituicao->complemento ? ' - ' . $instituicao->complemento : ''))
+            : $instituicao?->endereco;
+        $empresaEndereco = $empresa?->logradouro
+            ? trim($empresa->logradouro . ($empresa->numero ? ', ' . $empresa->numero : '') . ($empresa->complemento ? ' - ' . $empresa->complemento : ''))
+            : $empresa?->endereco;
+        $estagiarioEndereco = $estagiario?->logradouro
+            ? trim($estagiario->logradouro . ($estagiario->numero ? ', ' . $estagiario->numero : '') . ($estagiario->complemento ? ' - ' . $estagiario->complemento : ''))
+            : $estagiario?->endereco;
+        $supervisorNome = $empresa?->supervisor_nome ?? $empresa?->supervisor_estagio_nome;
+        $supervisorCargo = $empresa?->supervisor_cargo ?? $empresa?->supervisor_estagio_cargo;
+        $supervisorFormacao = $empresa?->supervisor_formacao ?? $empresa?->supervisor_estagio_formacao;
+        $supervisorCpf = $empresa?->supervisor_cpf ?? $empresa?->supervisor_estagio_cpf;
+        $supervisorEmail = $empresa?->supervisor_email ?? $empresa?->supervisor_estagio_email;
+        $supervisorTelefone = $empresa?->supervisor_telefone_whatsapp ?? $empresa?->supervisor_estagio_telefone;
     @endphp
 
     <p class="bold mt-2 mb-1">INSTITUIÇÃO DE ENSINO</p>
@@ -111,10 +126,9 @@
     @if($instituicao?->mantenedora)
         <p><span class="bold">Mantenedora:</span> {{ $instituicao->mantenedora }}</p>
     @endif
-    @if($instituicao?->endereco || $instituicao?->complemento || $instituicao?->bairro)
+    @if($instituicaoEndereco || $instituicao?->bairro)
         <p>
-            @if($instituicao?->endereco)<span class="bold">Endereço:</span> {{ $instituicao->endereco }}@endif
-            @if($instituicao?->complemento) <span class="bold">Complemento:</span> {{ $instituicao->complemento }}@endif
+            @if($instituicaoEndereco)<span class="bold">Endereço:</span> {{ $instituicaoEndereco }}@endif
             @if($instituicao?->bairro) <span class="bold">Bairro:</span> {{ $instituicao->bairro }}@endif
         </p>
     @endif
@@ -132,18 +146,23 @@
         </p>
     @endif
     <p class="mb-2"></p>
-    @if($instituicao?->responsavel_legal)
-        <p><span class="bold">Responsável Legal:</span> {{ $instituicao->responsavel_legal }}</p>
+    @if($instituicao?->responsavel_legal_nome || $instituicao?->responsavel_legal_cargo || $instituicao?->responsavel_legal_cpf || $instituicao?->responsavel_legal_rg || $instituicao?->responsavel_legal_email)
+        <p>
+            <span class="bold">Responsável Legal:</span> {{ $instituicao->responsavel_legal_nome }}
+            @if($instituicao?->responsavel_legal_cargo) ({{ $instituicao->responsavel_legal_cargo }})@endif
+            @if($instituicao?->responsavel_legal_cpf) <span class="bold">CPF:</span> {{ $instituicao->responsavel_legal_cpf }}@endif
+            @if($instituicao?->responsavel_legal_rg) <span class="bold">RG nº:</span> {{ $instituicao->responsavel_legal_rg }}@endif
+            @if($instituicao?->responsavel_legal_email) <span class="bold">Email:</span> {{ $instituicao->responsavel_legal_email }}@endif
+        </p>
     @endif
 
     <p class="bold mt-2 mb-1">UNIDADE CONCEDENTE DE ESTÁGIO</p>
     @if($empresa?->razao_social || $empresa?->cnpj)
         <p><span class="bold">Razão Social:</span> {{ $empresa->razao_social }} @if($empresa?->cnpj)<span class="bold">CNPJ:</span> {{ $empresa->cnpj }}@endif</p>
     @endif
-    @if($empresa?->endereco || $empresa?->complemento || $empresa?->bairro)
+    @if($empresaEndereco || $empresa?->bairro)
         <p>
-            @if($empresa?->endereco)<span class="bold">Endereço:</span> {{ $empresa->endereco }}@endif
-            @if($empresa?->complemento) <span class="bold">Complemento:</span> {{ $empresa->complemento }}@endif
+            @if($empresaEndereco)<span class="bold">Endereço:</span> {{ $empresaEndereco }}@endif
             @if($empresa?->bairro) <span class="bold">Bairro:</span> {{ $empresa->bairro }}@endif
         </p>
     @endif
@@ -161,8 +180,14 @@
         </p>
     @endif
     <p class="mb-2"></p>
-    @if($empresa?->responsavel_legal)
-        <p><span class="bold">Responsável Legal:</span> {{ $empresa->responsavel_legal }}</p>
+    @if($empresa?->responsavel_legal_nome || $empresa?->responsavel_legal_cargo || $empresa?->responsavel_legal_cpf || $empresa?->responsavel_legal_rg || $empresa?->responsavel_legal_email)
+        <p>
+            <span class="bold">Responsável Legal:</span> {{ $empresa->responsavel_legal_nome }}
+            @if($empresa?->responsavel_legal_cargo) ({{ $empresa->responsavel_legal_cargo }})@endif
+            @if($empresa?->responsavel_legal_cpf) <span class="bold">CPF:</span> {{ $empresa->responsavel_legal_cpf }}@endif
+            @if($empresa?->responsavel_legal_rg) <span class="bold">RG nº:</span> {{ $empresa->responsavel_legal_rg }}@endif
+            @if($empresa?->responsavel_legal_email) <span class="bold">Email:</span> {{ $empresa->responsavel_legal_email }}@endif
+        </p>
     @endif
 
     <p class="bold mt-2 mb-1">ESTAGIÁRIO(A)</p>
@@ -173,10 +198,9 @@
             @if($estagiario?->rg) <span class="bold">RG nº:</span> {{ $estagiario->rg }}@endif
         </p>
     @endif
-    @if($estagiario?->endereco || $estagiario?->complemento || $estagiario?->bairro)
+    @if($estagiarioEndereco || $estagiario?->bairro)
         <p>
-            @if($estagiario?->endereco)<span class="bold">Endereço:</span> {{ $estagiario->endereco }}@endif
-            @if($estagiario?->complemento) <span class="bold">Complemento:</span> {{ $estagiario->complemento }}@endif
+            @if($estagiarioEndereco)<span class="bold">Endereço:</span> {{ $estagiarioEndereco }}@endif
             @if($estagiario?->bairro) <span class="bold">Bairro:</span> {{ $estagiario->bairro }}@endif
         </p>
     @endif
@@ -193,17 +217,23 @@
             @if($estagiario?->email) <span class="bold">Email:</span> {{ $estagiario->email }}@endif
         </p>
     @endif
-    @if($estagiario?->curso || $semestre || $estagiario?->matricula)
+    @if($estagiario?->curso || $semestre || $estagiario?->matricula || $estagiario?->curso_data_inicio || $estagiario?->curso_data_conclusao_prevista)
         <p>
             @if($estagiario?->curso)<span class="bold">Curso:</span> {{ $estagiario->curso }}@endif
             @if($semestre) <span class="bold">Semestre/Período/Série:</span> {{ $semestre }}@endif
             @if($estagiario?->matricula) <span class="bold">Matrícula nº:</span> {{ $estagiario->matricula }}@endif
         </p>
+        @if($estagiario?->curso_data_inicio || $estagiario?->curso_data_conclusao_prevista)
+            <p>
+                @if($estagiario?->curso_data_inicio)<span class="bold">Data de Início:</span> {{ $estagiario->curso_data_inicio }}@endif
+                @if($estagiario?->curso_data_conclusao_prevista) <span class="bold">Data de Conclusão:</span> {{ $estagiario->curso_data_conclusao_prevista }}@endif
+            </p>
+        @endif
     @endif
     @if($estagio->data_inicio || $estagio->data_fim)
         <p>
-            @if($estagio->data_inicio)<span class="bold">Data de Início:</span> {{ $estagio->data_inicio->format('d/m/Y') }}@endif
-            @if($estagio->data_fim) <span class="bold">Data de Conclusão:</span> {{ $estagio->data_fim->format('d/m/Y') }}@endif
+            @if($estagio->data_inicio)<span class="bold">Data de Início do Estágio:</span> {{ $estagio->data_inicio->format('d/m/Y') }}@endif
+            @if($estagio->data_fim) <span class="bold">Data de Conclusão do Estágio:</span> {{ $estagio->data_fim->format('d/m/Y') }}@endif
         </p>
     @endif
     <p class="mb-2"></p>
@@ -230,14 +260,14 @@
     <p class="mt-2"><span class="bold">PARÁGRAFO SEGUNDO:</span> A INSTITUIÇÃO DE ENSINO declara que as atividades acima relacionadas são compatíveis com a programação curricular do curso de {{ $estagio->estagiario->curso }}, para o qual há previsão de estágio curricular.</p>
 
     <p class="bold mt-2">CLÁUSULA TERCEIRA:</p>
-    @if($empresa?->supervisor_estagio_nome || $empresa?->supervisor_estagio_cargo || $empresa?->supervisor_estagio_formacao || $empresa?->supervisor_estagio_cpf || $empresa?->supervisor_estagio_email || $empresa?->supervisor_estagio_telefone)
+    @if($supervisorNome || $supervisorCargo || $supervisorFormacao || $supervisorCpf || $supervisorEmail || $supervisorTelefone)
         <p>Atuará como Supervisor(a) de Estágio na Unidade Concedente:
-            @if($empresa?->supervisor_estagio_nome) {{ $empresa->supervisor_estagio_nome }}@endif
-            @if($empresa?->supervisor_estagio_cargo), {{ $empresa->supervisor_estagio_cargo }}@endif
-            @if($empresa?->supervisor_estagio_formacao), {{ $empresa->supervisor_estagio_formacao }}@endif
-            @if($empresa?->supervisor_estagio_cpf), CPF: {{ $empresa->supervisor_estagio_cpf }}@endif
-            @if($empresa?->supervisor_estagio_email), e-mail: {{ $empresa->supervisor_estagio_email }}@endif
-            @if($empresa?->supervisor_estagio_telefone), telefone: {{ $empresa->supervisor_estagio_telefone }}@endif.
+            @if($supervisorNome) {{ $supervisorNome }}@endif
+            @if($supervisorCargo), {{ $supervisorCargo }}@endif
+            @if($supervisorFormacao), {{ $supervisorFormacao }}@endif
+            @if($supervisorCpf), CPF: {{ $supervisorCpf }}@endif
+            @if($supervisorEmail), e-mail: {{ $supervisorEmail }}@endif
+            @if($supervisorTelefone), telefone: {{ $supervisorTelefone }}@endif.
         </p>
     @endif
 
@@ -278,12 +308,18 @@
     <div class="assinatura-centro mt-3" style="text-align: center;">
         <p class="underline mb-1">&nbsp;</p>
         <p class="bold assinatura-nome">{{ $estagio->empresaConcedente->razao_social }}</p>
+        @if($estagio->empresaConcedente->responsavel_legal_nome)
+            <p class="assinatura-responsavel">{{ $estagio->empresaConcedente->responsavel_legal_nome }}</p>
+        @endif
         <p class="assinatura-papel">Unidade Concedente de Estágio</p>
     </div>
 
     <div class="assinatura-centro mt-3" style="text-align: center;">
         <p class="underline mb-1">&nbsp;</p>
         <p class="bold assinatura-nome">{{ $estagio->instituicaoEnsino->razao_social }}</p>
+        @if($estagio->instituicaoEnsino->responsavel_legal_nome)
+            <p class="assinatura-responsavel">{{ $estagio->instituicaoEnsino->responsavel_legal_nome }}</p>
+        @endif
         <p class="assinatura-papel">Instituição de Ensino</p>
     </div>
 

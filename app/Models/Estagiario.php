@@ -14,8 +14,10 @@ class Estagiario extends Model
 
     protected $fillable = [
         'user_id', 'nome', 'cpf', 'rg', 'data_nascimento', 'estado_civil',
-        'endereco', 'complemento', 'bairro', 'cidade', 'estado', 'cep', 'telefone', 'email',
-        'curso', 'semestre_atual', 'periodo', 'matricula', 'responsavel_legal_nome', 'responsavel_legal_cpf'
+        'endereco', 'logradouro', 'numero', 'complemento', 'bairro', 'cidade', 'estado', 'cep',
+        'telefone', 'email',
+        'curso', 'semestre_atual', 'periodo', 'semestre_periodo_serie', 'curso_data_inicio',
+        'curso_data_conclusao_prevista', 'matricula', 'responsavel_legal_nome', 'responsavel_legal_cpf'
     ];
 
     protected function casts(): array

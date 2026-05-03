@@ -48,8 +48,18 @@
                         </div>
 
                         <div>
-                            <label for="endereco" class="block text-sm font-medium text-gray-700 mb-1">Endereço</label>
-                            <input type="text" name="endereco" id="endereco" value="{{ old('endereco') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" placeholder="Rua, número, complemento">
+                            <label for="logradouro" class="block text-sm font-medium text-gray-700 mb-1">Logradouro</label>
+                            <input type="text" name="logradouro" id="logradouro" value="{{ old('logradouro') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" placeholder="Rua, avenida, etc.">
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="numero" class="block text-sm font-medium text-gray-700 mb-1">Nº do Logradouro</label>
+                                <input type="text" name="numero" id="numero" value="{{ old('numero') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                            </div>
+                            <div>
+                                <label for="complemento" class="block text-sm font-medium text-gray-700 mb-1">Complemento</label>
+                                <input type="text" name="complemento" id="complemento" value="{{ old('complemento') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                            </div>
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -63,10 +73,43 @@
                             </div>
                         </div>
 
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="telefone" class="block text-sm font-medium text-gray-700 mb-1">Telefone</label>
+                                <input type="text" name="telefone" id="telefone" value="{{ old('telefone') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                            </div>
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">E-mail</label>
+                                <input type="email" name="email" id="email" value="{{ old('email') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                            </div>
+                        </div>
+
                         <div>
                             <label for="apolice_numero" class="block text-sm font-medium text-gray-700 mb-1">Número da Apólice</label>
                             <input type="text" name="apolice_numero" id="apolice_numero" value="{{ old('apolice_numero') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md" placeholder="Número do contrato ou apólice coletiva">
                             @error('apolice_numero') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="susep_vida_em_grupo" class="block text-sm font-medium text-gray-700 mb-1">Processo SUSEP Vida em Grupo</label>
+                                <input type="text" name="susep_vida_em_grupo" id="susep_vida_em_grupo" value="{{ old('susep_vida_em_grupo') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                            </div>
+                            <div>
+                                <label for="susep_acidentes_pessoais" class="block text-sm font-medium text-gray-700 mb-1">Processo SUSEP Acidentes Pessoais</label>
+                                <input type="text" name="susep_acidentes_pessoais" id="susep_acidentes_pessoais" value="{{ old('susep_acidentes_pessoais') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="capital_morte_acidental" class="block text-sm font-medium text-gray-700 mb-1">Capital Segurado (Morte Acidental)</label>
+                                <input type="number" step="0.01" name="capital_morte_acidental" id="capital_morte_acidental" value="{{ old('capital_morte_acidental') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" placeholder="0,00">
+                            </div>
+                            <div>
+                                <label for="capital_morte_acidental_extenso" class="block text-sm font-medium text-gray-700 mb-1">Capital Segurado por Extenso</label>
+                                <input type="text" name="capital_morte_acidental_extenso" id="capital_morte_acidental_extenso" value="{{ old('capital_morte_acidental_extenso') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                            </div>
                         </div>
 
                         <div>

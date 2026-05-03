@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Estagiario;
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreEstagiarioRequest;
+use App\Http\Requests\UpdateEstagiarioRequest;
 
 class EstagiarioController extends Controller
 {
@@ -18,27 +19,23 @@ class EstagiarioController extends Controller
         return view('estagiarios.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreEstagiarioRequest $request)
     {
-        $validated = $request->validate([
-            'nome' => 'required|string|max:255',
-            'cpf' => 'required|unique:estagiarios,cpf',
-            'rg' => 'nullable|string|max:255',
-            'data_nascimento' => 'nullable|date',
-            'estado_civil' => 'nullable|string|max:255',
-            'endereco' => 'nullable|string|max:255',
-            'bairro' => 'nullable|string|max:255',
-            'cidade' => 'nullable|string|max:255',
-            'estado' => 'nullable|string|max:2',
-            'cep' => 'nullable|string|max:10',
-            'telefone' => 'nullable|string|max:255',
-            'email' => 'nullable|email|max:255',
-            'curso' => 'nullable|string|max:255',
-            'semestre_atual' => 'nullable|integer',
-            'matricula' => 'nullable|string|max:255',
-            'responsavel_legal_nome' => 'nullable|string|max:255',
-            'responsavel_legal_cpf' => 'nullable|string|max:255',
-        ]);
+        $validated = $request->validated();
+
+        $logradouro = $request->input('logradouro');
+        if ($logradouro) {
+            $numero = $request->input('numero');
+            $complemento = $request->input('complemento');
+            $endereco = $logradouro;
+            if ($numero) {
+                $endereco .= ', ' . $numero;
+            }
+            if ($complemento) {
+                $endereco .= ' - ' . $complemento;
+            }
+            $validated['endereco'] = $endereco;
+        }
 
         Estagiario::create($validated);
 
@@ -50,27 +47,23 @@ class EstagiarioController extends Controller
         return view('estagiarios.edit', compact('estagiario'));
     }
 
-    public function update(Request $request, Estagiario $estagiario)
+    public function update(UpdateEstagiarioRequest $request, Estagiario $estagiario)
     {
-        $validated = $request->validate([
-            'nome' => 'required|string|max:255',
-            'cpf' => 'required|unique:estagiarios,cpf,' . $estagiario->id,
-            'rg' => 'nullable|string|max:255',
-            'data_nascimento' => 'nullable|date',
-            'estado_civil' => 'nullable|string|max:255',
-            'endereco' => 'nullable|string|max:255',
-            'bairro' => 'nullable|string|max:255',
-            'cidade' => 'nullable|string|max:255',
-            'estado' => 'nullable|string|max:2',
-            'cep' => 'nullable|string|max:10',
-            'telefone' => 'nullable|string|max:255',
-            'email' => 'nullable|email|max:255',
-            'curso' => 'nullable|string|max:255',
-            'semestre_atual' => 'nullable|integer',
-            'matricula' => 'nullable|string|max:255',
-            'responsavel_legal_nome' => 'nullable|string|max:255',
-            'responsavel_legal_cpf' => 'nullable|string|max:255',
-        ]);
+        $validated = $request->validated();
+
+        $logradouro = $request->input('logradouro');
+        if ($logradouro) {
+            $numero = $request->input('numero');
+            $complemento = $request->input('complemento');
+            $endereco = $logradouro;
+            if ($numero) {
+                $endereco .= ', ' . $numero;
+            }
+            if ($complemento) {
+                $endereco .= ' - ' . $complemento;
+            }
+            $validated['endereco'] = $endereco;
+        }
 
         $estagiario->update($validated);
 

@@ -65,8 +65,16 @@
                             </h3>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div class="col-span-2">
-                                    <label for="endereco" class="block text-sm font-medium text-gray-700 mb-1">Endereço Completo</label>
-                                    <input type="text" name="endereco" id="endereco" value="{{ old('endereco') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
+                                    <label for="logradouro" class="block text-sm font-medium text-gray-700 mb-1">Logradouro</label>
+                                    <input type="text" name="logradouro" id="logradouro" value="{{ old('logradouro') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
+                                </div>
+                                <div>
+                                    <label for="numero" class="block text-sm font-medium text-gray-700 mb-1">Nº do Logradouro</label>
+                                    <input type="text" name="numero" id="numero" value="{{ old('numero') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
+                                </div>
+                                <div>
+                                    <label for="complemento" class="block text-sm font-medium text-gray-700 mb-1">Complemento</label>
+                                    <input type="text" name="complemento" id="complemento" value="{{ old('complemento') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
                                 </div>
                                 <div>
                                     <label for="bairro" class="block text-sm font-medium text-gray-700 mb-1">Bairro</label>

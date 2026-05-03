@@ -21,7 +21,13 @@
         </tr>
         <tr>
             <td class="label">Endereço:</td>
-            <td>{{ $estagio->instituicaoEnsino->endereco }}, {{ $estagio->instituicaoEnsino->cidade }}-{{ $estagio->instituicaoEnsino->estado }}</td>
+            <td>
+                {{ $estagio->instituicaoEnsino->logradouro ? $estagio->instituicaoEnsino->logradouro : $estagio->instituicaoEnsino->endereco }}
+                @if($estagio->instituicaoEnsino->numero), {{ $estagio->instituicaoEnsino->numero }}@endif
+                @if($estagio->instituicaoEnsino->complemento) - {{ $estagio->instituicaoEnsino->complemento }}@endif
+                @if($estagio->instituicaoEnsino->cidade) , {{ $estagio->instituicaoEnsino->cidade }}@endif
+                @if($estagio->instituicaoEnsino->estado)-{{ $estagio->instituicaoEnsino->estado }}@endif
+            </td>
         </tr>
     </table>
 
@@ -39,11 +45,23 @@
         </tr>
         <tr>
             <td class="label">Endereço:</td>
-            <td>{{ $estagio->empresaConcedente->endereco }}, {{ $estagio->empresaConcedente->bairro }}, {{ $estagio->empresaConcedente->cidade }}-{{ $estagio->empresaConcedente->estado }}</td>
+            <td>
+                {{ $estagio->empresaConcedente->logradouro ? $estagio->empresaConcedente->logradouro : $estagio->empresaConcedente->endereco }}
+                @if($estagio->empresaConcedente->numero), {{ $estagio->empresaConcedente->numero }}@endif
+                @if($estagio->empresaConcedente->complemento) - {{ $estagio->empresaConcedente->complemento }}@endif
+                @if($estagio->empresaConcedente->bairro) , {{ $estagio->empresaConcedente->bairro }}@endif
+                @if($estagio->empresaConcedente->cidade) , {{ $estagio->empresaConcedente->cidade }}@endif
+                @if($estagio->empresaConcedente->estado)-{{ $estagio->empresaConcedente->estado }}@endif
+            </td>
         </tr>
         <tr>
             <td class="label">Supervisor:</td>
-            <td>{{ $estagio->empresaConcedente->supervisor_nome }} ({{ $estagio->empresaConcedente->supervisor_cargo }})</td>
+            <td>
+                {{ $estagio->empresaConcedente->supervisor_nome ?? $estagio->empresaConcedente->supervisor_estagio_nome }}
+                @if($estagio->empresaConcedente->supervisor_cargo || $estagio->empresaConcedente->supervisor_estagio_cargo)
+                    ({{ $estagio->empresaConcedente->supervisor_cargo ?? $estagio->empresaConcedente->supervisor_estagio_cargo }})
+                @endif
+            </td>
         </tr>
     </table>
 
@@ -63,6 +81,18 @@
             <td class="label">Curso:</td>
             <td>{{ $estagio->estagiario->curso }}</td>
         </tr>
+        @if($estagio->estagiario->semestre_periodo_serie)
+            <tr>
+                <td class="label">Semestre/Período/Série:</td>
+                <td>{{ $estagio->estagiario->semestre_periodo_serie }}</td>
+            </tr>
+        @endif
+        @if($estagio->estagiario->matricula)
+            <tr>
+                <td class="label">Matrícula:</td>
+                <td>{{ $estagio->estagiario->matricula }}</td>
+            </tr>
+        @endif
     </table>
 
     <div class="section-title">2. CONDIÇÕES DO ESTÁGIO</div>
@@ -105,6 +135,9 @@
                 <td>
                     <div class="signature-line"></div><br>
                     {{ $estagio->empresaConcedente->razao_social }}<br>
+                    @if($estagio->empresaConcedente->responsavel_legal_nome)
+                        {{ $estagio->empresaConcedente->responsavel_legal_nome }}<br>
+                    @endif
                     (Unidade Concedente)
                 </td>
                 <td>
@@ -117,6 +150,9 @@
                 <td colspan="2" style="padding-top: 60px;">
                     <div class="signature-line"></div><br>
                     {{ $estagio->instituicaoEnsino->nome_fantasia ?? $estagio->instituicaoEnsino->razao_social }}<br>
+                    @if($estagio->instituicaoEnsino->responsavel_legal_nome)
+                        {{ $estagio->instituicaoEnsino->responsavel_legal_nome }}<br>
+                    @endif
                     (Instituição de Ensino)
                 </td>
             </tr>

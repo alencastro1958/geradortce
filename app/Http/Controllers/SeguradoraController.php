@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Seguradora;
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreSeguradoraRequest;
+use App\Http\Requests\UpdateSeguradoraRequest;
 use Illuminate\Support\Facades\Storage;
 
 class SeguradoraController extends Controller
@@ -19,20 +20,23 @@ class SeguradoraController extends Controller
         return view('seguradoras.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreSeguradoraRequest $request)
     {
-        $validated = $request->validate([
-            'nome' => 'required|string|max:255',
-            'razao_social' => 'nullable|string|max:255',
-            'cnpj' => 'nullable|string|max:20',
-            'endereco' => 'nullable|string|max:255',
-            'bairro' => 'nullable|string|max:255',
-            'cidade' => 'nullable|string|max:255',
-            'estado' => 'nullable|string|max:2',
-            'cep' => 'nullable|string|max:10',
-            'apolice_numero' => 'nullable|string|max:255',
-            'arquivo_apolice' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
-        ]);
+        $validated = $request->validated();
+
+        $logradouro = $request->input('logradouro');
+        if ($logradouro) {
+            $numero = $request->input('numero');
+            $complemento = $request->input('complemento');
+            $endereco = $logradouro;
+            if ($numero) {
+                $endereco .= ', ' . $numero;
+            }
+            if ($complemento) {
+                $endereco .= ' - ' . $complemento;
+            }
+            $validated['endereco'] = $endereco;
+        }
 
         if ($request->hasFile('arquivo_apolice')) {
             $path = $request->file('arquivo_apolice')->store('apolices', 'public');
@@ -49,20 +53,23 @@ class SeguradoraController extends Controller
         return view('seguradoras.edit', compact('seguradora'));
     }
 
-    public function update(Request $request, Seguradora $seguradora)
+    public function update(UpdateSeguradoraRequest $request, Seguradora $seguradora)
     {
-        $validated = $request->validate([
-            'nome' => 'required|string|max:255',
-            'razao_social' => 'nullable|string|max:255',
-            'cnpj' => 'nullable|string|max:20',
-            'endereco' => 'nullable|string|max:255',
-            'bairro' => 'nullable|string|max:255',
-            'cidade' => 'nullable|string|max:255',
-            'estado' => 'nullable|string|max:2',
-            'cep' => 'nullable|string|max:10',
-            'apolice_numero' => 'nullable|string|max:255',
-            'arquivo_apolice' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
-        ]);
+        $validated = $request->validated();
+
+        $logradouro = $request->input('logradouro');
+        if ($logradouro) {
+            $numero = $request->input('numero');
+            $complemento = $request->input('complemento');
+            $endereco = $logradouro;
+            if ($numero) {
+                $endereco .= ', ' . $numero;
+            }
+            if ($complemento) {
+                $endereco .= ' - ' . $complemento;
+            }
+            $validated['endereco'] = $endereco;
+        }
 
         if ($request->hasFile('arquivo_apolice')) {
             // Remove arquivo antigo se existir
