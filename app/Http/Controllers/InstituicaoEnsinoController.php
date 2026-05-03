@@ -45,6 +45,7 @@ class InstituicaoEnsinoController extends Controller
     public function edit($id)
     {
         $instituicao = InstituicaoEnsino::findOrFail($id);
+        $instituicao->load('representantesLegais');
         return view('instituicoes.edit', compact('instituicao'));
     }
 

@@ -39,6 +39,23 @@ Route::middleware('auth')->group(function () {
     // API de Consulta CNPJ
     Route::get('/api/consultar-cnpj', [\App\Http\Controllers\CnpjController::class, 'consultar'])->name('api.consultar-cnpj');
 
+    // Supervisores de Estágio (nested under empresas)
+    Route::get('empresas/{empresa}/supervisores/criar', [\App\Http\Controllers\SupervisorEstagioController::class, 'create'])->name('supervisores.create');
+    Route::post('empresas/{empresa}/supervisores', [\App\Http\Controllers\SupervisorEstagioController::class, 'store'])->name('supervisores.store');
+    Route::get('empresas/{empresa}/supervisores/{supervisor}/editar', [\App\Http\Controllers\SupervisorEstagioController::class, 'edit'])->name('supervisores.edit');
+    Route::put('empresas/{empresa}/supervisores/{supervisor}', [\App\Http\Controllers\SupervisorEstagioController::class, 'update'])->name('supervisores.update');
+    Route::delete('empresas/{empresa}/supervisores/{supervisor}', [\App\Http\Controllers\SupervisorEstagioController::class, 'destroy'])->name('supervisores.destroy');
+
+    // Representantes Legais
+    Route::get('representantes/{tipo}/{entidadeId}/criar', [\App\Http\Controllers\RepresentanteLegalController::class, 'create'])->name('representantes.create');
+    Route::post('representantes/{tipo}/{entidadeId}', [\App\Http\Controllers\RepresentanteLegalController::class, 'store'])->name('representantes.store');
+    Route::get('representantes/{representante}/editar', [\App\Http\Controllers\RepresentanteLegalController::class, 'edit'])->name('representantes.edit');
+    Route::put('representantes/{representante}', [\App\Http\Controllers\RepresentanteLegalController::class, 'update'])->name('representantes.update');
+    Route::delete('representantes/{representante}', [\App\Http\Controllers\RepresentanteLegalController::class, 'destroy'])->name('representantes.destroy');
+
+    // API - Supervisores por Empresa
+    Route::get('/api/empresas/{empresa}/supervisores', [\App\Http\Controllers\ApiSupervisorController::class, 'byEmpresa'])->name('api.supervisores');
+
     // Sistema de Vagas
     Route::get('/vagas/oportunidades', [\App\Http\Controllers\VagaController::class, 'buscaPublica'])->name('vagas.busca');
     Route::post('/vagas/{vaga}/candidatar', [\App\Http\Controllers\VagaController::class, 'candidatar'])->name('vagas.candidatar');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\AgenteIntegracao;
+use App\Models\RepresentanteLegal;
 use Illuminate\Http\Request;
 
 class AgenteIntegracaoController extends Controller
@@ -10,7 +11,10 @@ class AgenteIntegracaoController extends Controller
     public function index()
     {
         $agente = AgenteIntegracao::first();
-        return view('agente_integracao.index', compact('agente'));
+        $representantes = RepresentanteLegal::where('entidade_tipo', 'agente')
+            ->where('entidade_id', $agente->id ?? 0)
+            ->get();
+        return view('agente_integracao.index', compact('agente', 'representantes'));
     }
 
     public function update(Request $request)

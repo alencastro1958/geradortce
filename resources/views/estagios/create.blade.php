@@ -48,6 +48,21 @@
                                 @error('empresa_concedente_id') <span class="text-red-500 text-xs mt-1">{{ $message }}</span> @enderror
                             </div>
 
+                            <!-- Supervisor de Estágio (dinâmico) -->
+                            <div x-data="supervisorSelector({{ json_encode($supervisoresPorEmpresa) }})">
+                                <label class="block text-sm font-bold text-gray-700 mb-2">Supervisor de Estágio</label>
+                                <select name="supervisor_estagio_id"
+                                        x-model="selectedSupervisor"
+                                        :disabled="supervisores.length === 0"
+                                        class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow">
+                                    <option value="">— Selecione após escolher a empresa —</option>
+                                    <template x-for="sup in supervisores" :key="sup.id">
+                                        <option :value="sup.id" x-text="sup.nome + (sup.cargo ? ' (' + sup.cargo + ')' : '')"></option>
+                                    </template>
+                                </select>
+                                <p class="text-xs text-gray-400 mt-1">Selecione primeiro a Empresa Concedente</p>
+                            </div>
+
                             <!-- Instituição de Ensino -->
                             <div>
                                 <label for="instituicao_ensino_id" class="block text-sm font-bold text-gray-700 mb-2">Instituição de Ensino *</label>
@@ -190,3 +205,31 @@
         </div>
     </div>
 </x-app-layout>
+
+<script>
+function supervisorSelector(allSupervisores) {
+    return {
+        allSupervisores: allSupervisores,
+        supervisores: [],
+        selectedEmpresa: null,
+        selectedSupervisor: '{{ old('supervisor_estagio_id') }}',
+        init() {
+            const empresaSelect = document.getElementById('empresa_concedente_id');
+            this.selectedEmpresa = empresaSelect.value;
+            this.updateSupervisores();
+            empresaSelect.addEventListener('change', () => {
+                this.selectedEmpresa = empresaSelect.value;
+                this.selectedSupervisor = '';
+                this.updateSupervisores();
+            });
+        },
+        updateSupervisores() {
+            if (this.selectedEmpresa && this.allSupervisores[this.selectedEmpresa]) {
+                this.supervisores = this.allSupervisores[this.selectedEmpresa];
+            } else {
+                this.supervisores = [];
+            }
+        }
+    }
+}
+</script>

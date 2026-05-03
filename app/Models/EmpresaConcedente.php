@@ -50,4 +50,15 @@ class EmpresaConcedente extends Model
     {
         return $this->hasMany(Estagio::class);
     }
+
+    public function supervisores(): HasMany
+    {
+        return $this->hasMany(SupervisorEstagio::class);
+    }
+
+    public function representantesLegais(): HasMany
+    {
+        return $this->hasMany(RepresentanteLegal::class, 'entidade_id')
+                    ->where('entidade_tipo', 'empresa');
+    }
 }

@@ -15,7 +15,8 @@ class Estagio extends Model
     protected $fillable = [
         'estagiario_id', 'empresa_concedente_id', 'instituicao_ensino_id', 'seguradora_id',
         'data_inicio', 'data_fim', 'carga_horaria_semanal', 'valor_bolsa', 'valor_auxilio_transporte',
-        'atividades', 'status', 'horario_inicio', 'horario_inicio_minuto', 'horario_fim', 'horario_fim_minuto', 'intervalo', 'apolice_numero'
+        'atividades', 'status', 'horario_inicio', 'horario_inicio_minuto', 'horario_fim', 'horario_fim_minuto', 'intervalo', 'apolice_numero',
+        'supervisor_estagio_id',
     ];
 
     protected function casts(): array
@@ -52,5 +53,10 @@ class Estagio extends Model
     public function documentos(): HasMany
     {
         return $this->hasMany(Documento::class);
+    }
+
+    public function supervisorEstagio(): BelongsTo
+    {
+        return $this->belongsTo(SupervisorEstagio::class);
     }
 }

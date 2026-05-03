@@ -104,209 +104,9 @@
                             </div>
                         </div>
 
-                        <!-- Representante Legal -->
-                        <div>
-                            <h3 class="text-lg font-semibold text-gray-900 border-b pb-2 mb-6 mt-8 flex items-center gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-500" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
-                                </svg>
-                                Representante Legal
-                            </h3>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div class="col-span-2">
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Nome</label>
-                                    <input type="text" name="responsavel_legal_nome" value="{{ old('responsavel_legal_nome', $empresa->responsavel_legal_nome ?? '') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">CPF</label>
-                                    <input type="text" name="responsavel_legal_cpf" value="{{ old('responsavel_legal_cpf', $empresa->responsavel_legal_cpf ?? '') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md" placeholder="000.000.000-00">
-                                </div>
-                                <div class="grid grid-cols-3 gap-3">
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">RG nº</label>
-                                        <input type="text" name="responsavel_legal_rg" value="{{ old('responsavel_legal_rg', $empresa->responsavel_legal_rg ?? '') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">Órgão Emissor</label>
-                                        <input type="text" name="responsavel_legal_rg_orgao_emissor" value="{{ old('responsavel_legal_rg_orgao_emissor', $empresa->responsavel_legal_rg_orgao_emissor ?? '') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md" placeholder="SSP">
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">UF</label>
-                                        <select name="responsavel_legal_rg_uf" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
-                                            <option value="">--</option>
-                                            @foreach(['AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA','PB','PR','PE','PI','RJ','RN','RS','RO','RR','SC','SP','SE','TO'] as $uf)
-                                                <option value="{{ $uf }}" {{ old('responsavel_legal_rg_uf', $empresa->responsavel_legal_rg_uf ?? '') == $uf ? 'selected' : '' }}>{{ $uf }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Cargo</label>
-                                    <input type="text" name="responsavel_legal_cargo" value="{{ old('responsavel_legal_cargo', $empresa->responsavel_legal_cargo ?? '') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Nacionalidade</label>
-                                    <input type="text" name="responsavel_legal_nacionalidade" value="{{ old('responsavel_legal_nacionalidade', $empresa->responsavel_legal_nacionalidade ?? '') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md" placeholder="Brasileiro(a)">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Data de Nascimento</label>
-                                    <input type="date" name="responsavel_legal_data_nascimento" value="{{ old('responsavel_legal_data_nascimento', isset($empresa) && $empresa->responsavel_legal_data_nascimento ? $empresa->responsavel_legal_data_nascimento->format('Y-m-d') : '') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">E-mail</label>
-                                    <input type="email" name="responsavel_legal_email" value="{{ old('responsavel_legal_email', $empresa->responsavel_legal_email ?? '') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Celular</label>
-                                    <input type="text" name="responsavel_legal_celular" value="{{ old('responsavel_legal_celular', $empresa->responsavel_legal_celular ?? '') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md" placeholder="(00) 00000-0000">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Celular 2</label>
-                                    <input type="text" name="responsavel_legal_celular2" value="{{ old('responsavel_legal_celular2', $empresa->responsavel_legal_celular2 ?? '') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md" placeholder="(00) 00000-0000">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">WhatsApp</label>
-                                    <input type="text" name="responsavel_legal_whatsapp" value="{{ old('responsavel_legal_whatsapp', $empresa->responsavel_legal_whatsapp ?? '') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md" placeholder="(00) 00000-0000">
-                                </div>
-                                <div class="col-span-2 grid grid-cols-3 gap-6">
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">Principal?</label>
-                                        <div class="flex gap-4">
-                                            <label class="flex items-center gap-2"><input type="radio" name="responsavel_legal_principal" value="1" {{ old('responsavel_legal_principal', $empresa->responsavel_legal_principal ?? '') == '1' ? 'checked' : '' }}> Sim</label>
-                                            <label class="flex items-center gap-2"><input type="radio" name="responsavel_legal_principal" value="0" {{ old('responsavel_legal_principal', $empresa->responsavel_legal_principal ?? '0') == '0' ? 'checked' : '' }}> Não</label>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">Ativo?</label>
-                                        <div class="flex gap-4">
-                                            <label class="flex items-center gap-2"><input type="radio" name="responsavel_legal_ativo" value="1" {{ old('responsavel_legal_ativo', $empresa->responsavel_legal_ativo ?? '1') == '1' ? 'checked' : '' }}> Sim</label>
-                                            <label class="flex items-center gap-2"><input type="radio" name="responsavel_legal_ativo" value="0" {{ old('responsavel_legal_ativo', $empresa->responsavel_legal_ativo ?? '') == '0' ? 'checked' : '' }}> Não</label>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">Assina Documentos?</label>
-                                        <div class="flex gap-4">
-                                            <label class="flex items-center gap-2"><input type="radio" name="responsavel_legal_assina_documentos" value="1" {{ old('responsavel_legal_assina_documentos', $empresa->responsavel_legal_assina_documentos ?? '') == '1' ? 'checked' : '' }}> Sim</label>
-                                            <label class="flex items-center gap-2"><input type="radio" name="responsavel_legal_assina_documentos" value="0" {{ old('responsavel_legal_assina_documentos', $empresa->responsavel_legal_assina_documentos ?? '0') == '0' ? 'checked' : '' }}> Não</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-span-2">
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Observações</label>
-                                    <textarea name="responsavel_legal_observacoes" rows="2" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">{{ old('responsavel_legal_observacoes', $empresa->responsavel_legal_observacoes ?? '') }}</textarea>
-                                </div>
-                            </div>
-                        </div>
+                        <!-- Representante Legal (gerenciado abaixo) -->
 
-                        <!-- Dados do Supervisor de Estágio -->
-                        <div>
-                            <h3 class="text-lg font-semibold text-gray-900 border-b pb-2 mb-6 mt-8 flex items-center gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-500" viewBox="0 0 20 20" fill="currentColor">
-                                    <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
-                                </svg>
-                                Dados do Supervisor de Estágio
-                            </h3>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div class="col-span-2">
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Nome Completo</label>
-                                    <input type="text" name="supervisor_nome" value="{{ old('supervisor_nome', $empresa->supervisor_nome ?? '') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Data de Nascimento</label>
-                                    <input type="date" name="supervisor_data_nascimento" value="{{ old('supervisor_data_nascimento', isset($empresa) && $empresa->supervisor_data_nascimento ? $empresa->supervisor_data_nascimento->format('Y-m-d') : '') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">CPF</label>
-                                    <input type="text" name="supervisor_cpf" value="{{ old('supervisor_cpf', $empresa->supervisor_cpf ?? '') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md" placeholder="000.000.000-00">
-                                </div>
-                                <div class="grid grid-cols-3 gap-3">
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">RG nº</label>
-                                        <input type="text" name="supervisor_rg" value="{{ old('supervisor_rg', $empresa->supervisor_rg ?? '') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">Órgão Emissor</label>
-                                        <input type="text" name="supervisor_rg_orgao_emissor" value="{{ old('supervisor_rg_orgao_emissor', $empresa->supervisor_rg_orgao_emissor ?? '') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md" placeholder="SSP">
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">UF</label>
-                                        <select name="supervisor_rg_uf" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
-                                            <option value="">--</option>
-                                            @foreach(['AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA','PB','PR','PE','PI','RJ','RN','RS','RO','RR','SC','SP','SE','TO'] as $uf)
-                                                <option value="{{ $uf }}" {{ old('supervisor_rg_uf', $empresa->supervisor_rg_uf ?? '') == $uf ? 'selected' : '' }}>{{ $uf }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Cargo</label>
-                                    <input type="text" name="supervisor_cargo" value="{{ old('supervisor_cargo', $empresa->supervisor_cargo ?? '') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Celular</label>
-                                    <input type="text" name="supervisor_celular" value="{{ old('supervisor_celular', $empresa->supervisor_celular ?? '') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md" placeholder="(00) 00000-0000">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">E-mail</label>
-                                    <input type="email" name="supervisor_email" value="{{ old('supervisor_email', $empresa->supervisor_email ?? '') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Formação</label>
-                                    <input type="text" name="supervisor_formacao" value="{{ old('supervisor_formacao', $empresa->supervisor_formacao ?? '') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Órgão Regulamentador</label>
-                                    <input type="text" name="supervisor_orgao_regulamentador" value="{{ old('supervisor_orgao_regulamentador', $empresa->supervisor_orgao_regulamentador ?? '') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md" placeholder="Ex: CRM, CREA, CRO...">
-                                </div>
-                                <div class="col-span-2">
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Outras Formações</label>
-                                    <textarea name="supervisor_outras_formacoes" rows="2" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">{{ old('supervisor_outras_formacoes', $empresa->supervisor_outras_formacoes ?? '') }}</textarea>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Tempo de Experiência no Cargo</label>
-                                    <input type="text" name="supervisor_tempo_atividade" value="{{ old('supervisor_tempo_atividade', $empresa->supervisor_tempo_atividade ?? '') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md" placeholder="Ex: 3 anos">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Setor</label>
-                                    <input type="text" name="supervisor_setor" value="{{ old('supervisor_setor', $empresa->supervisor_setor ?? '') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Nº de Matrícula na Empresa</label>
-                                    <input type="text" name="supervisor_matricula" value="{{ old('supervisor_matricula', $empresa->supervisor_matricula ?? '') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Registro Profissional</label>
-                                    <input type="text" name="supervisor_registro_profissional" value="{{ old('supervisor_registro_profissional', $empresa->supervisor_registro_profissional ?? '') }}" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
-                                </div>
-                                <div class="col-span-2">
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Observações</label>
-                                    <textarea name="supervisor_observacoes" rows="2" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">{{ old('supervisor_observacoes', $empresa->supervisor_observacoes ?? '') }}</textarea>
-                                </div>
-                                <div class="col-span-2 grid grid-cols-3 gap-6">
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">Ativo?</label>
-                                        <div class="flex gap-4">
-                                            <label class="flex items-center gap-2"><input type="radio" name="supervisor_ativo" value="1" {{ old('supervisor_ativo', $empresa->supervisor_ativo ?? '1') == '1' ? 'checked' : '' }}> Sim</label>
-                                            <label class="flex items-center gap-2"><input type="radio" name="supervisor_ativo" value="0" {{ old('supervisor_ativo', $empresa->supervisor_ativo ?? '') == '0' ? 'checked' : '' }}> Não</label>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">Acessa o Processo Seletivo?</label>
-                                        <div class="flex gap-4">
-                                            <label class="flex items-center gap-2"><input type="radio" name="supervisor_acessa_processo_seletivo" value="1" {{ old('supervisor_acessa_processo_seletivo', $empresa->supervisor_acessa_processo_seletivo ?? '') == '1' ? 'checked' : '' }}> Sim</label>
-                                            <label class="flex items-center gap-2"><input type="radio" name="supervisor_acessa_processo_seletivo" value="0" {{ old('supervisor_acessa_processo_seletivo', $empresa->supervisor_acessa_processo_seletivo ?? '0') == '0' ? 'checked' : '' }}> Não</label>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">Assina Documentos?</label>
-                                        <div class="flex gap-4">
-                                            <label class="flex items-center gap-2"><input type="radio" name="supervisor_assina_documentos" value="1" {{ old('supervisor_assina_documentos', $empresa->supervisor_assina_documentos ?? '') == '1' ? 'checked' : '' }}> Sim</label>
-                                            <label class="flex items-center gap-2"><input type="radio" name="supervisor_assina_documentos" value="0" {{ old('supervisor_assina_documentos', $empresa->supervisor_assina_documentos ?? '0') == '0' ? 'checked' : '' }}> Não</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <!-- Dados do Supervisor de Estágio (gerenciado abaixo) -->
 
                         <!-- Pessoa de Contato -->
                         <div>
@@ -345,6 +145,132 @@
                             </button>
                         </div>
                     </form>
+
+                    <!-- Supervisores de Estágio -->
+                    <div class="border-t border-gray-100 pt-8 mt-8">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-lg font-semibold text-gray-900 flex items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-500" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
+                                </svg>
+                                Supervisores de Estágio
+                            </h3>
+                            <a href="{{ route('supervisores.create', $empresa) }}" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-500 transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
+                                Incluir Supervisor
+                            </a>
+                        </div>
+                        @if($empresa->supervisores->isEmpty())
+                            <p class="text-gray-400 text-sm italic">Nenhum supervisor cadastrado.</p>
+                        @else
+                            <div class="overflow-x-auto rounded-xl border border-gray-200">
+                                <table class="min-w-full divide-y divide-gray-200 text-sm">
+                                    <thead class="bg-gray-50">
+                                        <tr>
+                                            <th class="px-4 py-3 text-left font-medium text-gray-600">Nome</th>
+                                            <th class="px-4 py-3 text-left font-medium text-gray-600">Cargo</th>
+                                            <th class="px-4 py-3 text-left font-medium text-gray-600">Formação</th>
+                                            <th class="px-4 py-3 text-left font-medium text-gray-600">Ativo?</th>
+                                            <th class="px-4 py-3 text-right font-medium text-gray-600">Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-gray-100 bg-white">
+                                        @foreach($empresa->supervisores as $sup)
+                                        <tr class="hover:bg-gray-50">
+                                            <td class="px-4 py-3 font-medium text-gray-900">{{ $sup->nome }}</td>
+                                            <td class="px-4 py-3 text-gray-600">{{ $sup->cargo ?? '—' }}</td>
+                                            <td class="px-4 py-3 text-gray-600">{{ $sup->formacao ?? '—' }}</td>
+                                            <td class="px-4 py-3">
+                                                @if($sup->ativo)
+                                                    <span class="inline-block px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">Sim</span>
+                                                @else
+                                                    <span class="inline-block px-2 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">Não</span>
+                                                @endif
+                                            </td>
+                                            <td class="px-4 py-3 text-right">
+                                                <a href="{{ route('supervisores.edit', [$empresa, $sup]) }}" class="inline-flex items-center px-3 py-1 rounded-lg text-xs font-medium text-indigo-700 bg-indigo-50 hover:bg-indigo-100 mr-2">Editar</a>
+                                                <form method="POST" action="{{ route('supervisores.destroy', [$empresa, $sup]) }}" class="inline" onsubmit="return confirm('Confirmar exclusão?')">
+                                                    @csrf @method('DELETE')
+                                                    <button type="submit" class="inline-flex items-center px-3 py-1 rounded-lg text-xs font-medium text-red-700 bg-red-50 hover:bg-red-100">Excluir</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        @endif
+                    </div>
+
+                    <!-- Representantes Legais -->
+                    <div class="border-t border-gray-100 pt-8 mt-8">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-lg font-semibold text-gray-900 flex items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                                </svg>
+                                Representantes Legais
+                            </h3>
+                            <a href="{{ route('representantes.create', ['tipo' => 'empresa', 'entidadeId' => $empresa->id]) }}" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium text-white bg-green-600 hover:bg-green-500 transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
+                                Incluir Representante Legal
+                            </a>
+                        </div>
+                        @if($empresa->representantesLegais->isEmpty())
+                            <p class="text-gray-400 text-sm italic">Nenhum representante legal cadastrado.</p>
+                        @else
+                            <div class="overflow-x-auto rounded-xl border border-gray-200">
+                                <table class="min-w-full divide-y divide-gray-200 text-sm">
+                                    <thead class="bg-gray-50">
+                                        <tr>
+                                            <th class="px-4 py-3 text-left font-medium text-gray-600">Nome</th>
+                                            <th class="px-4 py-3 text-left font-medium text-gray-600">Cargo</th>
+                                            <th class="px-4 py-3 text-left font-medium text-gray-600">Principal?</th>
+                                            <th class="px-4 py-3 text-left font-medium text-gray-600">Ativo?</th>
+                                            <th class="px-4 py-3 text-left font-medium text-gray-600">Assina?</th>
+                                            <th class="px-4 py-3 text-right font-medium text-gray-600">Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-gray-100 bg-white">
+                                        @foreach($empresa->representantesLegais as $rep)
+                                        <tr class="hover:bg-gray-50">
+                                            <td class="px-4 py-3 font-medium text-gray-900">{{ $rep->nome }}</td>
+                                            <td class="px-4 py-3 text-gray-600">{{ $rep->cargo ?? '—' }}</td>
+                                            <td class="px-4 py-3">
+                                                @if($rep->principal)
+                                                    <span class="inline-block px-2 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">Sim</span>
+                                                @else
+                                                    <span class="text-gray-400 text-xs">Não</span>
+                                                @endif
+                                            </td>
+                                            <td class="px-4 py-3">
+                                                @if($rep->ativo)
+                                                    <span class="inline-block px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">Sim</span>
+                                                @else
+                                                    <span class="inline-block px-2 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">Não</span>
+                                                @endif
+                                            </td>
+                                            <td class="px-4 py-3">
+                                                @if($rep->assina_documentos)
+                                                    <span class="inline-block px-2 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">Sim</span>
+                                                @else
+                                                    <span class="text-gray-400 text-xs">Não</span>
+                                                @endif
+                                            </td>
+                                            <td class="px-4 py-3 text-right">
+                                                <a href="{{ route('representantes.edit', $rep) }}" class="inline-flex items-center px-3 py-1 rounded-lg text-xs font-medium text-green-700 bg-green-50 hover:bg-green-100 mr-2">Editar</a>
+                                                <form method="POST" action="{{ route('representantes.destroy', $rep) }}" class="inline" onsubmit="return confirm('Confirmar exclusão?')">
+                                                    @csrf @method('DELETE')
+                                                    <button type="submit" class="inline-flex items-center px-3 py-1 rounded-lg text-xs font-medium text-red-700 bg-red-50 hover:bg-red-100">Excluir</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>

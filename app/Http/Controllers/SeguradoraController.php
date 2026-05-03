@@ -50,6 +50,7 @@ class SeguradoraController extends Controller
 
     public function edit(Seguradora $seguradora)
     {
+        $seguradora->load('representantesLegais');
         return view('seguradoras.edit', compact('seguradora'));
     }
 

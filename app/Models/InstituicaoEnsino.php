@@ -40,4 +40,10 @@ class InstituicaoEnsino extends Model
     {
         return $this->hasMany(Estagio::class);
     }
+
+    public function representantesLegais(): HasMany
+    {
+        return $this->hasMany(\App\Models\RepresentanteLegal::class, 'entidade_id')
+                    ->where('entidade_tipo', 'instituicao');
+    }
 }

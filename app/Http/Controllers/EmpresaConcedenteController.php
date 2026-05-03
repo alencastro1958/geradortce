@@ -45,6 +45,7 @@ class EmpresaConcedenteController extends Controller
 
     public function edit(EmpresaConcedente $empresa)
     {
+        $empresa->load(['supervisores', 'representantesLegais']);
         return view('empresas.edit', compact('empresa'));
     }
 

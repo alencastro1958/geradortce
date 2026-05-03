@@ -18,4 +18,10 @@ class AgenteIntegracao extends Model
             'responsavel_legal_data_nascimento' => 'date',
         ];
     }
+
+    public function representantesLegais(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(\App\Models\RepresentanteLegal::class, 'entidade_id')
+                    ->where('entidade_tipo', 'agente');
+    }
 }
