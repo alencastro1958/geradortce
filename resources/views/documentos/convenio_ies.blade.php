@@ -133,6 +133,7 @@
         <p>Fica eleito o foro da Comarca de {{ $estagio->instituicaoEnsino->cidade }} para dirimir quaisquer dúvidas oriundas deste Convênio.</p>
     </div>
 
+    <div style="page-break-inside: avoid; break-inside: avoid;">
     <p>E, por estarem assim, justas e accordadas, assinam o presente instrumento em {{ $estagio->instituicaoEnsino->cidade }}, {{ now()->format('d') }} de {{ now()->format('M') }} de {{ now()->format('Y') }}</p>
 
     <div class="mb-1 mt-2 text-center">
@@ -146,6 +147,7 @@
         <p class="bold">{{ $estagio->empresaConcedente->responsavel_legal_nome }}</p>
         <p>Representante da {{ $estagio->empresaConcedente->nome_fantasia ?? $estagio->empresaConcedente->razao_social }}</p>
     </div>
+    </div>{{-- fim bloco assinaturas --}}
 
     <div class="page-footer">
         <p>www.rotacerta-aprendizagem.com.br | admin@rotacerta-aprendizagem.com.br | (48) 99203-9611</p>

@@ -61,6 +61,8 @@
         }
         .assinaturas-stack {
             text-align: center;
+            page-break-inside: avoid;
+            break-inside: avoid;
         }
         .assinaturas-stack p {
             text-align: center;
@@ -77,6 +79,11 @@
         .assinatura-papel,
         .assinatura-responsavel {
             margin-top: 0;
+        }
+        /* Garante que o bloco de enceramento + assinaturas nunca seja partido entre páginas */
+        .bloco-assinaturas {
+            page-break-inside: avoid;
+            break-inside: avoid;
         }
     </style>
 </head>
@@ -307,6 +314,7 @@
     <p class="bold mt-2">CLÁUSULA DÉCIMA PRIMEIRA:</p>
     <p>O presente instrumento celebra-se nos termos do Art. 3º da Lei nº 11.788/2008. Fica expressamente declarado que a relação jurídica aqui estabelecida não gera vínculo empregatício de qualquer natureza, mesmo sendo onerosa, constituindo-se este documento como prova da inexistência de tal vínculo.</p>
 
+    <div class="bloco-assinaturas">
     <p class="mt-3">E, por estarem justos e contratados, as partes assinam o presente instrumento em vias de igual teor e forma.</p>
 
     <p class="mt-3">{{ $estagio->empresaConcedente->cidade ?? 'Cidade' }}, {{ $estagio->data_inicio->format('d') }} de {{ $estagio->data_inicio->translatedFormat('F') }} de {{ $estagio->data_inicio->format('Y') }}.</p>
@@ -343,6 +351,7 @@
         <p class="assinatura-responsavel">Diogo Luís Alencastro da Silva</p>
     </div>
     </div>
+    </div>{{-- fim .bloco-assinaturas --}}
 
     <div class="page-footer">
         <p>www.rotacerta-aprendizagem.com.br | admin@rotacerta-aprendizagem.com.br | (48) 99203-9611</p>
