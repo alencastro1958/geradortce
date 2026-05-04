@@ -14,14 +14,15 @@
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            font-size: 10pt;
-            line-height: 1.4;
+            font-size: 11pt;
+            line-height: 1.15;
             text-align: justify;
             padding-top: 0;
             padding-bottom: 1.0cm;
         }
         p {
-            margin-bottom: 4px;
+            margin-top: 0;
+            margin-bottom: 8pt;  /* espaço entre parágrafos ~1.5 × linha */
             text-align: justify;
         }
         .text-center { text-align: center; }
