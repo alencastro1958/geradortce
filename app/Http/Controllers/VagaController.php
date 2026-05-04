@@ -70,7 +70,7 @@ class VagaController extends Controller
         $estagiario = auth()->user()->estagiario;
 
         if (!$estagiario) {
-            return back()->with('error', 'Você precisa ser um estagiário cadastrado para se candidatar.');
+            return redirect('/candidate-se')->with('error', 'Você só poderá se candidatar às vagas após realizar seu cadastro.');
         }
 
         // Verifica se já se candidatou

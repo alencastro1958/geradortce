@@ -13,6 +13,10 @@
                 <p class="text-xs font-semibold uppercase tracking-[0.3em] text-sky-600">Portal de Vagas</p>
                 <h1 class="text-xl font-black">Oportunidades de Estágio</h1>
             </div>
+            <div class="flex items-center gap-4">
+                <a href="/candidate-se" class="rounded-2xl bg-indigo-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-indigo-500">Cadastre-se</a>
+                <a href="/empresa/login" class="text-sm font-medium text-slate-600 hover:text-slate-900">Acesso Empresa</a>
+            </div>
         </div>
     </nav>
 
@@ -84,12 +88,9 @@
                                 </div>
                             </div>
 
-                            <form action="{{ route('vagas.candidatar', $vaga) }}" method="POST">
-                                @csrf
-                                <button type="submit" class="w-full py-3 bg-gray-900 text-white font-bold rounded-2xl hover:bg-indigo-600 transition-all shadow-lg hover:shadow-indigo-500/30 transform hover:-translate-y-1">
-                                    Candidatar-se Agora
-                                </button>
-                            </form>
+                            <a href="/candidate-se" class="block w-full py-3 bg-gray-900 text-white font-bold rounded-2xl hover:bg-indigo-600 transition-all shadow-lg hover:shadow-indigo-500/30 transform hover:-translate-y-1 text-center">
+                                Candidatar-se Agora
+                            </a>
                         </div>
                     </div>
                 @empty

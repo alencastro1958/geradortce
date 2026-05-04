@@ -61,6 +61,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('vagas', \App\Http\Controllers\VagaController::class)->except(['show']);
 });
 
+// Portal público de acesso — hub para candidatos, empresas, IEs e vagas
+Route::get('/candidate-se', fn() => view('portal.candidato'))->name('candidato.portal');
+
 // Vagas públicas — sem autenticação, acessível a estudantes externos
 Route::get('/vagas/oportunidades', [\App\Http\Controllers\VagaController::class, 'buscaPublica'])->name('vagas.busca');
 
