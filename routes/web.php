@@ -65,6 +65,7 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 // ─── Portal do Supervisor ─────────────────────────────────────────────────────
+use App\Http\Controllers\EmpresaPortalController;
 use App\Http\Controllers\SupervisorPortalController;
 
 Route::prefix('supervisor')->name('supervisor.')->group(function () {
@@ -83,9 +84,27 @@ Route::prefix('supervisor')->name('supervisor.')->group(function () {
     });
 });
 
+Route::prefix('empresa')->name('empresa.')->group(function () {
+    Route::get('login', [EmpresaPortalController::class, 'loginForm'])->name('login');
+    Route::post('login', [EmpresaPortalController::class, 'login'])->name('login.submit');
+
+    Route::middleware(['auth'])->group(function () {
+        Route::post('logout', [EmpresaPortalController::class, 'logout'])->name('logout');
+        Route::get('dashboard', [EmpresaPortalController::class, 'dashboard'])->name('dashboard');
+
+        Route::get('vagas/criar', [EmpresaPortalController::class, 'createVaga'])->name('vagas.create');
+        Route::post('vagas', [EmpresaPortalController::class, 'storeVaga'])->name('vagas.store');
+        Route::get('vagas/{vaga}/editar', [EmpresaPortalController::class, 'editVaga'])->name('vagas.edit');
+        Route::put('vagas/{vaga}', [EmpresaPortalController::class, 'updateVaga'])->name('vagas.update');
+        Route::delete('vagas/{vaga}', [EmpresaPortalController::class, 'destroyVaga'])->name('vagas.destroy');
+    });
+});
+
 // Admin: criar/revogar acesso supervisor
 Route::middleware('auth')->group(function () {
     Route::post('supervisores/{supervisor}/criar-acesso', [SupervisorPortalController::class, 'criarAcesso'])->name('supervisor.criar-acesso');
     Route::delete('supervisores/{supervisor}/revogar-acesso', [SupervisorPortalController::class, 'revogarAcesso'])->name('supervisor.revogar-acesso');
+    Route::post('empresas/{empresa}/criar-acesso', [EmpresaPortalController::class, 'criarAcesso'])->name('empresa.criar-acesso');
+    Route::delete('empresas/{empresa}/revogar-acesso', [EmpresaPortalController::class, 'revogarAcesso'])->name('empresa.revogar-acesso');
 });
 

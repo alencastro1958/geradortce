@@ -35,4 +35,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(\App\Models\SupervisorEstagio::class);
     }
+
+    public function empresaConcedente(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(\App\Models\EmpresaConcedente::class);
+    }
 }

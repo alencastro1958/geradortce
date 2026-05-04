@@ -51,6 +51,11 @@ class EmpresaConcedente extends Model
         return $this->hasMany(Estagio::class);
     }
 
+    public function vagas(): HasMany
+    {
+        return $this->hasMany(Vaga::class, 'empresa_id');
+    }
+
     public function supervisores(): HasMany
     {
         return $this->hasMany(SupervisorEstagio::class);

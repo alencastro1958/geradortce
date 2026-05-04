@@ -245,6 +245,48 @@
                         </div>
                     </form>
 
+                    <div class="border-t border-gray-100 pt-8 mt-8">
+                        <div class="rounded-2xl border border-sky-100 bg-sky-50/70 p-6">
+                            <div class="flex items-start justify-between gap-6 flex-wrap">
+                                <div>
+                                    <h3 class="text-lg font-semibold text-gray-900">Acesso ao Portal da Empresa</h3>
+                                    <p class="mt-1 text-sm text-gray-600">Libere o login da empresa para que ela possa acessar o dashboard e realizar o cadastro das vagas.</p>
+                                    <p class="mt-2 text-xs text-sky-700">URL de acesso: {{ url('/empresa/login') }}</p>
+                                </div>
+                                @if($empresa->user_id)
+                                    <div class="min-w-[260px]">
+                                        <p class="mb-3 text-sm text-green-700">Acesso ativo. Login: <strong>{{ $empresa->email }}</strong></p>
+                                        <form method="POST" action="{{ route('empresa.revogar-acesso', $empresa) }}">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" onclick="return confirm('Revogar o acesso da empresa {{ $empresa->razao_social }}?')" class="inline-flex items-center px-4 py-2 rounded-xl text-sm font-medium text-red-700 bg-red-50 hover:bg-red-100 transition-colors">
+                                                Revogar acesso
+                                            </button>
+                                        </form>
+                                    </div>
+                                @else
+                                    <div class="min-w-[320px]">
+                                        <p class="mb-3 text-sm text-gray-500">Esta empresa ainda nao possui acesso ao portal. Crie um login abaixo.</p>
+                                        <form method="POST" action="{{ route('empresa.criar-acesso', $empresa) }}" class="grid gap-3">
+                                            @csrf
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-1">Senha inicial</label>
+                                                <input type="password" name="password" required class="w-full rounded-xl border-gray-300 shadow-sm focus:border-sky-500 focus:ring-sky-500">
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-1">Confirmar senha</label>
+                                                <input type="password" name="password_confirmation" required class="w-full rounded-xl border-gray-300 shadow-sm focus:border-sky-500 focus:ring-sky-500">
+                                            </div>
+                                            <button type="submit" class="inline-flex items-center justify-center px-4 py-2 rounded-xl text-sm font-medium text-white bg-sky-600 hover:bg-sky-500 transition-colors">
+                                                Criar acesso da empresa
+                                            </button>
+                                        </form>
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Supervisores de Estágio -->
                     <div class="border-t border-gray-100 pt-8 mt-8">
                         <div class="flex items-center justify-between mb-6">
