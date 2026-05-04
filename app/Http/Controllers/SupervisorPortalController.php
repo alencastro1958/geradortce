@@ -61,8 +61,14 @@ class SupervisorPortalController extends Controller
             abort(403, 'Supervisor não vinculado.');
         }
 
+        // Busca estágios ativos vinculados a este supervisor:
+        // - diretamente pelo supervisor_estagio_id, OU
+        // - pela empresa concedente do supervisor (caso o campo não esteja preenchido no estágio)
         $estagios = Estagio::with(['estagiario', 'relatorios'])
-            ->where('supervisor_estagio_id', $supervisor->id)
+            ->where(function ($q) use ($supervisor) {
+                $q->where('supervisor_estagio_id', $supervisor->id)
+                  ->orWhere('empresa_concedente_id', $supervisor->empresa_concedente_id);
+            })
             ->where('status', 'ativo')
             ->get();
 
