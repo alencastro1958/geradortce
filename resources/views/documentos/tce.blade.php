@@ -22,7 +22,7 @@
         }
         p {
             margin-top: 0;
-            margin-bottom: 8pt;
+            margin-bottom: 2pt;
             text-align: justify;
         }
         /* Títulos de cláusula: bold, margem inferior reduzida */
@@ -34,7 +34,7 @@
         p.secao-titulo {
             font-size: 11pt;
             font-weight: bold;
-            margin-top: 14pt;
+            margin-top: 16pt;
             margin-bottom: 2pt;
         }
         .text-center { text-align: center; }
@@ -115,7 +115,7 @@
             display: block;
             text-align: center;
             font-size: 8pt;
-            content: "Página " counter(page) " de " counter(pages);
+            content: "Página " counter(page);
             margin-top: 2px;
         }
     </style>
