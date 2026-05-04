@@ -271,18 +271,25 @@
         </p>
     @endif
 
+    @php
+        $duracaoMeses  = $estagio->data_inicio->diffInMonths($estagio->data_fim);
+        $chSemanal     = (int) $estagio->carga_horaria_semanal;
+        $bolsa         = (float) ($estagio->valor_bolsa ?? 0);
+        $transporte    = (float) ($estagio->valor_auxilio_transporte ?? 0);
+    @endphp
+
     <p class="bold mt-2">CLÁUSULA QUARTA:</p>
-    <p>A duração do estágio será de {{ $estagio->data_inicio->diffInMonths($estagio->data_fim) }} ({{ $estagio->data_inicio->diffInMonths($estagio->data_fim) }}) meses, com início em {{ $estagio->data_inicio->format('d/m/Y') }} e término previsto em {{ $estagio->data_fim->format('d/m/Y') }}.</p>
+    <p>A duração do estágio será de {{ $duracaoMeses }} ({{ numero_extenso((int)$duracaoMeses) }}) meses, com início em {{ $estagio->data_inicio->format('d/m/Y') }} e término previsto em {{ $estagio->data_fim->format('d/m/Y') }}.</p>
     <p><span class="bold">PARÁGRAFO ÚNICO:</span> O período total do estágio não poderá exceder 24 (vinte e quatro) meses na mesma Unidade Concedente, nos termos do Art. 11 da Lei nº 11.788/2008.</p>
 
     <p class="bold mt-2">CLÁUSULA QUINTA:</p>
-    <p>O estágio terá jornada de até {{ $estagio->carga_horaria_semanal }} ({{ $estagio->carga_horaria_semanal }}) horas semanais, de segunda a sexta-feira, no horário das {{ $estagio->horario_inicio ?? '08' }}h{{ $estagio->horario_inicio_minuto ?? '00' }} às {{ $estagio->horario_fim ?? '14' }}h{{ $estagio->horario_fim_minuto ?? '00' }}, compreendendo {{ $estagio->carga_horaria_semanal / 5 }} horas diárias.</p>
+    <p>O estágio terá jornada de até {{ $chSemanal }} ({{ numero_extenso($chSemanal) }}) horas semanais, de segunda a sexta-feira, no horário das {{ $estagio->horario_inicio ?? '08' }}h{{ $estagio->horario_inicio_minuto ?? '00' }} às {{ $estagio->horario_fim ?? '14' }}h{{ $estagio->horario_fim_minuto ?? '00' }}, compreendendo {{ $chSemanal / 5 }} horas diárias.</p>
     <p><span class="bold">Parágrafo Único:</span> Nos períodos de avaliação de aprendizagem da Instituição de Ensino, comprovados mediante calendário acadêmico, a carga horária será reduzida à metade, conforme determina o § 1º do Art. 10 da Lei nº 11.788/2008.</p>
 
     <p class="bold mt-2">CLÁUSULA SEXTA:</p>
-    <p>A UNIDADE CONCEDENTE pagará mensalmente, diretamente à ESTAGIÁRIA, a importância de R$ {{ number_format($estagio->valor_bolsa ?? 0, 2, ',', '.') }} ({{ $estagio->valor_bolsa ? number_format($estagio->valor_bolsa, 2, ',', '.') : '___' }} reais) a título de Bolsa-Auxílio. Este pagamento será efetuado até o quinto dia útil subsequente ao fechamento da folha de frequência da estagiária.</p>
+    <p>A UNIDADE CONCEDENTE pagará mensalmente, diretamente à ESTAGIÁRIA, a importância de R$ {{ number_format($bolsa, 2, ',', '.') }} ({{ $bolsa > 0 ? valor_extenso($bolsa) : '___' }}) a título de Bolsa-Auxílio. Este pagamento será efetuado até o quinto dia útil subsequente ao fechamento da folha de frequência da estagiária.</p>
     <p><span class="bold">PARÁGRAFO PRIMEIRO:</span> O pagamento da Bolsa-Auxílio será proporcional à frequência da estudante. Ressalta-se que a bolsa de estágio goza de isenção de Imposto de Renda, conforme legislação vigente. Eventuais complementações de valor ficam a critério da UNIDADE CONCEDENTE.</p>
-    <p><span class="bold">PARÁGRAFO SEGUNDO:</span> A UNIDADE CONCEDENTE oferecerá ao(à) estagiário(a) auxílio transporte no valor mensal de R$ {{ number_format($estagio->valor_auxilio_transporte ?? 0, 2, ',', '.') }} ({{ $estagio->valor_auxilio_transporte ? number_format($estagio->valor_auxilio_transporte, 2, ',', '.') : '___' }} reais e centavos (se houver)) ou o equivalente ao deslocamento real, conforme opção da concedente.</p>
+    <p><span class="bold">PARÁGRAFO SEGUNDO:</span> A UNIDADE CONCEDENTE oferecerá ao(à) estagiário(a) auxílio transporte no valor mensal de R$ {{ number_format($transporte, 2, ',', '.') }} ({{ $transporte > 0 ? valor_extenso($transporte) : '___' }}) ou o equivalente ao deslocamento real, conforme opção da concedente.</p>
     <p><span class="bold">PARÁGRAFO TERCEIRO:</span> O(A) estagiário(a) fará jus a um recesso remunerado de 30 (trinta) dias, a ser usufruído preferencialmente durante suas férias escolares, caso o estágio tenha duração igual ou superior a um ano. Caso a duração seja inferior a um ano, o recesso será concedido de forma proporcional. Durante o período de recesso, a percepção da bolsa-auxílio será mantida integralmente.</p>
 
     <p class="bold mt-2">CLÁUSULA SÉTIMA:</p>
@@ -302,7 +309,7 @@
 
     <p class="mt-3">E, por estarem justos e contratados, as partes assinam o presente instrumento em vias de igual teor e forma.</p>
 
-    <p class="mt-3">{{ $estagio->empresaConcedente->cidade ?? 'Cidade' }}, {{ now()->format('d') }} de {{ now()->translatedFormat('F') }} de {{ now()->format('Y') }}.</p>
+    <p class="mt-3">{{ $estagio->empresaConcedente->cidade ?? 'Cidade' }}, {{ $estagio->data_inicio->format('d') }} de {{ $estagio->data_inicio->translatedFormat('F') }} de {{ $estagio->data_inicio->format('Y') }}.</p>
 
     <div class="assinaturas-stack" style="width: 100%; margin: 0 auto;">
     <div class="assinatura-centro mt-3" style="text-align: center;">
