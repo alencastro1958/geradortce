@@ -265,7 +265,7 @@
                                     @endif
                                 </div>
                                 @if($empresa->user_id)
-                                    <div class="min-w-[260px]">
+                                    <div class="min-w-[260px] space-y-4">
                                         <p class="mb-1 text-sm text-green-700">Acesso ativo. Login: <strong>{{ $empresa->email }}</strong></p>
                                         @if($empresa->slug)
                                             <p class="mb-3 text-xs text-sky-700">Endereço: <strong>{{ $empresa->slug }}</strong></p>
@@ -277,6 +277,30 @@
                                                 Revogar acesso
                                             </button>
                                         </form>
+
+                                        {{-- Alterar senha --}}
+                                        <details class="mt-2">
+                                            <summary class="cursor-pointer text-sm font-medium text-sky-700 hover:underline select-none">
+                                                ↺ Alterar senha do portal
+                                            </summary>
+                                            <form method="POST" action="{{ route('empresa.alterar-senha', $empresa) }}" class="mt-3 space-y-3" style="max-width:320px;">
+                                                @csrf
+                                                @if(session('success') && str_contains(session('success'), 'Senha'))
+                                                    <p class="text-xs text-green-700 font-medium">{{ session('success') }}</p>
+                                                @endif
+                                                <div>
+                                                    <label class="block text-xs font-medium text-gray-700 mb-1">Nova senha</label>
+                                                    <input type="password" name="nova_senha" required minlength="8" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 text-sm">
+                                                </div>
+                                                <div>
+                                                    <label class="block text-xs font-medium text-gray-700 mb-1">Confirmar nova senha</label>
+                                                    <input type="password" name="nova_senha_confirmation" required minlength="8" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 text-sm">
+                                                </div>
+                                                <button type="submit" class="px-4 py-2 rounded-xl text-sm font-semibold text-white bg-sky-600 hover:bg-sky-500 transition-colors">
+                                                    Salvar nova senha
+                                                </button>
+                                            </form>
+                                        </details>
                                     </div>
                                 @else
                                     <div class="w-full mt-4">

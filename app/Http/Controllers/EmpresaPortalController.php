@@ -200,6 +200,26 @@ class EmpresaPortalController extends Controller
         return back()->with('success', 'Acesso da empresa revogado com sucesso.');
     }
 
+    public function alterarSenha(Request $request, EmpresaConcedente $empresa): RedirectResponse
+    {
+        $request->validate([
+            'nova_senha'              => ['required', 'string', 'min:8', 'confirmed'],
+            'nova_senha_confirmation' => ['required', 'string'],
+        ], [
+            'nova_senha.required'   => 'A nova senha e obrigatoria.',
+            'nova_senha.min'        => 'A senha deve ter pelo menos 8 caracteres.',
+            'nova_senha.confirmed'  => 'A confirmacao da senha nao confere.',
+        ]);
+
+        $user = $empresa->user_id ? User::find($empresa->user_id) : null;
+
+        abort_if(!$user, 404, 'Usuario do portal nao encontrado.');
+
+        $user->update(['password' => Hash::make($request->nova_senha)]);
+
+        return back()->with('success', 'Senha do portal da empresa alterada com sucesso.');
+    }
+
     private function empresaAutenticadaPorSlug(string $slug): EmpresaConcedente
     {
         $empresa = Auth::user()?->empresaConcedente;

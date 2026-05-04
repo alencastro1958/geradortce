@@ -103,6 +103,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('supervisores/{supervisor}/revogar-acesso', [SupervisorPortalController::class, 'revogarAcesso'])->name('supervisor.revogar-acesso');
     Route::post('empresas/{empresa}/criar-acesso', [EmpresaPortalController::class, 'criarAcesso'])->name('empresa.criar-acesso');
     Route::delete('empresas/{empresa}/revogar-acesso', [EmpresaPortalController::class, 'revogarAcesso'])->name('empresa.revogar-acesso');
+    Route::post('empresas/{empresa}/alterar-senha', [EmpresaPortalController::class, 'alterarSenha'])->name('empresa.alterar-senha');
 });
 
 // ─── Portal da Empresa por slug: /{slug}/dashboard ────────────────────────────

@@ -40,6 +40,11 @@
                 <button type="submit" class="w-full rounded-2xl bg-slate-900 px-4 py-3 text-sm font-bold uppercase tracking-[0.2em] text-white transition hover:bg-sky-600">
                     Entrar
                 </button>
+                <div class="text-center">
+                    <a href="{{ url('/forgot-password') }}" class="text-xs text-slate-500 hover:text-sky-600 hover:underline">
+                        Esqueci minha senha
+                    </a>
+                </div>
             </form>
             <div class="mt-6 border-t border-slate-100 pt-5 text-center">
                 <p class="text-xs text-slate-500">Estudante buscando oportunidades de estágio?</p>
