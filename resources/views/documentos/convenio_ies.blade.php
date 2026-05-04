@@ -12,7 +12,7 @@
             margin-bottom: 1.0cm;
             margin-left: 2.5cm;
         }
-        body { margin: 0; font-family: Arial, sans-serif; font-size: 11pt; line-height: 1.15; padding-top: 0; padding-bottom: 1.0cm; }
+        body { margin: 0; font-family: Arial, sans-serif; font-size: 10pt; line-height: 1.15; padding-top: 0; padding-bottom: 1.0cm; }
         .text-center { text-align: center; }
         .text-right { text-align: right; }
         .bold { font-weight: bold; }

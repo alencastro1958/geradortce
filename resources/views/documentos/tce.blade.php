@@ -14,7 +14,7 @@
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            font-size: 11pt;
+            font-size: 10pt;
             line-height: 1.15;
             text-align: justify;
             padding-top: 0;
@@ -22,8 +22,12 @@
         }
         p {
             margin-top: 0;
-            margin-bottom: 8pt;  /* espaço entre parágrafos ~1.5 × linha */
+            margin-bottom: 8pt;
             text-align: justify;
+        }
+        /* Títulos de seção (CLÁUSULA X, INSTITUIÇÃO DE ENSINO, etc.) */
+        p.bold {
+            font-size: 12pt;
         }
         .text-center { text-align: center; }
         .text-right { text-align: right; }
