@@ -41,6 +41,13 @@
                     Entrar
                 </button>
             </form>
+            <div class="mt-6 border-t border-slate-100 pt-5 text-center">
+                <p class="text-xs text-slate-500">Estudante buscando oportunidades de estágio?</p>
+                <a href="{{ url('/vagas/oportunidades') }}" class="mt-1 inline-block text-sm font-semibold text-sky-600 hover:underline">
+                    Acessar o Portal de Vagas →
+                </a>
+                <p class="mt-1 text-xs text-slate-400">{{ url('/vagas/oportunidades') }}</p>
+            </div>
         </div>
     </div>
 </body>

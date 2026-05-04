@@ -252,6 +252,10 @@
                                     <h3 class="text-lg font-semibold text-gray-900">Acesso ao Portal da Empresa</h3>
                                     <p class="mt-1 text-sm text-gray-600">Libere o login e defina o endereço exclusivo da empresa no sistema.</p>
                                     <p class="mt-2 text-xs text-sky-700">URL de login: <strong>{{ url('/empresa/login') }}</strong></p>
+                                    <p class="mt-1 text-xs text-violet-700">
+                                        Portal público de vagas (para estudantes):
+                                        <a href="{{ url('/vagas/oportunidades') }}" target="_blank" class="font-semibold underline">{{ url('/vagas/oportunidades') }}</a>
+                                    </p>
                                     @if($empresa->slug)
                                         <p class="mt-1 text-xs text-emerald-700">Portal da empresa:
                                             <a href="{{ url('/' . $empresa->slug . '/dashboard') }}" target="_blank" class="font-semibold underline">
