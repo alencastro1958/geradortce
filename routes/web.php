@@ -64,6 +64,9 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
+// Redireciona /empresas/login (plural) para o portal correto
+Route::get('/empresas/login', fn() => redirect()->route('empresa.login'));
+
 // ─── Portal do Supervisor ─────────────────────────────────────────────────────
 use App\Http\Controllers\EmpresaPortalController;
 use App\Http\Controllers\SupervisorPortalController;
