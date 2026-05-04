@@ -148,9 +148,9 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" /></svg>
                                     Representante Legal
                                 </h3>
-                                <a href="/representantes/seguradora/{{ $seguradora->id }}/criar" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium text-white bg-green-600 hover:bg-green-500 transition-colors">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
-                                    Incluir Novo Representante Legal
+                                <a href="/representantes/seguradora/{{ $seguradora->id }}/criar" style="display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:10px;font-size:0.875rem;font-weight:600;color:#fff;background-color:#16a34a;text-decoration:none;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" style="width:16px;height:16px;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
+                                    + Incluir Novo Representante Legal
                                 </a>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">

@@ -111,9 +111,9 @@
                                     Representante Legal
                                 </h3>
                                 @if($agente)
-                                <a href="/representantes/agente_integracao/{{ $agente->id }}/criar" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium text-white bg-green-600 hover:bg-green-500 transition-colors">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
-                                    Incluir Novo Representante Legal
+                                <a href="/representantes/agente_integracao/{{ $agente->id }}/criar" style="display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:10px;font-size:0.875rem;font-weight:600;color:#fff;background-color:#16a34a;text-decoration:none;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" style="width:16px;height:16px;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
+                                    + Incluir Novo Representante Legal
                                 </a>
                                 @endif
                             </div>
