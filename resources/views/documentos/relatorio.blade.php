@@ -9,19 +9,42 @@
             size: A4;
             margin-top: 4.0cm;
             margin-right: 1.5cm;
-            margin-bottom: 1.0cm;
+            margin-bottom: 1.5cm;
             margin-left: 2.5cm;
         }
-        body { margin: 0; font-family: 'Times New Roman', Times, serif; font-size: 12pt; line-height: 1.6; padding-top: 0; padding-bottom: 1.0cm; }
-        .text-center { text-align: center; }
-        .text-right { text-align: right; }
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            font-size: 11pt;
+            line-height: 1.15;
+            text-align: justify;
+            padding-top: 0;
+            padding-bottom: 1.0cm;
+        }
+        p {
+            margin-top: 0;
+            margin-bottom: 2pt;
+        }
+        h1 {
+            font-family: Arial, sans-serif;
+            font-size: 12pt;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 6pt;
+        }
         .bold { font-weight: bold; }
         .underline { text-decoration: underline; }
-        .mb-1 { margin-bottom: 15px; }
-        .mb-2 { margin-bottom: 25px; }
-        .mb-3 { margin-bottom: 35px; }
-        .mt-2 { margin-top: 20px; }
-        p { margin-bottom: 8px; }
+        .text-center { text-align: center; }
+        .text-left { text-align: left; }
+        /* Separação entre blocos de seção (1.5× = ~14pt) */
+        .bloco {
+            margin-top: 14pt;
+        }
+        /* Título de cada bloco numerado */
+        .bloco-titulo {
+            font-weight: bold;
+            margin-bottom: 2pt;
+        }
         .page-header {
             position: fixed;
             top: -2.5cm;
@@ -40,6 +63,21 @@
             border-top: 1px solid #ccc;
             padding-top: 3px;
         }
+        .page-footer::after {
+            display: block;
+            text-align: center;
+            font-size: 8pt;
+            content: "Página " counter(page);
+            margin-top: 2px;
+        }
+        .assinatura-linha {
+            border-bottom: 1px solid #000;
+            display: block;
+            width: 60%;
+            margin: 0 auto;
+            height: 55px;
+            margin-bottom: 4px;
+        }
     </style>
 </head>
 <body>
@@ -47,89 +85,100 @@
         @if(file_exists(public_path('images/AlencastroEstagios.png')))
         <img src="{{ public_path('images/AlencastroEstagios.png') }}" alt="Alencastro Estágios" style="max-width: 220px;">
         @else
-        <p class="bold uppercase" style="font-size: 14pt;">ALENCASTRO CONSULTORIA-ESTÁGIOS</p>
+        <p class="bold" style="font-size: 14pt; text-align: center; text-transform: uppercase;">ALENCASTRO CONSULTORIA-ESTÁGIOS</p>
         @endif
     </div>
+
     @php
         $estagiario = $estagio->estagiario;
         $empresa = $estagio->empresaConcedente;
-        $periodo = $estagiario?->periodo;
+        $periodo = $estagiario?->semestre_periodo_serie ?? $estagiario?->semestre_atual ?? $estagiario?->periodo;
+        $cidade = $empresa?->cidade ?? 'Cidade';
+        \Carbon\Carbon::setLocale('pt_BR');
+        $hoje = \Carbon\Carbon::now();
+        $dataExtenso = $cidade . ', ' . $hoje->format('d') . ' de ' . $hoje->translatedFormat('F') . ' de ' . $hoje->format('Y') . '.';
     @endphp
-    <div class="text-center mb-2">
-        <h1 class="bold">RELATÓRIO SEMESTRAL DE ESTÁGIO</h1>
+
+    <div class="text-center" style="margin-bottom: 8pt;">
+        <h1>RELATÓRIO SEMESTRAL DE ESTÁGIO</h1>
     </div>
 
-    <div class="mb-2">
-        <p><span class="bold">1. DADOS DO ESTAGIÁRIO:</span></p>
+    <div class="bloco">
+        <p class="bloco-titulo">1. DADOS DO ESTAGIÁRIO:</p>
         @if($estagiario?->nome)
-            <p>Nome: {{ $estagiario->nome }}</p>
+            <p><span class="bold">Nome:</span> {{ $estagiario->nome }}</p>
         @endif
         @if($estagiario?->cpf)
-            <p>CPF: {{ $estagiario->cpf }}</p>
+            <p><span class="bold">CPF:</span> {{ $estagiario->cpf }}</p>
         @endif
         @if($estagiario?->rg)
-            <p>RG: {{ $estagiario->rg }}</p>
+            <p><span class="bold">RG:</span> {{ $estagiario->rg }}</p>
         @endif
         @if($estagiario?->curso)
-            <p>Curso: {{ $estagiario->curso }}</p>
+            <p><span class="bold">Curso:</span> {{ $estagiario->curso }}</p>
         @endif
         @if($periodo)
-            <p>Período: {{ $periodo }}</p>
+            <p><span class="bold">Período/Semestre:</span> {{ $periodo }}</p>
         @endif
     </div>
 
-    <div class="mb-2">
-        <p><span class="bold">2. DADOS DA EMPRESA:</span></p>
+    <div class="bloco">
+        <p class="bloco-titulo">2. DADOS DA EMPRESA:</p>
         @if($empresa?->razao_social)
-            <p>Razão Social: {{ $empresa->razao_social }}</p>
+            <p><span class="bold">Razão Social:</span> {{ $empresa->razao_social }}</p>
         @endif
         @if($empresa?->cnpj)
-            <p>CNPJ: {{ $empresa->cnpj }}</p>
+            <p><span class="bold">CNPJ:</span> {{ $empresa->cnpj }}</p>
         @endif
-        @if($empresa?->endereco || $empresa?->bairro || $empresa?->cidade || $empresa?->estado)
-            <p>Endereço: {{ $empresa->endereco }}{{ $empresa?->bairro ? ', ' . $empresa->bairro : '' }}{{ $empresa?->cidade || $empresa?->estado ? ' - ' : '' }}{{ $empresa->cidade }}{{ $empresa?->estado ? '/' . $empresa->estado : '' }}</p>
+        @if($empresa?->endereco || $empresa?->logradouro || $empresa?->bairro || $empresa?->cidade)
+            @php
+                $endEmpresa = $empresa?->logradouro
+                    ? trim($empresa->logradouro . ($empresa->numero ? ', ' . $empresa->numero : '') . ($empresa->complemento ? ' - ' . $empresa->complemento : ''))
+                    : $empresa?->endereco;
+            @endphp
+            <p><span class="bold">Endereço:</span> {{ $endEmpresa }}{{ $empresa?->bairro ? ' - ' . $empresa->bairro : '' }}{{ $empresa?->cidade ? ' - ' . $empresa->cidade : '' }}{{ $empresa?->estado ? '/' . $empresa->estado : '' }}</p>
         @endif
-        @if($empresa?->supervisor_estagio_nome)
-            <p>Supervisor: {{ $empresa->supervisor_estagio_nome }}</p>
+        @if($empresa?->supervisor_estagio_nome ?? $empresa?->supervisor_nome)
+            <p><span class="bold">Supervisor:</span> {{ $empresa->supervisor_estagio_nome ?? $empresa->supervisor_nome }}</p>
         @endif
     </div>
 
-    <div class="mb-2">
-        <p><span class="bold">3. PERÍODO DO RELATÓRIO:</span></p>
+    <div class="bloco">
+        <p class="bloco-titulo">3. PERÍODO DO RELATÓRIO:</p>
         @if($estagio->data_inicio)
-            <p>Data de Início do Estágio: {{ $estagio->data_inicio->format('d/m/Y') }}</p>
+            <p><span class="bold">Data de Início do Estágio:</span> {{ $estagio->data_inicio->format('d/m/Y') }}</p>
         @endif
         @if($estagio->data_fim)
-            <p>Data de Término: {{ $estagio->data_fim->format('d/m/Y') }}</p>
+            <p><span class="bold">Data de Término:</span> {{ $estagio->data_fim->format('d/m/Y') }}</p>
         @endif
     </div>
 
-    <div class="mb-2">
+    <div class="bloco">
+        <p class="bloco-titulo">4. ATIVIDADES DESENVOLVIDAS NESTE PERÍODO:</p>
         @if($estagio->atividades)
-            <p><span class="bold">4. ATIVIDADES DESENVOLVIDAS NESTE PERÍODO:</span></p>
             <p>{{ $estagio->atividades }}</p>
+        @else
+            <p>_______________________________________________________________</p>
         @endif
     </div>
 
-    <div class="mb-2">
-        <p><span class="bold">5. AVALIAÇÃO DO DESEMPENHO:</span></p>
-        <p>( ) Excelente ( ) Bom ( ) Regular ( ) Insuficiente</p>
+    <div class="bloco">
+        <p class="bloco-titulo">5. AVALIAÇÃO DO DESEMPENHO:</p>
+        <p>( ) Excelente &nbsp;&nbsp; ( ) Bom &nbsp;&nbsp; ( ) Regular &nbsp;&nbsp; ( ) Insuficiente</p>
     </div>
 
-    <div class="mb-2">
-        <p><span class="bold">6. OBSERVAÇÕES:</span></p>
+    <div class="bloco">
+        <p class="bloco-titulo">6. OBSERVAÇÕES:</p>
         <p>_______________________________________________________________</p>
     </div>
 
-    @if($empresa?->cidade)
-        <div class="mb-3 mt-2">
-            <p class="text-right">{{ $empresa->cidade }}, {{ now()->format('d') }} de {{ now()->format('M') }} de {{ now()->format('Y') }}</p>
-        </div>
-    @endif
+    <div style="margin-top: 20pt; text-align: left;">
+        <p>{{ $dataExtenso }}</p>
+    </div>
 
-    <div class="mb-1 text-center">
-        <p class="underline">&nbsp;</p>
-        <p>Assinatura do Supervisor de Estágio</p>
+    <div style="margin-top: 30pt; text-align: center; page-break-inside: avoid; break-inside: avoid;">
+        <div class="assinatura-linha"></div>
+        <p class="bold">Assinatura do Supervisor de Estágio</p>
     </div>
 
     <div class="page-footer">
