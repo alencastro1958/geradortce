@@ -40,6 +40,13 @@
             border-top: 1px solid #ccc;
             padding-top: 3px;
         }
+        .page-footer::after {
+            display: block;
+            text-align: center;
+            font-size: 8pt;
+            content: "Página " counter(page) " de " counter(pages);
+            margin-top: 2px;
+        }
     </style>
 </head>
 <body>

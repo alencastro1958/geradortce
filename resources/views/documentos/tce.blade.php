@@ -61,29 +61,39 @@
         }
         .assinaturas-stack {
             text-align: center;
-            page-break-inside: avoid;
-            break-inside: avoid;
         }
         .assinaturas-stack p {
             text-align: center;
         }
+        /* Cada bloco de assinatura individual não pode ser partido no meio */
+        .assinatura-centro {
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
         .assinaturas-stack .assinatura-centro {
-            margin-top: 12px;
+            margin-top: 8px;
         }
         .assinaturas-stack .assinatura-centro p {
-            margin-bottom: 2px;
+            margin-bottom: 1px;
         }
         .assinatura-nome {
-            margin-bottom: 2px;
+            margin-bottom: 1px;
         }
         .assinatura-papel,
         .assinatura-responsavel {
             margin-top: 0;
         }
-        /* Garante que o bloco de enceramento + assinaturas nunca seja partido entre páginas */
+        /* Bloco de encerramento: mantém texto + data juntos com a 1ª assinatura */
         .bloco-assinaturas {
-            page-break-inside: avoid;
-            break-inside: avoid;
+            /* sem page-break-inside aqui — deixa fluir naturalmente */
+        }
+        /* Numeração de páginas via DomPDF/CSS counter */
+        .page-footer::after {
+            display: block;
+            text-align: center;
+            font-size: 8pt;
+            content: "Página " counter(page) " de " counter(pages);
+            margin-top: 2px;
         }
     </style>
 </head>
@@ -315,13 +325,13 @@
     <p>O presente instrumento celebra-se nos termos do Art. 3º da Lei nº 11.788/2008. Fica expressamente declarado que a relação jurídica aqui estabelecida não gera vínculo empregatício de qualquer natureza, mesmo sendo onerosa, constituindo-se este documento como prova da inexistência de tal vínculo.</p>
 
     <div class="bloco-assinaturas">
-    <p class="mt-3">E, por estarem justos e contratados, as partes assinam o presente instrumento em vias de igual teor e forma.</p>
+    <p class="mt-2">E, por estarem justos e contratados, as partes assinam o presente instrumento em vias de igual teor e forma.</p>
 
-    <p class="mt-3">{{ $estagio->empresaConcedente->cidade ?? 'Cidade' }}, {{ $estagio->data_inicio->format('d') }} de {{ $estagio->data_inicio->translatedFormat('F') }} de {{ $estagio->data_inicio->format('Y') }}.</p>
+    <p class="mt-1">{{ $estagio->empresaConcedente->cidade ?? 'Cidade' }}, {{ $estagio->data_inicio->format('d') }} de {{ $estagio->data_inicio->translatedFormat('F') }} de {{ $estagio->data_inicio->format('Y') }}.</p>
 
     <div class="assinaturas-stack" style="width: 100%; margin: 0 auto;">
-    <div class="assinatura-centro mt-3" style="text-align: center;">
-        <p class="underline mb-1">&nbsp;</p>
+    <div class="assinatura-centro" style="text-align: center; margin-top: 20px;">
+        <p style="border-bottom:1px solid #000; margin-bottom:1px;">&nbsp;</p>
         <p class="bold assinatura-nome">{{ $estagio->empresaConcedente->razao_social }}</p>
         @if($estagio->empresaConcedente->responsavel_legal_nome)
             <p class="assinatura-responsavel">{{ $estagio->empresaConcedente->responsavel_legal_nome }}</p>
@@ -329,8 +339,8 @@
         <p class="assinatura-papel">Unidade Concedente de Estágio</p>
     </div>
 
-    <div class="assinatura-centro mt-3" style="text-align: center;">
-        <p class="underline mb-1">&nbsp;</p>
+    <div class="assinatura-centro" style="text-align: center; margin-top: 12px;">
+        <p style="border-bottom:1px solid #000; margin-bottom:1px;">&nbsp;</p>
         <p class="bold assinatura-nome">{{ $estagio->instituicaoEnsino->razao_social }}</p>
         @if($estagio->instituicaoEnsino->responsavel_legal_nome)
             <p class="assinatura-responsavel">{{ $estagio->instituicaoEnsino->responsavel_legal_nome }}</p>
@@ -338,14 +348,14 @@
         <p class="assinatura-papel">Instituição de Ensino</p>
     </div>
 
-    <div class="assinatura-centro mt-3" style="text-align: center;">
-        <p class="underline mb-1">&nbsp;</p>
+    <div class="assinatura-centro" style="text-align: center; margin-top: 12px;">
+        <p style="border-bottom:1px solid #000; margin-bottom:1px;">&nbsp;</p>
         <p class="bold assinatura-nome">{{ $estagio->estagiario->nome }}</p>
         <p class="assinatura-papel">Estagiário(a)</p>
     </div>
 
-    <div class="assinatura-centro mt-3" style="text-align: center;">
-        <p class="underline mb-1">&nbsp;</p>
+    <div class="assinatura-centro" style="text-align: center; margin-top: 12px;">
+        <p style="border-bottom:1px solid #000; margin-bottom:1px;">&nbsp;</p>
         <p class="bold assinatura-nome">ALENCASTRO CONSULTORIA-ESTÁGIOS</p>
         <p class="assinatura-papel">Agente de Integração</p>
         <p class="assinatura-responsavel">Diogo Luís Alencastro da Silva</p>
