@@ -161,22 +161,22 @@ class EmpresaPortalController extends Controller
             return back()->with('error', 'Esta empresa ja possui acesso ao portal.');
         }
 
-        if (!$empresa->email) {
-            return back()->with('error', 'A empresa precisa ter um e-mail cadastrado antes de criar o acesso.');
-        }
-
         $request->validate([
+            'email'    => ['required', 'email', 'unique:users,email'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
 
+        $email = $request->email;
+
         $user = User::create([
-            'name' => $empresa->nome_fantasia ?: $empresa->razao_social,
-            'email' => $empresa->email,
+            'name'     => $empresa->nome_fantasia ?: $empresa->razao_social,
+            'email'    => $email,
             'password' => Hash::make($request->password),
         ]);
         $user->assignRole('Empresa');
 
-        $empresa->update(['user_id' => $user->id]);
+        // Atualiza o e-mail da empresa também, se necessário
+        $empresa->update(['user_id' => $user->id, 'email' => $email]);
 
         return back()->with('success', 'Acesso criado para a empresa. Login: ' . $empresa->email);
     }
