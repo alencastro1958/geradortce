@@ -316,7 +316,9 @@ class EmpresaPortalController extends Controller
 
     private function normalizarDadosVaga(array $validated): array
     {
-        $validated['ativa'] = (bool) ($validated['ativa'] ?? true);
+        $validated['ativa']   = (bool) ($validated['ativa'] ?? true);
+        // horario e descricao sao NOT NULL na tabela original; garantir string vazia em vez de null
+        $validated['horario'] = $validated['horario'] ?? '';
         return $validated;
     }
 }

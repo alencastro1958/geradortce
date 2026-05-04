@@ -67,6 +67,14 @@ class Vaga extends Model
             // Gera um código único tipo VAG-2026-0001
             $ultimoId = static::max('id') ?? 0;
             $vaga->codigo_vaga = 'VAG-' . date('Y') . '-' . str_pad($ultimoId + 1, 4, '0', STR_PAD_LEFT);
+
+            // descricao e horario sao NOT NULL na tabela original — garantir fallback
+            if (empty($vaga->descricao)) {
+                $vaga->descricao = $vaga->atividades ?? $vaga->titulo ?? '-';
+            }
+            if (empty($vaga->horario)) {
+                $vaga->horario = 'A combinar';
+            }
         });
     }
 
