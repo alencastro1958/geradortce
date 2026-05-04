@@ -265,25 +265,26 @@
                                         </form>
                                     </div>
                                 @else
-                                    <div class="min-w-[320px]">
-                                        <p class="mb-3 text-sm text-gray-500">Esta empresa ainda não possui acesso ao portal. Defina o e-mail de login e a senha abaixo.</p>
-                                        <form method="POST" action="{{ route('empresa.criar-acesso', $empresa) }}" class="grid gap-3">
+                                    <div class="w-full mt-4">
+                                        <p class="mb-4 text-sm text-gray-500">Esta empresa ainda não possui acesso ao portal. Defina o e-mail de login e a senha abaixo.</p>
+                                        <form method="POST" action="{{ route('empresa.criar-acesso', $empresa) }}">
                                             @csrf
-                                            <div>
-                                                <label class="block text-sm font-medium text-gray-700 mb-1">E-mail de login</label>
-                                                <input type="email" name="email" required value="{{ old('email', $empresa->email) }}" placeholder="email@empresa.com.br" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 text-sm">
+                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                                                <div>
+                                                    <label class="block text-sm font-medium text-gray-700 mb-1">E-mail de login</label>
+                                                    <input type="email" name="email" required value="{{ old('email', $empresa->email) }}" placeholder="email@empresa.com.br" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 text-sm">
+                                                </div>
+                                                <div>
+                                                    <label class="block text-sm font-medium text-gray-700 mb-1">Senha inicial</label>
+                                                    <input type="password" name="password" required minlength="8" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 text-sm">
+                                                </div>
+                                                <div>
+                                                    <label class="block text-sm font-medium text-gray-700 mb-1">Confirmar senha</label>
+                                                    <input type="password" name="password_confirmation" required minlength="8" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 text-sm">
+                                                </div>
                                             </div>
-                                            <div>
-                                                <label class="block text-sm font-medium text-gray-700 mb-1">Senha inicial</label>
-                                                <input type="password" name="password" required minlength="8" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 text-sm">
-                                            </div>
-                                            <div>
-                                                <label class="block text-sm font-medium text-gray-700 mb-1">Confirmar senha</label>
-                                                <input type="password" name="password_confirmation" required minlength="8" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 text-sm">
-                                            </div>
-                                            <button type="submit" class="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold text-white bg-sky-600 hover:bg-sky-500 transition-colors mt-1">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
-                                                Salvar acesso
+                                            <button type="submit" style="background-color:#0284c7;color:#fff;padding:10px 24px;border-radius:12px;font-size:14px;font-weight:600;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;">
+                                                ✓ Salvar acesso ao portal
                                             </button>
                                         </form>
                                     </div>
