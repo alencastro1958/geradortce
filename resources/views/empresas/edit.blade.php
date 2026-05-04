@@ -288,17 +288,17 @@
                                                 @if(session('success') && str_contains(session('success'), 'Senha'))
                                                     <p class="text-xs text-green-700 font-medium mb-2">{{ session('success') }}</p>
                                                 @endif
-                                                <div class="flex flex-wrap items-end gap-3">
+                                                <div class="grid gap-2 mt-1" style="grid-template-columns: 1fr 1fr auto; align-items: end;">
                                                     <div>
                                                         <label class="block text-xs font-medium text-gray-700 mb-1">Nova senha</label>
-                                                        <input type="password" name="nova_senha" required minlength="8" placeholder="mín. 8 caracteres" class="rounded-xl border-gray-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 text-sm" style="width:180px;">
+                                                        <input type="password" name="nova_senha" required minlength="8" placeholder="mín. 8 caracteres" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 text-sm">
                                                     </div>
                                                     <div>
                                                         <label class="block text-xs font-medium text-gray-700 mb-1">Confirmar nova senha</label>
-                                                        <input type="password" name="nova_senha_confirmation" required minlength="8" placeholder="repita a senha" class="rounded-xl border-gray-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 text-sm" style="width:180px;">
+                                                        <input type="password" name="nova_senha_confirmation" required minlength="8" placeholder="repita a senha" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 text-sm">
                                                     </div>
-                                                    <button type="submit" style="background-color:#0284c7;color:#fff;padding:8px 20px;border-radius:12px;font-size:14px;font-weight:600;border:none;cursor:pointer;white-space:nowrap;align-self:flex-end;">
-                                                        ✓ Salvar nova senha
+                                                    <button type="submit" style="background-color:#0284c7;color:#fff;padding:8px 16px;border-radius:12px;font-size:13px;font-weight:600;border:none;cursor:pointer;white-space:nowrap;">
+                                                        ✓ Salvar
                                                     </button>
                                                 </div>
                                             </form>
