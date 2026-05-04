@@ -281,22 +281,18 @@
                                         {{-- Definir/alterar slug --}}
                                         @if(!$empresa->slug)
                                             <div class="mt-3 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3">
-                                                <p class="text-xs font-semibold text-amber-800 mb-2">⚠ Endereço do portal não definido — a empresa não consegue fazer login até que seja configurado.</p>
+                                                <p class="text-xs font-semibold text-amber-800 mb-3">⚠ Endereço do portal não definido — a empresa não consegue fazer login até que seja configurado.</p>
                                                 <form method="POST" action="{{ route('empresa.alterar-slug', $empresa) }}">
                                                     @csrf
-                                                    <div class="flex items-end gap-2">
-                                                        <div class="flex-1">
-                                                            <label class="block text-xs font-medium text-gray-700 mb-1">Identificador (slug)</label>
-                                                            <div class="flex items-center gap-1">
-                                                                <span class="text-xs text-gray-400 whitespace-nowrap">{{ url('/') }}/</span>
-                                                                <input type="text" name="slug" required
-                                                                    value="{{ old('slug', preg_replace('/[^a-zA-Z0-9\-]/', '', str_replace(' ', '-', strtolower($empresa->nome_fantasia ?: $empresa->razao_social)))) }}"
-                                                                    placeholder="ex: KFG"
-                                                                    pattern="[a-zA-Z][a-zA-Z0-9\-]*"
-                                                                    class="w-full rounded-xl border-gray-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 text-sm font-mono">
-                                                            </div>
-                                                        </div>
-                                                        <button type="submit" style="background-color:#d97706;color:#fff;padding:8px 16px;border-radius:12px;font-size:13px;font-weight:600;border:none;cursor:pointer;white-space:nowrap;">
+                                                    <label class="block text-xs font-medium text-gray-700 mb-1">Identificador do portal (slug)</label>
+                                                    <p class="text-xs text-gray-400 mb-1">Ex: <code>KFG</code> → URL: <em>{{ url('/') }}/<strong>KFG</strong>/dashboard</em></p>
+                                                    <div class="flex items-center gap-2 mt-1">
+                                                        <input type="text" name="slug" required
+                                                            value="{{ old('slug', preg_replace('/[^a-zA-Z0-9\-]/', '', str_replace(' ', '-', strtolower($empresa->nome_fantasia ?: $empresa->razao_social)))) }}"
+                                                            placeholder="ex: KFG"
+                                                            pattern="[a-zA-Z][a-zA-Z0-9\-]*"
+                                                            style="flex:1;min-width:0;padding:8px 12px;border:1px solid #d1d5db;border-radius:12px;font-size:14px;font-family:monospace;">
+                                                        <button type="submit" style="background-color:#d97706;color:#fff;padding:8px 18px;border-radius:12px;font-size:13px;font-weight:600;border:none;cursor:pointer;white-space:nowrap;flex-shrink:0;">
                                                             ✓ Definir endereço
                                                         </button>
                                                     </div>
