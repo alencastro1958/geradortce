@@ -9,12 +9,24 @@ return new class extends Migration
 {
     public function up(): void
     {
-        // Converte o campo date para string para aceitar texto livre como "Contratação Imediata"
-        DB::statement('ALTER TABLE vagas MODIFY inicio_previsto VARCHAR(100) NULL');
+        $driver = DB::getDriverName();
+
+        if ($driver === 'mysql') {
+            DB::statement('ALTER TABLE vagas MODIFY inicio_previsto VARCHAR(100) NULL');
+        } elseif ($driver === 'pgsql') {
+            DB::statement('ALTER TABLE vagas ALTER COLUMN inicio_previsto TYPE VARCHAR(100)');
+        }
+        // SQLite já aceita qualquer tipo de dado em qualquer coluna — nenhuma ação necessária
     }
 
     public function down(): void
     {
-        DB::statement('ALTER TABLE vagas MODIFY inicio_previsto DATE NULL');
+        $driver = DB::getDriverName();
+
+        if ($driver === 'mysql') {
+            DB::statement('ALTER TABLE vagas MODIFY inicio_previsto DATE NULL');
+        } elseif ($driver === 'pgsql') {
+            DB::statement('ALTER TABLE vagas ALTER COLUMN inicio_previsto TYPE DATE USING inicio_previsto::date');
+        }
     }
 };
