@@ -36,7 +36,7 @@
                                 </div>
                                 <div class="col-span-2">
                                     <label for="nome" class="block text-sm font-medium text-gray-700 mb-1">Nome Completo *</label>
-                                    <input type="text" name="nome" id="nome" value="{{ old('nome') }}" required class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
+                                    <input type="text" name="nome" id="nome" data-case="upper" value="{{ old('nome') }}" required class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-shadow hover:shadow-md">
                                     @error('nome') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
                                 </div>
                                 <div class="col-span-2 md:col-span-1">

@@ -2,7 +2,7 @@
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
     <div class="col-span-2">
         <label class="block text-sm font-medium text-gray-700 mb-1">Nome Completo *</label>
-        <input type="text" name="nome" value="{{ old('nome', $supervisor->nome ?? '') }}" required class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+        <input type="text" name="nome" data-case="upper" value="{{ old('nome', $supervisor->nome ?? '') }}" required class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
         @error('nome')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
     </div>
     <div>

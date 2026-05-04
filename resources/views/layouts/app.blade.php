@@ -82,6 +82,88 @@
             observer.observe(document.body, { childList: true, subtree: true });
         });
         </script>
+
+        <!-- Formatação automática de capitalização nos campos de texto -->
+        <script>
+        (function () {
+            // Campos que devem sempre ficar em MAIÚSCULAS (por name attribute)
+            var upperByName = ['razao_social', 'nome_fantasia', 'responsavel_legal_nome'];
+
+            // Padrões de campos telefône/fone que não devem ser alterados
+            var phonePatterns = ['telefone', 'celular', 'whatsapp', 'fone'];
+
+            function isPhoneField(input) {
+                var n = (input.name || '').toLowerCase();
+                return phonePatterns.some(function (p) { return n.indexOf(p) !== -1; });
+            }
+
+            function isUpperField(input) {
+                return input.dataset.case === 'upper' || upperByName.indexOf(input.name) !== -1;
+            }
+
+            function toTitleCase(str) {
+                if (!str) return str;
+                return str.toLowerCase().replace(/(?:^|[\s\-\/\\(])\S/g, function (c) { return c.toUpperCase(); });
+            }
+
+            function initCaseField(input) {
+                if (input.dataset.caseMasked) return;
+                var type = (input.type || 'text').toLowerCase();
+                var skipTypes = ['email', 'date', 'number', 'hidden', 'password', 'checkbox', 'radio', 'file', 'tel', 'submit', 'button', 'reset', 'search'];
+                if (skipTypes.indexOf(type) !== -1) return;
+                if (isPhoneField(input) || input.dataset.phoneMasked) return;
+
+                input.dataset.caseMasked = '1';
+                var upper = isUpperField(input);
+
+                // Converte valor já existente ao carregar a página
+                if (input.value) {
+                    input.value = upper ? input.value.toUpperCase() : toTitleCase(input.value);
+                }
+
+                if (upper) {
+                    // Uppercase: converte a cada tecla
+                    input.addEventListener('input', function () {
+                        var pos = this.selectionStart;
+                        this.value = this.value.toUpperCase();
+                        try { this.setSelectionRange(pos, pos); } catch (e) {}
+                    });
+                } else {
+                    // Title case: converte ao sair do campo (menos intrusivo ao digitar)
+                    input.addEventListener('blur', function () {
+                        if (this.value) this.value = toTitleCase(this.value);
+                    });
+                }
+            }
+
+            function initCaseFields(root) {
+                var container = root || document;
+                container.querySelectorAll('input, textarea').forEach(function (el) {
+                    initCaseField(el);
+                });
+            }
+
+            document.addEventListener('DOMContentLoaded', function () {
+                // Pequeno delay para garantir que as máscaras de telefone já rodaram
+                setTimeout(function () { initCaseFields(); }, 10);
+
+                document.addEventListener('alpine:initialized', function () {
+                    setTimeout(function () { initCaseFields(); }, 10);
+                });
+
+                var caseObserver = new MutationObserver(function (mutations) {
+                    mutations.forEach(function (m) {
+                        m.addedNodes.forEach(function (node) {
+                            if (node.nodeType === 1) {
+                                setTimeout(function () { initCaseFields(node); }, 10);
+                            }
+                        });
+                    });
+                });
+                caseObserver.observe(document.body, { childList: true, subtree: true });
+            });
+        })();
+        </script>
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
