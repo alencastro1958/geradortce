@@ -269,7 +269,7 @@
                                         <p class="mb-4 text-sm text-gray-500">Esta empresa ainda não possui acesso ao portal. Defina o e-mail de login e a senha abaixo.</p>
                                         <form method="POST" action="{{ route('empresa.criar-acesso', $empresa) }}">
                                             @csrf
-                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                                            <div class="grid grid-cols-1 gap-4 mb-4" style="max-width:600px;">
                                                 <div>
                                                     <label class="block text-sm font-medium text-gray-700 mb-1">E-mail de login</label>
                                                     <input type="email" name="email" required value="{{ old('email', $empresa->email) }}" placeholder="email@empresa.com.br" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 text-sm">
