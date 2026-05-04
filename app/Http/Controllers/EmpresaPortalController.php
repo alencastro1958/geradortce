@@ -114,7 +114,8 @@ class EmpresaPortalController extends Controller
         $vaga->preencherDadosDaEmpresa($empresa);
         $vaga->save();
 
-        return redirect()->route('empresa.dashboard')->with('success', 'Vaga cadastrada com sucesso.');
+        return redirect()->route('empresa.dashboard')
+            ->with('success', 'Vaga cadastrada com sucesso! As vagas ativas ficam disponíveis em: ' . url('/vagas/oportunidades'));
     }
 
     public function editVaga(Vaga $vaga): View
