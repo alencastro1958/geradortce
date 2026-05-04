@@ -104,6 +104,7 @@ Route::middleware('auth')->group(function () {
     Route::post('empresas/{empresa}/criar-acesso', [EmpresaPortalController::class, 'criarAcesso'])->name('empresa.criar-acesso');
     Route::delete('empresas/{empresa}/revogar-acesso', [EmpresaPortalController::class, 'revogarAcesso'])->name('empresa.revogar-acesso');
     Route::post('empresas/{empresa}/alterar-senha', [EmpresaPortalController::class, 'alterarSenha'])->name('empresa.alterar-senha');
+    Route::post('empresas/{empresa}/alterar-slug', [EmpresaPortalController::class, 'alterarSlug'])->name('empresa.alterar-slug');
 });
 
 // ─── Portal da Empresa por slug: /{slug}/dashboard ────────────────────────────

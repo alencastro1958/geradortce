@@ -220,6 +220,27 @@ class EmpresaPortalController extends Controller
         return back()->with('success', 'Senha do portal da empresa alterada com sucesso.');
     }
 
+    public function alterarSlug(Request $request, EmpresaConcedente $empresa): RedirectResponse
+    {
+        $request->validate([
+            'slug' => [
+                'required', 'string', 'min:2', 'max:100',
+                'regex:/^[a-zA-Z][a-zA-Z0-9\-]*$/',
+                Rule::unique('empresa_concedentes', 'slug')->ignore($empresa->id),
+                Rule::notIn(self::SLUGS_RESERVADOS),
+            ],
+        ], [
+            'slug.required' => 'O identificador (slug) e obrigatorio.',
+            'slug.regex'    => 'Use apenas letras, numeros e hifens. Deve iniciar com letra.',
+            'slug.unique'   => 'Este identificador ja esta em uso por outra empresa.',
+            'slug.not_in'   => 'Este identificador e reservado pelo sistema.',
+        ]);
+
+        $empresa->update(['slug' => $request->slug]);
+
+        return back()->with('success', 'Endereco do portal definido: /' . $request->slug . '/dashboard');
+    }
+
     private function empresaAutenticadaPorSlug(string $slug): EmpresaConcedente
     {
         $empresa = Auth::user()?->empresaConcedente;

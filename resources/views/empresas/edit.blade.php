@@ -278,6 +278,32 @@
                                             </button>
                                         </form>
 
+                                        {{-- Definir/alterar slug --}}
+                                        @if(!$empresa->slug)
+                                            <div class="mt-3 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3">
+                                                <p class="text-xs font-semibold text-amber-800 mb-2">⚠ Endereço do portal não definido — a empresa não consegue fazer login até que seja configurado.</p>
+                                                <form method="POST" action="{{ route('empresa.alterar-slug', $empresa) }}">
+                                                    @csrf
+                                                    <div class="flex items-end gap-2">
+                                                        <div class="flex-1">
+                                                            <label class="block text-xs font-medium text-gray-700 mb-1">Identificador (slug)</label>
+                                                            <div class="flex items-center gap-1">
+                                                                <span class="text-xs text-gray-400 whitespace-nowrap">{{ url('/') }}/</span>
+                                                                <input type="text" name="slug" required
+                                                                    value="{{ old('slug', preg_replace('/[^a-zA-Z0-9\-]/', '', str_replace(' ', '-', strtolower($empresa->nome_fantasia ?: $empresa->razao_social)))) }}"
+                                                                    placeholder="ex: KFG"
+                                                                    pattern="[a-zA-Z][a-zA-Z0-9\-]*"
+                                                                    class="w-full rounded-xl border-gray-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 text-sm font-mono">
+                                                            </div>
+                                                        </div>
+                                                        <button type="submit" style="background-color:#d97706;color:#fff;padding:8px 16px;border-radius:12px;font-size:13px;font-weight:600;border:none;cursor:pointer;white-space:nowrap;">
+                                                            ✓ Definir endereço
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        @endif
+
                                         {{-- Alterar senha --}}
                                         <details class="mt-2">
                                             <summary class="cursor-pointer text-sm font-medium text-sky-700 hover:underline select-none">
