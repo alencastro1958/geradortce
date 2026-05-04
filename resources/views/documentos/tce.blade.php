@@ -344,8 +344,10 @@
     <p class="bold mt-2">CLÁUSULA DÉCIMA:</p>
     <p>O presente TERMO DE COMPROMISSO DE ESTÁGIO será encerrado: a) Automaticamente ao término do prazo estipulado; b) Por livre manifestação de vontade da UNIDADE CONCEDENTE ou do(a) ESTAGIÁRIO(A), mediante aviso prévio por escrito de, no mínimo, 7 (sete) dias; c) Mediante comprovação de rendimento insatisfatório ou descumprimento das normas disciplinares; d) Ao término do curso, mediante comunicação formal da data de colação de grau/formatura pelo(a) estudante; e) Por descumprimento das cláusulas deste instrumento ou da legislação pertinente.</p>
 
+    <div style="page-break-inside: avoid; break-inside: avoid;">
     <p class="bold mt-2">CLÁUSULA DÉCIMA PRIMEIRA:</p>
     <p>O presente instrumento celebra-se nos termos do Art. 3º da Lei nº 11.788/2008. Fica expressamente declarado que a relação jurídica aqui estabelecida não gera vínculo empregatício de qualquer natureza, mesmo sendo onerosa, constituindo-se este documento como prova da inexistência de tal vínculo.</p>
+    </div>
 
     <div class="bloco-assinaturas">
     <p class="mt-2">E, por estarem justos e contratados, as partes assinam o presente instrumento em vias de igual teor e forma.</p>
