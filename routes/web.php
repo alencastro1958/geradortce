@@ -95,6 +95,7 @@ Route::prefix('empresa')->name('empresa.')->group(function () {
         Route::post('logout', [EmpresaPortalController::class, 'logout'])->name('logout');
         Route::get('dashboard', [EmpresaPortalController::class, 'dashboard'])->name('dashboard');
 
+        Route::get('vagas', fn() => redirect()->route('empresa.vagas.create'));
         Route::get('vagas/criar', [EmpresaPortalController::class, 'createVaga'])->name('vagas.create');
         Route::post('vagas', [EmpresaPortalController::class, 'storeVaga'])->name('vagas.store');
         Route::get('vagas/{vaga}/editar', [EmpresaPortalController::class, 'editVaga'])->name('vagas.edit');
