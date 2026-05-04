@@ -7,9 +7,9 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         @page {
             size: A4;
-            margin-top: 4.0cm;
+            margin-top: 3.0cm;
             margin-right: 1.5cm;
-            margin-bottom: 1.5cm;
+            margin-bottom: 1.0cm;
             margin-left: 2.5cm;
         }
         body {
@@ -19,7 +19,7 @@
             line-height: 1.15;
             text-align: justify;
             padding-top: 0;
-            padding-bottom: 1.0cm;
+            padding-bottom: 0.5cm;
         }
         p {
             margin-top: 0;
@@ -27,7 +27,7 @@
         }
         h1 {
             font-family: Arial, sans-serif;
-            font-size: 12pt;
+            font-size: 14pt;
             font-weight: bold;
             text-align: center;
             margin-bottom: 6pt;
@@ -48,9 +48,9 @@
         .page-header {
             position: fixed;
             top: -2.5cm;
-            left: 2.5cm;
-            right: 1.5cm;
-            height: 3.0cm;
+            left: 0;
+            right: 0;
+            height: 2.5cm;
             text-align: center;
         }
         .page-footer {
