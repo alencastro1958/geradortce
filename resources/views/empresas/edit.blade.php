@@ -283,22 +283,24 @@
                                             <summary class="cursor-pointer text-sm font-medium text-sky-700 hover:underline select-none">
                                                 ↺ Alterar senha do portal
                                             </summary>
-                                            <form method="POST" action="{{ route('empresa.alterar-senha', $empresa) }}" class="mt-3 space-y-3" style="max-width:320px;">
+                                            <form method="POST" action="{{ route('empresa.alterar-senha', $empresa) }}" class="mt-3">
                                                 @csrf
                                                 @if(session('success') && str_contains(session('success'), 'Senha'))
-                                                    <p class="text-xs text-green-700 font-medium">{{ session('success') }}</p>
+                                                    <p class="text-xs text-green-700 font-medium mb-2">{{ session('success') }}</p>
                                                 @endif
-                                                <div>
-                                                    <label class="block text-xs font-medium text-gray-700 mb-1">Nova senha</label>
-                                                    <input type="password" name="nova_senha" required minlength="8" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 text-sm">
+                                                <div class="flex flex-wrap items-end gap-3">
+                                                    <div>
+                                                        <label class="block text-xs font-medium text-gray-700 mb-1">Nova senha</label>
+                                                        <input type="password" name="nova_senha" required minlength="8" placeholder="mín. 8 caracteres" class="rounded-xl border-gray-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 text-sm" style="width:180px;">
+                                                    </div>
+                                                    <div>
+                                                        <label class="block text-xs font-medium text-gray-700 mb-1">Confirmar nova senha</label>
+                                                        <input type="password" name="nova_senha_confirmation" required minlength="8" placeholder="repita a senha" class="rounded-xl border-gray-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 text-sm" style="width:180px;">
+                                                    </div>
+                                                    <button type="submit" class="px-4 py-2 rounded-xl text-sm font-semibold text-white bg-sky-600 hover:bg-sky-500 transition-colors whitespace-nowrap">
+                                                        Salvar nova senha
+                                                    </button>
                                                 </div>
-                                                <div>
-                                                    <label class="block text-xs font-medium text-gray-700 mb-1">Confirmar nova senha</label>
-                                                    <input type="password" name="nova_senha_confirmation" required minlength="8" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 text-sm">
-                                                </div>
-                                                <button type="submit" class="px-4 py-2 rounded-xl text-sm font-semibold text-white bg-sky-600 hover:bg-sky-500 transition-colors">
-                                                    Salvar nova senha
-                                                </button>
                                             </form>
                                         </details>
                                     </div>
