@@ -1,9 +1,20 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-bold text-3xl bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 leading-tight">
-            {{ __('Oportunidades de Estágio') }}
-        </h2>
-    </x-slot>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oportunidades de Estágio — Portal de Vagas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-slate-50 text-slate-900">
+    <nav class="border-b border-slate-200 bg-white/95 backdrop-blur">
+        <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+            <div>
+                <p class="text-xs font-semibold uppercase tracking-[0.3em] text-sky-600">Portal de Vagas</p>
+                <h1 class="text-xl font-black">Oportunidades de Estágio</h1>
+            </div>
+        </div>
+    </nav>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -99,4 +110,5 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+</body>
+</html>
