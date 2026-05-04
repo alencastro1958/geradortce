@@ -96,6 +96,11 @@
         \Carbon\Carbon::setLocale('pt_BR');
         $hoje = \Carbon\Carbon::now();
         $dataExtenso = $cidade . ', ' . $hoje->format('d') . ' de ' . $hoje->translatedFormat('F') . ' de ' . $hoje->format('Y') . '.';
+        $rel = $relatorio ?? null;
+        $semestre = $rel?->semestre ?? null;
+        $avaliacao = $rel?->avaliacao ?? null;
+        $observacoes = $rel?->observacoes ?? null;
+        $supervisorNome = $rel?->supervisorEstagio?->nome ?? $estagio->supervisorEstagio?->nome ?? null;
     @endphp
 
     <div class="text-center" style="margin-bottom: 8pt;">
@@ -150,6 +155,15 @@
         @if($estagio->data_fim)
             <p><span class="bold">Data de Término:</span> {{ $estagio->data_fim->format('d/m/Y') }}</p>
         @endif
+        <p style="margin-top: 4pt;">
+            ({{ $semestre == 1 ? 'X' : '&nbsp;' }}) Relatório do 1º Semestre
+            &nbsp;&nbsp;
+            ({{ $semestre == 2 ? 'X' : '&nbsp;' }}) Relatório do 2º Semestre
+            &nbsp;&nbsp;
+            ({{ $semestre == 3 ? 'X' : '&nbsp;' }}) Relatório do 3º Semestre
+            &nbsp;&nbsp;
+            ({{ $semestre == 4 ? 'X' : '&nbsp;' }}) Relatório do 4º Semestre
+        </p>
     </div>
 
     <div class="bloco">
@@ -163,12 +177,24 @@
 
     <div class="bloco">
         <p class="bloco-titulo">5. AVALIAÇÃO DO DESEMPENHO:</p>
-        <p>( ) Excelente &nbsp;&nbsp; ( ) Bom &nbsp;&nbsp; ( ) Regular &nbsp;&nbsp; ( ) Insuficiente</p>
+        <p>
+            ({{ $avaliacao == 'excelente' ? 'X' : '&nbsp;' }}) Excelente
+            &nbsp;&nbsp;
+            ({{ $avaliacao == 'bom' ? 'X' : '&nbsp;' }}) Bom
+            &nbsp;&nbsp;
+            ({{ $avaliacao == 'regular' ? 'X' : '&nbsp;' }}) Regular
+            &nbsp;&nbsp;
+            ({{ $avaliacao == 'insuficiente' ? 'X' : '&nbsp;' }}) Insuficiente
+        </p>
     </div>
 
     <div class="bloco">
         <p class="bloco-titulo">6. OBSERVAÇÕES:</p>
-        <p>_______________________________________________________________</p>
+        @if($observacoes)
+            <p>{{ $observacoes }}</p>
+        @else
+            <p>_______________________________________________________________</p>
+        @endif
     </div>
 
     <div style="margin-top: 20pt; text-align: left;">
@@ -177,7 +203,8 @@
 
     <div style="margin-top: 30pt; text-align: center; page-break-inside: avoid; break-inside: avoid;">
         <div class="assinatura-linha"></div>
-        <p class="bold">Assinatura do Supervisor de Estágio</p>
+        <p class="bold">{{ $supervisorNome ?? 'Assinatura do Supervisor de Estágio' }}</p>
+        <p style="font-size: 9pt; color: #555;">Supervisor de Estágio</p>
     </div>
 
     <div class="page-footer">

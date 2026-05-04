@@ -9,7 +9,7 @@ class SupervisorEstagio extends Model
     protected $table = 'supervisores_estagio';
 
     protected $fillable = [
-        'empresa_concedente_id', 'nome', 'data_nascimento', 'cpf', 'rg',
+        'empresa_concedente_id', 'user_id', 'nome', 'data_nascimento', 'cpf', 'rg',
         'rg_orgao_emissor', 'rg_uf', 'cargo', 'celular', 'email',
         'formacao', 'orgao_regulamentador', 'outras_formacoes', 'observacoes',
         'tempo_atividade', 'registro_profissional', 'setor', 'matricula',
@@ -23,6 +23,16 @@ class SupervisorEstagio extends Model
             'acessa_processo_seletivo' => 'boolean',
             'assina_documentos' => 'boolean',
         ];
+    }
+
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function relatorios(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Relatorio::class, 'supervisor_estagio_id');
     }
 
     public function empresaConcedente(): BelongsTo {

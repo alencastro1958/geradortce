@@ -63,3 +63,29 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+// ─── Portal do Supervisor ─────────────────────────────────────────────────────
+use App\Http\Controllers\SupervisorPortalController;
+
+Route::prefix('supervisor')->name('supervisor.')->group(function () {
+    Route::get('login', [SupervisorPortalController::class, 'loginForm'])->name('login');
+    Route::post('login', [SupervisorPortalController::class, 'login'])->name('login.submit');
+
+    Route::middleware(['auth'])->group(function () {
+        Route::post('logout', [SupervisorPortalController::class, 'logout'])->name('logout');
+        Route::get('dashboard', [SupervisorPortalController::class, 'dashboard'])->name('dashboard');
+
+        Route::get('estagios/{estagio}/relatorios/criar', [SupervisorPortalController::class, 'criarRelatorio'])->name('relatorio.criar');
+        Route::post('estagios/{estagio}/relatorios', [SupervisorPortalController::class, 'salvarRelatorio'])->name('relatorio.salvar');
+        Route::get('relatorios/{relatorio}/editar', [SupervisorPortalController::class, 'editarRelatorio'])->name('relatorio.editar');
+        Route::put('relatorios/{relatorio}', [SupervisorPortalController::class, 'atualizarRelatorio'])->name('relatorio.atualizar');
+        Route::get('relatorios/{relatorio}/pdf', [SupervisorPortalController::class, 'gerarPdf'])->name('relatorio.pdf');
+    });
+});
+
+// Admin: criar/revogar acesso supervisor
+Route::middleware('auth')->group(function () {
+    Route::post('supervisores/{supervisor}/criar-acesso', [SupervisorPortalController::class, 'criarAcesso'])->name('supervisor.criar-acesso');
+    Route::delete('supervisores/{supervisor}/revogar-acesso', [SupervisorPortalController::class, 'revogarAcesso'])->name('supervisor.revogar-acesso');
+});
+

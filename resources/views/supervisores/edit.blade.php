@@ -27,6 +27,48 @@
                         <button type="submit" class="px-8 py-3 rounded-xl font-bold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 shadow-lg">Atualizar Supervisor</button>
                     </div>
                 </form>
+
+                {{-- Acesso ao Portal do Supervisor --}}
+                <div class="mt-8 pt-6 border-t">
+                    <h3 class="font-bold text-gray-700 mb-3">Acesso ao Portal do Supervisor</h3>
+                    @if(session('success'))
+                        <div class="mb-4 p-3 bg-green-50 border border-green-200 rounded-xl text-sm text-green-800">{{ session('success') }}</div>
+                    @endif
+                    @if(session('error'))
+                        <div class="mb-4 p-3 bg-red-50 border border-red-200 rounded-xl text-sm text-red-800">{{ session('error') }}</div>
+                    @endif
+
+                    @if($supervisor->user_id)
+                        <p class="text-sm text-green-700 mb-3">✓ Acesso ativo &mdash; Login: <strong>{{ $supervisor->email }}</strong></p>
+                        <form method="POST" action="{{ route('supervisor.revogar-acesso', $supervisor) }}">
+                            @csrf @method('DELETE')
+                            <button type="submit" onclick="return confirm('Revogar acesso de {{ $supervisor->nome }}?')"
+                                class="px-5 py-2 rounded-xl border border-red-500 text-red-600 text-sm hover:bg-red-50 transition">
+                                Revogar Acesso
+                            </button>
+                        </form>
+                    @else
+                        <p class="text-sm text-gray-500 mb-3">Este supervisor ainda não possui acesso ao Portal. Crie um login abaixo.</p>
+                        <form method="POST" action="{{ route('supervisor.criar-acesso', $supervisor) }}" class="flex flex-wrap gap-4 items-end">
+                            @csrf
+                            <div>
+                                <label class="block text-xs font-medium text-gray-600 mb-1">Senha</label>
+                                <input type="password" name="password" required minlength="8" placeholder="Mínimo 8 caracteres"
+                                    class="rounded-xl border-gray-300 shadow-sm text-sm focus:border-indigo-500 focus:ring-indigo-500 px-3 py-2 w-52">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-gray-600 mb-1">Confirmar Senha</label>
+                                <input type="password" name="password_confirmation" required
+                                    class="rounded-xl border-gray-300 shadow-sm text-sm focus:border-indigo-500 focus:ring-indigo-500 px-3 py-2 w-52">
+                            </div>
+                            <button type="submit"
+                                class="px-6 py-2 rounded-xl font-semibold text-white bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 shadow text-sm transition">
+                                Criar Acesso
+                            </button>
+                        </form>
+                        @error('password')<p class="text-red-500 text-xs mt-2">{{ $message }}</p>@enderror
+                    @endif
+                </div>
             </div>
         </div>
     </div>
