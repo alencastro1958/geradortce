@@ -30,7 +30,7 @@ class EmpresaConcedente extends Model
         'supervisor_celular', 'supervisor_orgao_regulamentador', 'supervisor_outras_formacoes',
         'supervisor_observacoes', 'supervisor_ativo', 'supervisor_setor', 'supervisor_matricula',
         'supervisor_acessa_processo_seletivo', 'supervisor_assina_documentos',
-        'mantenedora', 'contato_nome', 'contato_fone', 'contato_email', 'observacoes'
+        'mantenedora', 'contato_nome', 'contato_fone', 'contato_email', 'observacoes', 'slug'
     ];
 
     protected function casts(): array

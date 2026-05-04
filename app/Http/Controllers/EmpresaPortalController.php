@@ -9,46 +9,56 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 class EmpresaPortalController extends Controller
 {
+    private const SLUGS_RESERVADOS = [
+        'dashboard', 'profile', 'instituicoes', 'empresas', 'estagiarios',
+        'seguradoras', 'agente-integracao', 'estagios', 'api', 'vagas',
+        'empresa', 'supervisor', 'representantes', 'login', 'logout',
+        'register', 'forgot-password', 'reset-password', 'verify-email',
+        'password', 'sanctum', 'storage', 'public', 'admin',
+    ];
+
     public function loginForm(): View|RedirectResponse
     {
         $user = Auth::user();
-
         if ($user instanceof User && $user->hasRole('Empresa')) {
-            return redirect()->route('empresa.dashboard');
+            $empresa = $user->empresaConcedente;
+            if ($empresa?->slug) {
+                return redirect('/' . $empresa->slug . '/dashboard');
+            }
         }
-
         return view('empresa.login');
     }
 
     public function login(Request $request): RedirectResponse
     {
         $request->validate([
-            'email' => ['required', 'email'],
+            'email'    => ['required', 'email'],
             'password' => ['required', 'string'],
         ], [
-            'email.required' => 'O e-mail e obrigatorio.',
+            'email.required'    => 'O e-mail e obrigatorio.',
             'password.required' => 'A senha e obrigatoria.',
         ]);
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->boolean('remember'))) {
             $user = Auth::user();
-
             if ($user instanceof User && $user->hasRole('Empresa')) {
+                $empresa = $user->empresaConcedente;
+                if (!$empresa?->slug) {
+                    Auth::logout();
+                    return back()->withErrors(['email' => 'Portal nao configurado. Solicite ao administrador que defina o endereco (slug) desta empresa.']);
+                }
                 $request->session()->regenerate();
-
-                return redirect()->route('empresa.dashboard');
+                return redirect('/' . $empresa->slug . '/dashboard');
             }
-
             Auth::logout();
-
             return back()->withErrors(['email' => 'Acesso nao autorizado para este usuario.']);
         }
-
         return back()->withErrors(['email' => 'E-mail ou senha incorretos.'])->onlyInput('email');
     }
 
@@ -57,103 +67,92 @@ class EmpresaPortalController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-
         return redirect()->route('empresa.login');
     }
 
-    public function dashboard(): View
+    public function dashboard(string $slug): View
     {
-        $empresa = $this->empresaAutenticada()->load(['vagas' => function ($query) {
+        $empresa = $this->empresaAutenticadaPorSlug($slug);
+        $empresa->load(['vagas' => function ($query) {
             $query->withCount('candidaturas')->latest();
         }]);
-
-        $vagas = $empresa->vagas;
-        $vagasAtivas = $vagas->where('ativa', true)->count();
+        $vagas             = $empresa->vagas;
+        $vagasAtivas       = $vagas->where('ativa', true)->count();
         $totalCandidaturas = $vagas->sum('candidaturas_count');
-
         return view('empresa.dashboard', compact('empresa', 'vagas', 'vagasAtivas', 'totalCandidaturas'));
     }
 
-    public function createVaga(): View
+    public function createVaga(string $slug): View
     {
-        $empresa = $this->empresaAutenticada();
+        $empresa = $this->empresaAutenticadaPorSlug($slug);
         $vaga = new Vaga([
-            'nome_empresa' => $empresa->razao_social,
-            'cnpj_empresa' => $empresa->cnpj,
-            'ramo_empresa' => $empresa->ramo_atividade,
-            'descricao_empresa' => $empresa->observacoes,
+            'nome_empresa'     => $empresa->razao_social,
+            'cnpj_empresa'     => $empresa->cnpj,
+            'descricao_empresa'=> $empresa->observacoes,
             'endereco_empresa' => $empresa->endereco,
-            'contato_empresa' => $empresa->contato_nome ?: $empresa->responsavel_legal_nome,
-            'email_empresa' => $empresa->email,
+            'contato_empresa'  => $empresa->contato_nome ?: $empresa->responsavel_legal_nome,
+            'email_empresa'    => $empresa->email,
             'telefone_empresa' => $empresa->telefone,
-            'quantidade' => 1,
-            'modalidade' => 'Presencial',
-            'horas_dia' => '6',
-            'dias' => 'Segunda a Sexta',
+            'quantidade'       => 1,
+            'modalidade'       => 'Presencial',
+            'horas_dia'        => '6',
+            'dias'             => 'Segunda a Sexta',
             'contratacao_tipo' => 'Nao obrigatorio',
-            'ativa' => true,
+            'ativa'            => true,
         ]);
-
         return view('empresa.vagas.form', [
-            'empresa' => $empresa,
-            'vaga' => $vaga,
-            'route' => route('empresa.vagas.store'),
-            'method' => 'POST',
-            'submitLabel' => 'Publicar vaga',
-            'pageTitle' => 'Cadastro de Vagas',
+            'empresa'      => $empresa,
+            'vaga'         => $vaga,
+            'route'        => route('empresa.vagas.store', ['slug' => $slug]),
+            'method'       => 'POST',
+            'submitLabel'  => 'Publicar vaga',
+            'pageTitle'    => 'Cadastro de Vagas',
             'pageSubtitle' => 'Preencha as informacoes da oportunidade de estagio.',
         ]);
     }
 
-    public function storeVaga(Request $request): RedirectResponse
+    public function storeVaga(Request $request, string $slug): RedirectResponse
     {
-        $empresa = $this->empresaAutenticada();
+        $empresa  = $this->empresaAutenticadaPorSlug($slug);
         $validated = $this->validarVaga($request);
-
         $vaga = new Vaga($this->normalizarDadosVaga($validated));
         $vaga->preencherDadosDaEmpresa($empresa);
         $vaga->save();
-
-        return redirect()->route('empresa.dashboard')
-            ->with('success', 'Vaga cadastrada com sucesso! As vagas ativas ficam disponíveis em: ' . url('/vagas/oportunidades'));
+        return redirect('/' . $slug . '/dashboard')
+            ->with('success', 'Vaga publicada com sucesso! Candidatos podem encontra-la em: ' . url('/vagas/oportunidades'));
     }
 
-    public function editVaga(Vaga $vaga): View
+    public function editVaga(string $slug, Vaga $vaga): View
     {
-        $empresa = $this->empresaAutenticada();
+        $empresa = $this->empresaAutenticadaPorSlug($slug);
         $this->autorizarVaga($vaga, $empresa);
-
         return view('empresa.vagas.form', [
-            'empresa' => $empresa,
-            'vaga' => $vaga,
-            'route' => route('empresa.vagas.update', $vaga),
-            'method' => 'PUT',
-            'submitLabel' => 'Salvar alteracoes',
-            'pageTitle' => 'Editar vaga',
+            'empresa'      => $empresa,
+            'vaga'         => $vaga,
+            'route'        => route('empresa.vagas.update', ['slug' => $slug, 'vaga' => $vaga]),
+            'method'       => 'PUT',
+            'submitLabel'  => 'Salvar alteracoes',
+            'pageTitle'    => 'Editar Vaga',
             'pageSubtitle' => 'Atualize os dados do cadastro da vaga.',
         ]);
     }
 
-    public function updateVaga(Request $request, Vaga $vaga): RedirectResponse
+    public function updateVaga(Request $request, string $slug, Vaga $vaga): RedirectResponse
     {
-        $empresa = $this->empresaAutenticada();
+        $empresa = $this->empresaAutenticadaPorSlug($slug);
         $this->autorizarVaga($vaga, $empresa);
-
-        $validated = $this->validarVaga($request);
-        $vaga->fill($this->normalizarDadosVaga($validated));
+        $vaga->fill($this->normalizarDadosVaga($this->validarVaga($request)));
         $vaga->preencherDadosDaEmpresa($empresa);
         $vaga->save();
-
-        return redirect()->route('empresa.dashboard')->with('success', 'Vaga atualizada com sucesso.');
+        return redirect('/' . $slug . '/dashboard')->with('success', 'Vaga atualizada com sucesso.');
     }
 
-    public function destroyVaga(Vaga $vaga): RedirectResponse
+    public function destroyVaga(Request $request, string $slug, Vaga $vaga): RedirectResponse
     {
-        $empresa = $this->empresaAutenticada();
+        $empresa = $this->empresaAutenticadaPorSlug($slug);
         $this->autorizarVaga($vaga, $empresa);
         $vaga->delete();
-
-        return redirect()->route('empresa.dashboard')->with('success', 'Vaga removida com sucesso.');
+        return redirect('/' . $slug . '/dashboard')->with('success', 'Vaga removida com sucesso.');
     }
 
     public function criarAcesso(Request $request, EmpresaConcedente $empresa): RedirectResponse
@@ -161,25 +160,34 @@ class EmpresaPortalController extends Controller
         if ($empresa->user_id) {
             return back()->with('error', 'Esta empresa ja possui acesso ao portal.');
         }
-
         $request->validate([
+            'slug' => [
+                'required', 'string', 'min:2', 'max:100',
+                'regex:/^[a-zA-Z][a-zA-Z0-9\-]*$/',
+                'unique:empresa_concedentes,slug',
+                Rule::notIn(self::SLUGS_RESERVADOS),
+            ],
             'email'    => ['required', 'email', 'unique:users,email'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ], [
+            'slug.required' => 'O identificador de endereco e obrigatorio.',
+            'slug.regex'    => 'O identificador deve comecar com letra e conter apenas letras, numeros e hifens.',
+            'slug.unique'   => 'Este identificador ja esta sendo usado por outra empresa.',
+            'slug.not_in'   => 'Este identificador e reservado pelo sistema. Escolha outro.',
         ]);
-
-        $email = $request->email;
-
         $user = User::create([
             'name'     => $empresa->nome_fantasia ?: $empresa->razao_social,
-            'email'    => $email,
+            'email'    => $request->email,
             'password' => Hash::make($request->password),
         ]);
         $user->assignRole('Empresa');
-
-        // Atualiza o e-mail da empresa também, se necessário
-        $empresa->update(['user_id' => $user->id, 'email' => $email]);
-
-        return back()->with('success', 'Acesso criado para a empresa. Login: ' . $empresa->email);
+        $empresa->update([
+            'user_id' => $user->id,
+            'email'   => $request->email,
+            'slug'    => $request->slug,
+        ]);
+        $url = url('/' . $request->slug . '/dashboard');
+        return back()->with('success', "Acesso criado! Login: {$request->email} | Portal: {$url}");
     }
 
     public function revogarAcesso(EmpresaConcedente $empresa): RedirectResponse
@@ -189,16 +197,14 @@ class EmpresaPortalController extends Controller
             $empresa->update(['user_id' => null]);
             $user?->delete();
         }
-
         return back()->with('success', 'Acesso da empresa revogado com sucesso.');
     }
 
-    private function empresaAutenticada(): EmpresaConcedente
+    private function empresaAutenticadaPorSlug(string $slug): EmpresaConcedente
     {
         $empresa = Auth::user()?->empresaConcedente;
-
         abort_if(!$empresa, 403, 'Empresa nao vinculada ao portal.');
-
+        abort_if($empresa->slug !== $slug, 403, 'Acesso nao autorizado.');
         return $empresa;
     }
 
@@ -210,53 +216,52 @@ class EmpresaPortalController extends Controller
     private function validarVaga(Request $request): array
     {
         return $request->validate([
-            'nome_empresa' => ['required', 'string', 'max:255'],
-            'cnpj_empresa' => ['required', 'string', 'max:32'],
-            'ramo_empresa' => ['nullable', 'string', 'max:255'],
-            'descricao_empresa' => ['nullable', 'string'],
-            'endereco_empresa' => ['nullable', 'string', 'max:255'],
-            'contato_empresa' => ['nullable', 'string', 'max:255'],
-            'email_empresa' => ['nullable', 'email', 'max:255'],
-            'telefone_empresa' => ['nullable', 'string', 'max:50'],
-            'titulo' => ['required', 'string', 'max:255'],
-            'area_atuacao' => ['required', 'string', 'max:255'],
-            'quantidade' => ['required', 'integer', 'min:1', 'max:999'],
-            'modalidade' => ['required', Rule::in(['Presencial', 'Hibrido', 'Remoto'])],
-            'cidade_estado' => ['nullable', 'string', 'max:255'],
-            'inicio_previsto' => ['nullable', 'string', 'max:255'],
-            'formacao_aceita' => ['nullable', 'string'],
-            'cursos' => ['nullable', 'string'],
-            'periodo_minimo' => ['nullable', 'string', 'max:255'],
+            'nome_empresa'             => ['required', 'string', 'max:255'],
+            'cnpj_empresa'             => ['required', 'string', 'max:32'],
+            'ramo_empresa'             => ['nullable', 'string', 'max:255'],
+            'descricao_empresa'        => ['nullable', 'string'],
+            'endereco_empresa'         => ['nullable', 'string', 'max:255'],
+            'contato_empresa'          => ['nullable', 'string', 'max:255'],
+            'email_empresa'            => ['nullable', 'email', 'max:255'],
+            'telefone_empresa'         => ['nullable', 'string', 'max:50'],
+            'titulo'                   => ['required', 'string', 'max:255'],
+            'area_atuacao'             => ['required', 'string', 'max:255'],
+            'quantidade'               => ['required', 'integer', 'min:1', 'max:999'],
+            'modalidade'               => ['required', Rule::in(['Presencial', 'Hibrido', 'Remoto'])],
+            'cidade_estado'            => ['nullable', 'string', 'max:255'],
+            'inicio_previsto'          => ['nullable', 'string', 'max:255'],
+            'formacao_aceita'          => ['nullable', 'string'],
+            'cursos'                   => ['nullable', 'string'],
+            'periodo_minimo'           => ['nullable', 'string', 'max:255'],
             'conhecimentos_desejaveis' => ['nullable', 'string'],
-            'competencias' => ['nullable', 'string'],
-            'atividades' => ['nullable', 'string'],
-            'horas_dia' => ['nullable', 'string', 'max:50'],
-            'dias' => ['nullable', 'string', 'max:255'],
-            'horario' => ['nullable', 'string', 'max:255'],
-            'flexibilidade' => ['nullable', 'string', 'max:255'],
-            'bolsa_auxilio' => ['nullable', 'numeric', 'min:0'],
-            'transporte' => ['nullable', 'string', 'max:255'],
-            'alimentacao' => ['nullable', 'string', 'max:255'],
-            'seguro' => ['nullable', 'string', 'max:255'],
-            'outros_beneficios' => ['nullable', 'string'],
-            'contratacao_tipo' => ['required', Rule::in(['Obrigatorio', 'Nao obrigatorio'])],
-            'duracao' => ['nullable', 'string', 'max:255'],
+            'competencias'             => ['nullable', 'string'],
+            'atividades'               => ['nullable', 'string'],
+            'horas_dia'                => ['nullable', 'string', 'max:50'],
+            'dias'                     => ['nullable', 'string', 'max:255'],
+            'horario'                  => ['nullable', 'string', 'max:255'],
+            'flexibilidade'            => ['nullable', 'string', 'max:255'],
+            'bolsa_auxilio'            => ['nullable', 'numeric', 'min:0'],
+            'transporte'               => ['nullable', 'string', 'max:255'],
+            'alimentacao'              => ['nullable', 'string', 'max:255'],
+            'seguro'                   => ['nullable', 'string', 'max:255'],
+            'outros_beneficios'        => ['nullable', 'string'],
+            'contratacao_tipo'         => ['required', Rule::in(['Obrigatorio', 'Nao obrigatorio'])],
+            'duracao'                  => ['nullable', 'string', 'max:255'],
             'possibilidade_efetivacao' => ['nullable', 'string', 'max:255'],
-            'etapas' => ['nullable', 'string'],
-            'prazo' => ['nullable', 'date'],
-            'retorno' => ['nullable', 'string'],
-            'link_candidatura' => ['nullable', 'string', 'max:255'],
-            'email_candidatura' => ['nullable', 'email', 'max:255'],
-            'instrucoes_candidatura' => ['nullable', 'string'],
-            'observacoes' => ['nullable', 'string'],
-            'ativa' => ['nullable', 'boolean'],
+            'etapas'                   => ['nullable', 'string'],
+            'prazo'                    => ['nullable', 'date'],
+            'retorno'                  => ['nullable', 'string'],
+            'link_candidatura'         => ['nullable', 'string', 'max:255'],
+            'email_candidatura'        => ['nullable', 'email', 'max:255'],
+            'instrucoes_candidatura'   => ['nullable', 'string'],
+            'observacoes'              => ['nullable', 'string'],
+            'ativa'                    => ['nullable', 'boolean'],
         ]);
     }
 
     private function normalizarDadosVaga(array $validated): array
     {
         $validated['ativa'] = (bool) ($validated['ativa'] ?? true);
-
         return $validated;
     }
 }

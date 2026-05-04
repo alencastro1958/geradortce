@@ -56,11 +56,13 @@ Route::middleware('auth')->group(function () {
     // API - Supervisores por Empresa
     Route::get('/api/empresas/{empresa}/supervisores', [\App\Http\Controllers\ApiSupervisorController::class, 'byEmpresa'])->name('api.supervisores');
 
-    // Sistema de Vagas
-    Route::get('/vagas/oportunidades', [\App\Http\Controllers\VagaController::class, 'buscaPublica'])->name('vagas.busca');
+    // Sistema de Vagas (admin)
     Route::post('/vagas/{vaga}/candidatar', [\App\Http\Controllers\VagaController::class, 'candidatar'])->name('vagas.candidatar');
     Route::resource('vagas', \App\Http\Controllers\VagaController::class)->except(['show']);
 });
+
+// Vagas públicas — sem autenticação, acessível a estudantes externos
+Route::get('/vagas/oportunidades', [\App\Http\Controllers\VagaController::class, 'buscaPublica'])->name('vagas.busca');
 
 require __DIR__.'/auth.php';
 
@@ -90,17 +92,8 @@ Route::prefix('supervisor')->name('supervisor.')->group(function () {
 Route::prefix('empresa')->name('empresa.')->group(function () {
     Route::get('login', [EmpresaPortalController::class, 'loginForm'])->name('login');
     Route::post('login', [EmpresaPortalController::class, 'login'])->name('login.submit');
-
     Route::middleware(['auth'])->group(function () {
         Route::post('logout', [EmpresaPortalController::class, 'logout'])->name('logout');
-        Route::get('dashboard', [EmpresaPortalController::class, 'dashboard'])->name('dashboard');
-
-        Route::get('vagas', fn() => redirect()->route('empresa.vagas.create'));
-        Route::get('vagas/criar', [EmpresaPortalController::class, 'createVaga'])->name('vagas.create');
-        Route::post('vagas', [EmpresaPortalController::class, 'storeVaga'])->name('vagas.store');
-        Route::get('vagas/{vaga}/editar', [EmpresaPortalController::class, 'editVaga'])->name('vagas.edit');
-        Route::put('vagas/{vaga}', [EmpresaPortalController::class, 'updateVaga'])->name('vagas.update');
-        Route::delete('vagas/{vaga}', [EmpresaPortalController::class, 'destroyVaga'])->name('vagas.destroy');
     });
 });
 
@@ -112,3 +105,16 @@ Route::middleware('auth')->group(function () {
     Route::delete('empresas/{empresa}/revogar-acesso', [EmpresaPortalController::class, 'revogarAcesso'])->name('empresa.revogar-acesso');
 });
 
+// ─── Portal da Empresa por slug: /{slug}/dashboard ────────────────────────────
+// DEVE ficar por último para não conflitar com rotas específicas acima
+Route::prefix('{slug}')->middleware('auth')
+    ->where(['slug' => '[a-zA-Z][a-zA-Z0-9\-]*'])
+    ->group(function () {
+        Route::get('dashboard', [EmpresaPortalController::class, 'dashboard'])->name('empresa.dashboard');
+        Route::get('vagas', fn(string $slug) => redirect()->route('empresa.vagas.create', ['slug' => $slug]))->name('empresa.vagas.index');
+        Route::get('vagas/criar', [EmpresaPortalController::class, 'createVaga'])->name('empresa.vagas.create');
+        Route::post('vagas', [EmpresaPortalController::class, 'storeVaga'])->name('empresa.vagas.store');
+        Route::get('vagas/{vaga}/editar', [EmpresaPortalController::class, 'editVaga'])->name('empresa.vagas.edit');
+        Route::put('vagas/{vaga}', [EmpresaPortalController::class, 'updateVaga'])->name('empresa.vagas.update');
+        Route::delete('vagas/{vaga}', [EmpresaPortalController::class, 'destroyVaga'])->name('empresa.vagas.destroy');
+    });

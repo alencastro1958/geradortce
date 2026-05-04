@@ -29,7 +29,7 @@
     <div class="mx-auto max-w-6xl px-6 py-8">
         <div class="mb-6 flex items-center justify-between gap-4">
             <div>
-                <a href="{{ route('empresa.dashboard') }}" class="text-sm font-medium text-sky-600 hover:underline">Voltar ao dashboard</a>
+                <a href="{{ route('empresa.dashboard', ['slug' => $empresa->slug]) }}" class="text-sm font-medium text-sky-600 hover:underline">Voltar ao dashboard</a>
                 <h1 class="mt-2 text-3xl font-black">{{ $pageTitle }}</h1>
                 <p class="mt-1 text-sm text-slate-500">{{ $pageSubtitle }}</p>
             </div>
@@ -284,7 +284,7 @@
             </section>
 
             <div class="flex items-center justify-end gap-3 pb-8">
-                <a href="{{ route('empresa.dashboard') }}" class="rounded-2xl px-5 py-3 text-sm font-semibold text-slate-600 transition hover:bg-slate-200">Cancelar</a>
+                <a href="{{ route('empresa.dashboard', ['slug' => $empresa->slug]) }}" class="rounded-2xl px-5 py-3 text-sm font-semibold text-slate-600 transition hover:bg-slate-200">Cancelar</a>
                 <button type="submit" class="rounded-2xl bg-slate-900 px-6 py-3 text-sm font-bold uppercase tracking-[0.2em] text-white transition hover:bg-sky-600">{{ $submitLabel }}</button>
             </div>
         </form>

@@ -89,13 +89,14 @@ class VagaController extends Controller
 
         // Envio de E-mails
         $empresa = $vaga->empresa;
-        
-        // E-mail para Empresa (se autorizou)
-        if ($empresa->autoriza_envio_mensagens && $empresa->email) {
-            Mail::to($empresa->email)->send(new \App\Mail\NovaCandidatura($vaga, $estagiario));
+
+        // E-mail para a Empresa: usa email_candidatura da vaga se definido, senão o email da empresa
+        $emailDestino = $vaga->email_candidatura ?: ($empresa?->email ?? null);
+        if ($emailDestino && ($empresa?->autoriza_envio_mensagens || $vaga->email_candidatura)) {
+            Mail::to($emailDestino)->send(new \App\Mail\NovaCandidatura($vaga, $estagiario));
         }
 
-        // E-mail para o Candidato
+        // E-mail de confirmação para o Candidato
         if ($estagiario->email) {
             Mail::to($estagiario->email)->send(new \App\Mail\ConfirmacaoCandidatura($vaga));
         }

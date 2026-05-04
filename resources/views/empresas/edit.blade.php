@@ -250,12 +250,22 @@
                             <div class="flex items-start justify-between gap-6 flex-wrap">
                                 <div>
                                     <h3 class="text-lg font-semibold text-gray-900">Acesso ao Portal da Empresa</h3>
-                                    <p class="mt-1 text-sm text-gray-600">Libere o login da empresa para que ela possa acessar o dashboard e realizar o cadastro das vagas.</p>
-                                    <p class="mt-2 text-xs text-sky-700">URL de acesso: {{ url('/empresa/login') }}</p>
+                                    <p class="mt-1 text-sm text-gray-600">Libere o login e defina o endereço exclusivo da empresa no sistema.</p>
+                                    <p class="mt-2 text-xs text-sky-700">URL de login: <strong>{{ url('/empresa/login') }}</strong></p>
+                                    @if($empresa->slug)
+                                        <p class="mt-1 text-xs text-emerald-700">Portal da empresa:
+                                            <a href="{{ url('/' . $empresa->slug . '/dashboard') }}" target="_blank" class="font-semibold underline">
+                                                {{ url('/' . $empresa->slug . '/dashboard') }}
+                                            </a>
+                                        </p>
+                                    @endif
                                 </div>
                                 @if($empresa->user_id)
                                     <div class="min-w-[260px]">
-                                        <p class="mb-3 text-sm text-green-700">Acesso ativo. Login: <strong>{{ $empresa->email }}</strong></p>
+                                        <p class="mb-1 text-sm text-green-700">Acesso ativo. Login: <strong>{{ $empresa->email }}</strong></p>
+                                        @if($empresa->slug)
+                                            <p class="mb-3 text-xs text-sky-700">Endereço: <strong>{{ $empresa->slug }}</strong></p>
+                                        @endif
                                         <form method="POST" action="{{ route('empresa.revogar-acesso', $empresa) }}">
                                             @csrf
                                             @method('DELETE')
@@ -266,10 +276,27 @@
                                     </div>
                                 @else
                                     <div class="w-full mt-4">
-                                        <p class="mb-4 text-sm text-gray-500">Esta empresa ainda não possui acesso ao portal. Defina o e-mail de login e a senha abaixo.</p>
+                                        <p class="mb-4 text-sm text-gray-500">Esta empresa ainda não possui acesso ao portal. Defina o identificador de endereço, e-mail e senha abaixo.</p>
                                         <form method="POST" action="{{ route('empresa.criar-acesso', $empresa) }}">
                                             @csrf
+                                            @if($errors->any())
+                                                <div class="mb-4 rounded-xl bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700">
+                                                    @foreach($errors->all() as $error)<p>{{ $error }}</p>@endforeach
+                                                </div>
+                                            @endif
                                             <div class="grid grid-cols-1 gap-4 mb-4" style="max-width:600px;">
+                                                <div>
+                                                    <label class="block text-sm font-medium text-gray-700 mb-1">Identificador de endereço (slug) *</label>
+                                                    <div class="flex items-center gap-2">
+                                                        <span class="text-sm text-gray-400 whitespace-nowrap">{{ url('/') }}/</span>
+                                                        <input type="text" name="slug" required
+                                                            value="{{ old('slug', preg_replace('/[^a-zA-Z0-9\-]/', '', str_replace(' ', '-', strtolower($empresa->nome_fantasia ?: $empresa->razao_social)))) }}"
+                                                            placeholder="ex: KFG ou novo-conceito"
+                                                            pattern="[a-zA-Z][a-zA-Z0-9\-]*"
+                                                            class="w-full rounded-xl border-gray-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 text-sm font-mono">
+                                                    </div>
+                                                    <p class="mt-1 text-xs text-gray-400">Somente letras, números e hífens. Ex: <code>KFG</code> ou <code>novo-conceito</code></p>
+                                                </div>
                                                 <div>
                                                     <label class="block text-sm font-medium text-gray-700 mb-1">E-mail de login</label>
                                                     <input type="email" name="email" required value="{{ old('email', $empresa->email) }}" placeholder="email@empresa.com.br" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 text-sm">
