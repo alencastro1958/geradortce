@@ -73,9 +73,17 @@ class EmpresaPortalController extends Controller
     public function dashboard(string $slug): View
     {
         $empresa = $this->empresaAutenticadaPorSlug($slug);
-        $empresa->load(['vagas' => function ($query) {
-            $query->withCount('candidaturas')->latest();
-        }]);
+
+        try {
+            $empresa->load(['vagas' => function ($query) {
+                $query->withCount('candidaturas')->latest();
+            }]);
+        } catch (\Exception $e) {
+            $empresa->load(['vagas' => function ($query) {
+                $query->latest();
+            }]);
+        }
+
         $vagas             = $empresa->vagas;
         $vagasAtivas       = $vagas->where('ativa', true)->count();
         $totalCandidaturas = $vagas->sum('candidaturas_count');
@@ -243,9 +251,15 @@ class EmpresaPortalController extends Controller
 
     private function empresaAutenticadaPorSlug(string $slug): EmpresaConcedente
     {
-        $empresa = Auth::user()?->empresaConcedente;
-        abort_if(!$empresa, 403, 'Empresa nao vinculada ao portal.');
-        abort_if($empresa->slug !== $slug, 403, 'Acesso nao autorizado.');
+        $user = Auth::user();
+        abort_if(!$user, 401, 'Nao autenticado.');
+
+        $empresa = $user->empresaConcedente;
+        abort_if(!$empresa, 403, 'Empresa nao vinculada ao portal. Contate o administrador.');
+
+        // Comparacao case-insensitive para evitar problemas com letras maiusculas/minusculas no slug
+        abort_if(strtolower($empresa->slug) !== strtolower($slug), 403, 'Acesso nao autorizado.');
+
         return $empresa;
     }
 
