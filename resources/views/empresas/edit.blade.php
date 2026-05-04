@@ -297,8 +297,8 @@
                                                         <label class="block text-xs font-medium text-gray-700 mb-1">Confirmar nova senha</label>
                                                         <input type="password" name="nova_senha_confirmation" required minlength="8" placeholder="repita a senha" class="rounded-xl border-gray-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 text-sm" style="width:180px;">
                                                     </div>
-                                                    <button type="submit" class="px-4 py-2 rounded-xl text-sm font-semibold text-white bg-sky-600 hover:bg-sky-500 transition-colors whitespace-nowrap">
-                                                        Salvar nova senha
+                                                    <button type="submit" style="background-color:#0284c7;color:#fff;padding:8px 20px;border-radius:12px;font-size:14px;font-weight:600;border:none;cursor:pointer;white-space:nowrap;align-self:flex-end;">
+                                                        ✓ Salvar nova senha
                                                     </button>
                                                 </div>
                                             </form>
