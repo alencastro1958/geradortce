@@ -14,7 +14,7 @@
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            font-size: 10pt;
+            font-size: 11pt;
             line-height: 1.15;
             text-align: justify;
             padding-top: 0;
@@ -25,9 +25,10 @@
             margin-bottom: 8pt;
             text-align: justify;
         }
-        /* Títulos de seção (CLÁUSULA X, INSTITUIÇÃO DE ENSINO, etc.) */
+        /* Títulos de cláusula: mesma fonte 11pt, bold, margem inferior reduzida */
         p.bold {
-            font-size: 12pt;
+            font-size: 11pt;
+            margin-bottom: 2pt;
         }
         .text-center { text-align: center; }
         .text-right { text-align: right; }
@@ -75,8 +76,18 @@
             page-break-inside: avoid;
             break-inside: avoid;
         }
+        /* Espaço generoso acima de cada bloco (área para selo digital) */
         .assinaturas-stack .assinatura-centro {
-            margin-top: 8px;
+            margin-top: 30px;
+        }
+        /* Linha de assinatura com altura para acomodar selos */
+        .assinatura-linha {
+            border-bottom: 1px solid #000;
+            display: block;
+            width: 80%;
+            margin: 0 auto;
+            height: 55px;  /* espaço para o selo digital acima da linha */
+            margin-bottom: 4px;
         }
         .assinaturas-stack .assinatura-centro p {
             margin-bottom: 1px;
@@ -335,8 +346,8 @@
     <p class="mt-1">{{ $estagio->empresaConcedente->cidade ?? 'Cidade' }}, {{ $estagio->data_inicio->format('d') }} de {{ $estagio->data_inicio->translatedFormat('F') }} de {{ $estagio->data_inicio->format('Y') }}.</p>
 
     <div class="assinaturas-stack" style="width: 100%; margin: 0 auto;">
-    <div class="assinatura-centro" style="text-align: center; margin-top: 20px;">
-        <p style="border-bottom:1px solid #000; margin-bottom:1px;">&nbsp;</p>
+    <div class="assinatura-centro">
+        <div class="assinatura-linha"></div>
         <p class="bold assinatura-nome">{{ $estagio->empresaConcedente->razao_social }}</p>
         @if($estagio->empresaConcedente->responsavel_legal_nome)
             <p class="assinatura-responsavel">{{ $estagio->empresaConcedente->responsavel_legal_nome }}</p>
@@ -344,8 +355,8 @@
         <p class="assinatura-papel">Unidade Concedente de Estágio</p>
     </div>
 
-    <div class="assinatura-centro" style="text-align: center; margin-top: 12px;">
-        <p style="border-bottom:1px solid #000; margin-bottom:1px;">&nbsp;</p>
+    <div class="assinatura-centro">
+        <div class="assinatura-linha"></div>
         <p class="bold assinatura-nome">{{ $estagio->instituicaoEnsino->razao_social }}</p>
         @if($estagio->instituicaoEnsino->responsavel_legal_nome)
             <p class="assinatura-responsavel">{{ $estagio->instituicaoEnsino->responsavel_legal_nome }}</p>
@@ -353,14 +364,14 @@
         <p class="assinatura-papel">Instituição de Ensino</p>
     </div>
 
-    <div class="assinatura-centro" style="text-align: center; margin-top: 12px;">
-        <p style="border-bottom:1px solid #000; margin-bottom:1px;">&nbsp;</p>
+    <div class="assinatura-centro">
+        <div class="assinatura-linha"></div>
         <p class="bold assinatura-nome">{{ $estagio->estagiario->nome }}</p>
         <p class="assinatura-papel">Estagiário(a)</p>
     </div>
 
-    <div class="assinatura-centro" style="text-align: center; margin-top: 12px;">
-        <p style="border-bottom:1px solid #000; margin-bottom:1px;">&nbsp;</p>
+    <div class="assinatura-centro">
+        <div class="assinatura-linha"></div>
         <p class="bold assinatura-nome">ALENCASTRO CONSULTORIA-ESTÁGIOS</p>
         <p class="assinatura-papel">Agente de Integração</p>
         <p class="assinatura-responsavel">Diogo Luís Alencastro da Silva</p>
