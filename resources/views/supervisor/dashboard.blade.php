@@ -29,69 +29,117 @@
             </div>
         @endif
 
-        <h2 class="text-2xl font-bold text-gray-800 mb-6">Meus Estágios Supervisionados</h2>
-
-        @forelse($estagios as $estagio)
-            <div class="bg-white rounded-2xl shadow p-6 mb-6">
-                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-4">
-                    <div>
-                        <h3 class="font-bold text-gray-800 text-lg">{{ $estagio->estagiario->nome }}</h3>
-                        <p class="text-sm text-gray-500">
-                            CPF: {{ $estagio->estagiario->cpf }}
-                            &nbsp;|&nbsp;
-                            Início: {{ \Carbon\Carbon::parse($estagio->data_inicio)->format('d/m/Y') }}
-                            &nbsp;|&nbsp;
-                            Previsão: {{ \Carbon\Carbon::parse($estagio->data_termino)->format('d/m/Y') }}
-                        </p>
-                    </div>
-                    <a href="{{ route('supervisor.relatorio.criar', $estagio) }}"
-                        class="inline-block px-5 py-2 rounded-xl bg-indigo-600 text-white font-semibold text-sm hover:bg-indigo-500 shadow transition">
-                        + Novo Relatório
-                    </a>
-                </div>
-
-                {{-- Relatórios existentes --}}
-                @if($estagio->relatorios->count())
-                    <table class="w-full text-sm border-t pt-4">
-                        <thead>
-                            <tr class="text-left text-gray-500 border-b">
-                                <th class="pb-2 pr-4">Semestre</th>
-                                <th class="pb-2 pr-4">Avaliação</th>
-                                <th class="pb-2 pr-4">Status</th>
-                                <th class="pb-2">Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($estagio->relatorios->sortBy('semestre') as $rel)
-                                <tr class="border-b last:border-0">
-                                    <td class="py-2 pr-4 font-medium">{{ $rel->labelSemestre() }}</td>
-                                    <td class="py-2 pr-4">{{ $rel->labelAvaliacao() }}</td>
-                                    <td class="py-2 pr-4">
-                                        @if($rel->status === 'finalizado')
-                                            <span class="px-2 py-0.5 rounded-full bg-green-100 text-green-700 text-xs font-semibold">Finalizado</span>
-                                        @else
-                                            <span class="px-2 py-0.5 rounded-full bg-yellow-100 text-yellow-700 text-xs font-semibold">Rascunho</span>
-                                        @endif
-                                    </td>
-                                    <td class="py-2 flex gap-3">
-                                        @if($rel->status !== 'finalizado')
-                                            <a href="{{ route('supervisor.relatorio.editar', $rel) }}" class="text-indigo-600 hover:underline">Editar</a>
-                                        @endif
-                                        <a href="{{ route('supervisor.relatorio.pdf', $rel) }}" target="_blank" class="text-blue-600 hover:underline">PDF</a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                @else
-                    <p class="text-sm text-gray-400 mt-2">Nenhum relatório emitido ainda.</p>
+        {{-- Cabeçalho com contador --}}
+        <div class="flex items-center justify-between mb-6">
+            <h2 class="text-2xl font-bold text-gray-800">Estagiários Supervisionados</h2>
+            <div class="flex items-center gap-2">
+                @php $total = $estagios->count(); $limite = 10; @endphp
+                <span class="text-sm font-semibold px-4 py-1.5 rounded-full
+                    {{ $total >= $limite ? 'bg-red-100 text-red-700' : ($total >= 8 ? 'bg-yellow-100 text-yellow-700' : 'bg-green-100 text-green-700') }}">
+                    {{ $total }} / {{ $limite }} estagiários
+                </span>
+                @if($total >= $limite)
+                    <span class="text-xs text-red-600 font-medium">Limite atingido (Lei nº 11.788/2008)</span>
                 @endif
             </div>
-        @empty
+        </div>
+
+        {{-- Alerta de limite --}}
+        @if($total >= $limite)
+            <div class="mb-6 p-4 bg-red-50 border border-red-300 rounded-xl text-sm text-red-800">
+                <strong>⚠ Limite máximo atingido.</strong> Conforme o Art. 9º da Lei nº 11.788/2008, cada supervisor pode acompanhar no máximo <strong>10 estagiários</strong> simultaneamente.
+            </div>
+        @elseif($total >= 8)
+            <div class="mb-6 p-4 bg-yellow-50 border border-yellow-300 rounded-xl text-sm text-yellow-800">
+                <strong>Atenção:</strong> Você está próximo do limite máximo de 10 estagiários permitido por lei.
+            </div>
+        @endif
+
+        {{-- Tabela resumo de estagiários --}}
+        @if($estagios->count())
+            <div class="bg-white rounded-2xl shadow mb-8 overflow-hidden">
+                <table class="w-full text-sm">
+                    <thead class="bg-indigo-50 text-indigo-800 uppercase text-xs font-semibold">
+                        <tr>
+                            <th class="px-5 py-3 text-left">#</th>
+                            <th class="px-5 py-3 text-left">Estagiário</th>
+                            <th class="px-5 py-3 text-left">Curso</th>
+                            <th class="px-5 py-3 text-left">Início</th>
+                            <th class="px-5 py-3 text-left">Término</th>
+                            <th class="px-5 py-3 text-left">Status</th>
+                            <th class="px-5 py-3 text-left">Relatórios</th>
+                            <th class="px-5 py-3 text-left">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        @foreach($estagios as $i => $estagio)
+                            <tr class="hover:bg-gray-50 transition">
+                                <td class="px-5 py-3 text-gray-400 font-mono">{{ $i + 1 }}</td>
+                                <td class="px-5 py-3">
+                                    <div class="font-semibold text-gray-800">{{ $estagio->estagiario->nome }}</div>
+                                    <div class="text-xs text-gray-400">CPF: {{ $estagio->estagiario->cpf }}</div>
+                                </td>
+                                <td class="px-5 py-3 text-gray-600">{{ $estagio->estagiario->curso ?? '—' }}</td>
+                                <td class="px-5 py-3 text-gray-600">
+                                    {{ $estagio->data_inicio ? $estagio->data_inicio->format('d/m/Y') : '—' }}
+                                </td>
+                                <td class="px-5 py-3 text-gray-600">
+                                    {{ $estagio->data_fim ? $estagio->data_fim->format('d/m/Y') : '—' }}
+                                </td>
+                                <td class="px-5 py-3">
+                                    @php $st = $estagio->status->value ?? $estagio->status; @endphp
+                                    <span class="px-2 py-0.5 rounded-full text-xs font-semibold
+                                        {{ $st === 'ativo' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700' }}">
+                                        {{ ucfirst($st) }}
+                                    </span>
+                                </td>
+                                <td class="px-5 py-3">
+                                    @php $relEmitidos = $estagio->relatorios->count(); @endphp
+                                    <span class="text-gray-600">{{ $relEmitidos }} / 4</span>
+                                    @foreach($estagio->relatorios->sortBy('semestre') as $rel)
+                                        <span class="ml-1 px-1.5 py-0.5 rounded text-xs
+                                            {{ $rel->status === 'finalizado' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700' }}">
+                                            {{ $rel->semestre }}º
+                                        </span>
+                                    @endforeach
+                                </td>
+                                <td class="px-5 py-3">
+                                    <div class="flex gap-2 flex-wrap">
+                                        @if($estagio->relatorios->count() < 4)
+                                            <a href="{{ route('supervisor.relatorio.criar', $estagio) }}"
+                                                class="px-3 py-1 rounded-lg bg-indigo-600 text-white text-xs font-semibold hover:bg-indigo-500 transition">
+                                                + Relatório
+                                            </a>
+                                        @endif
+                                        @foreach($estagio->relatorios->where('status', '!=', 'finalizado') as $rel)
+                                            <a href="{{ route('supervisor.relatorio.editar', $rel) }}"
+                                                class="px-3 py-1 rounded-lg border border-indigo-400 text-indigo-600 text-xs font-semibold hover:bg-indigo-50 transition">
+                                                Editar {{ $rel->semestre }}º
+                                            </a>
+                                        @endforeach
+                                        @foreach($estagio->relatorios as $rel)
+                                            <a href="{{ route('supervisor.relatorio.pdf', $rel) }}" target="_blank"
+                                                class="px-3 py-1 rounded-lg border border-gray-300 text-gray-600 text-xs hover:bg-gray-50 transition">
+                                                PDF {{ $rel->semestre }}º
+                                            </a>
+                                        @endforeach
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+
+            {{-- Rodapé informativo --}}
+            <p class="text-xs text-gray-400 text-center">
+                Conforme Art. 9º da Lei nº 11.788/2008 – cada supervisor pode acompanhar no máximo <strong>10 estagiários</strong> por vez.
+            </p>
+        @else
             <div class="bg-white rounded-2xl shadow p-8 text-center text-gray-500">
                 Nenhum estágio ativo vinculado a você no momento.
             </div>
-        @endforelse
+        @endif
     </div>
 </body>
 </html>
