@@ -5,6 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $pageTitle }}</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .campo {
+            width: 100%;
+            border: 1.5px solid #94a3b8;
+            border-radius: 14px;
+            padding: 9px 14px;
+            font-size: 14px;
+            outline: none;
+            background: #fff;
+            transition: border-color 0.2s;
+        }
+        .campo:focus {
+            border-color: #0ea5e9;
+            box-shadow: 0 0 0 3px rgba(14,165,233,0.15);
+        }
+        textarea.campo {
+            resize: vertical;
+        }
+    </style>
 </head>
 <body class="min-h-screen bg-slate-50 text-slate-900">
     <div class="mx-auto max-w-6xl px-6 py-8">
@@ -39,35 +58,35 @@
                 <div class="mt-5 grid gap-4 md:grid-cols-2">
                     <div>
                         <label class="mb-1 block text-sm font-medium text-slate-700">Nome</label>
-                        <input type="text" name="nome_empresa" value="{{ old('nome_empresa', $vaga->nome_empresa) }}" required class="w-full rounded-2xl border-slate-200">
+                        <input type="text" name="nome_empresa" value="{{ old('nome_empresa', $vaga->nome_empresa) }}" required class="campo">
                     </div>
                     <div>
                         <label class="mb-1 block text-sm font-medium text-slate-700">CNPJ</label>
-                        <input type="text" name="cnpj_empresa" value="{{ old('cnpj_empresa', $vaga->cnpj_empresa) }}" required class="w-full rounded-2xl border-slate-200">
+                        <input type="text" name="cnpj_empresa" value="{{ old('cnpj_empresa', $vaga->cnpj_empresa) }}" required class="campo">
                     </div>
                     <div>
                         <label class="mb-1 block text-sm font-medium text-slate-700">Ramo</label>
-                        <input type="text" name="ramo_empresa" value="{{ old('ramo_empresa', $vaga->ramo_empresa) }}" class="w-full rounded-2xl border-slate-200">
+                        <input type="text" name="ramo_empresa" value="{{ old('ramo_empresa', $vaga->ramo_empresa) }}" class="campo">
                     </div>
                     <div>
                         <label class="mb-1 block text-sm font-medium text-slate-700">Endereco</label>
-                        <input type="text" name="endereco_empresa" value="{{ old('endereco_empresa', $vaga->endereco_empresa) }}" class="w-full rounded-2xl border-slate-200">
+                        <input type="text" name="endereco_empresa" value="{{ old('endereco_empresa', $vaga->endereco_empresa) }}" class="campo">
                     </div>
                     <div class="md:col-span-2">
-                        <label class="mb-1 block text-sm font-medium text-slate-700">Descricao</label>
-                        <textarea name="descricao_empresa" rows="3" class="w-full rounded-2xl border-slate-200">{{ old('descricao_empresa', $vaga->descricao_empresa) }}</textarea>
+                        <label class="mb-1 block text-sm font-medium text-slate-700">Descrição da Empresa</label>
+                        <textarea name="descricao_empresa" rows="6" class="campo">{{ old('descricao_empresa', $vaga->descricao_empresa) }}</textarea>
                     </div>
                     <div>
                         <label class="mb-1 block text-sm font-medium text-slate-700">Contato</label>
-                        <input type="text" name="contato_empresa" value="{{ old('contato_empresa', $vaga->contato_empresa) }}" class="w-full rounded-2xl border-slate-200">
+                        <input type="text" name="contato_empresa" value="{{ old('contato_empresa', $vaga->contato_empresa) }}" class="campo">
                     </div>
                     <div>
                         <label class="mb-1 block text-sm font-medium text-slate-700">E-mail</label>
-                        <input type="email" name="email_empresa" value="{{ old('email_empresa', $vaga->email_empresa) }}" class="w-full rounded-2xl border-slate-200">
+                        <input type="email" name="email_empresa" value="{{ old('email_empresa', $vaga->email_empresa) }}" class="campo">
                     </div>
                     <div>
                         <label class="mb-1 block text-sm font-medium text-slate-700">Telefone</label>
-                        <input type="text" name="telefone_empresa" value="{{ old('telefone_empresa', $vaga->telefone_empresa) }}" class="w-full rounded-2xl border-slate-200">
+                        <input type="text" name="telefone_empresa" value="{{ old('telefone_empresa', $vaga->telefone_empresa) }}" class="campo">
                     </div>
                 </div>
             </section>
@@ -77,19 +96,19 @@
                 <div class="mt-5 grid gap-4 md:grid-cols-2">
                     <div>
                         <label class="mb-1 block text-sm font-medium text-slate-700">Titulo</label>
-                        <input type="text" name="titulo" value="{{ old('titulo', $vaga->titulo) }}" required class="w-full rounded-2xl border-slate-200">
+                        <input type="text" name="titulo" value="{{ old('titulo', $vaga->titulo) }}" required class="campo">
                     </div>
                     <div>
                         <label class="mb-1 block text-sm font-medium text-slate-700">Area</label>
-                        <input type="text" name="area_atuacao" value="{{ old('area_atuacao', $vaga->area_atuacao) }}" required class="w-full rounded-2xl border-slate-200">
+                        <input type="text" name="area_atuacao" value="{{ old('area_atuacao', $vaga->area_atuacao) }}" required class="campo">
                     </div>
                     <div>
                         <label class="mb-1 block text-sm font-medium text-slate-700">Quantidade</label>
-                        <input type="number" min="1" name="quantidade" value="{{ old('quantidade', $vaga->quantidade) }}" required class="w-full rounded-2xl border-slate-200">
+                        <input type="number" min="1" name="quantidade" value="{{ old('quantidade', $vaga->quantidade) }}" required class="campo">
                     </div>
                     <div>
                         <label class="mb-1 block text-sm font-medium text-slate-700">Local</label>
-                        <select name="modalidade" class="w-full rounded-2xl border-slate-200">
+                        <select name="modalidade" class="campo">
                             @foreach(['Presencial', 'Hibrido', 'Remoto'] as $modalidade)
                                 <option value="{{ $modalidade }}" @selected(old('modalidade', $vaga->modalidade) === $modalidade)>{{ $modalidade }}</option>
                             @endforeach
@@ -97,11 +116,18 @@
                     </div>
                     <div>
                         <label class="mb-1 block text-sm font-medium text-slate-700">Cidade/Estado</label>
-                        <input type="text" name="cidade_estado" value="{{ old('cidade_estado', $vaga->cidade_estado) }}" class="w-full rounded-2xl border-slate-200">
+                        <input type="text" name="cidade_estado" value="{{ old('cidade_estado', $vaga->cidade_estado) }}" class="campo">
                     </div>
                     <div>
-                        <label class="mb-1 block text-sm font-medium text-slate-700">Inicio previsto</label>
-                        <input type="date" name="inicio_previsto" value="{{ old('inicio_previsto', optional($vaga->inicio_previsto)->format('Y-m-d')) }}" class="w-full rounded-2xl border-slate-200">
+                        <label class="mb-1 block text-sm font-medium text-slate-700">Início previsto</label>
+                        <select name="inicio_previsto_tipo" onchange="toggleInicioPrevisto(this)" class="campo mb-2">
+                            <option value="data" {{ (!$vaga->inicio_previsto || strtotime($vaga->inicio_previsto)) ? 'selected' : '' }}>Selecionar data</option>
+                            <option value="imediato" {{ ($vaga->inicio_previsto === 'Contratação Imediata') ? 'selected' : '' }}>Contratação Imediata</option>
+                        </select>
+                        <div id="campo-data-inicio" {{ ($vaga->inicio_previsto === 'Contratação Imediata') ? 'style=display:none' : '' }}>
+                            <input type="date" name="inicio_previsto_data" value="{{ old('inicio_previsto_data', ($vaga->inicio_previsto && strtotime($vaga->inicio_previsto)) ? $vaga->inicio_previsto : '') }}" class="campo">
+                        </div>
+                        <input type="hidden" name="inicio_previsto" id="inicio_previsto_hidden" value="{{ old('inicio_previsto', $vaga->inicio_previsto) }}">
                     </div>
                 </div>
             </section>
@@ -111,23 +137,23 @@
                 <div class="mt-5 grid gap-4 md:grid-cols-2">
                     <div>
                         <label class="mb-1 block text-sm font-medium text-slate-700">Formacao aceita</label>
-                        <textarea name="formacao_aceita" rows="3" class="w-full rounded-2xl border-slate-200">{{ old('formacao_aceita', $vaga->formacao_aceita) }}</textarea>
+                        <textarea name="formacao_aceita" rows="3" class="campo">{{ old('formacao_aceita', $vaga->formacao_aceita) }}</textarea>
                     </div>
                     <div>
                         <label class="mb-1 block text-sm font-medium text-slate-700">Cursos</label>
-                        <textarea name="cursos" rows="3" class="w-full rounded-2xl border-slate-200">{{ old('cursos', $vaga->cursos) }}</textarea>
+                        <textarea name="cursos" rows="3" class="campo">{{ old('cursos', $vaga->cursos) }}</textarea>
                     </div>
                     <div>
                         <label class="mb-1 block text-sm font-medium text-slate-700">Periodo minimo</label>
-                        <input type="text" name="periodo_minimo" value="{{ old('periodo_minimo', $vaga->periodo_minimo) }}" class="w-full rounded-2xl border-slate-200">
+                        <input type="text" name="periodo_minimo" value="{{ old('periodo_minimo', $vaga->periodo_minimo) }}" class="campo">
                     </div>
                     <div>
                         <label class="mb-1 block text-sm font-medium text-slate-700">Competencias</label>
-                        <textarea name="competencias" rows="3" class="w-full rounded-2xl border-slate-200">{{ old('competencias', $vaga->competencias) }}</textarea>
+                        <textarea name="competencias" rows="3" class="campo">{{ old('competencias', $vaga->competencias) }}</textarea>
                     </div>
                     <div class="md:col-span-2">
                         <label class="mb-1 block text-sm font-medium text-slate-700">Conhecimentos desejaveis</label>
-                        <textarea name="conhecimentos_desejaveis" rows="3" class="w-full rounded-2xl border-slate-200">{{ old('conhecimentos_desejaveis', $vaga->conhecimentos_desejaveis) }}</textarea>
+                        <textarea name="conhecimentos_desejaveis" rows="3" class="campo">{{ old('conhecimentos_desejaveis', $vaga->conhecimentos_desejaveis) }}</textarea>
                     </div>
                 </div>
             </section>
@@ -136,7 +162,7 @@
                 <h2 class="text-lg font-black uppercase tracking-[0.2em] text-slate-800">Atividades</h2>
                 <div class="mt-5">
                     <label class="mb-1 block text-sm font-medium text-slate-700">Atividades previstas</label>
-                    <textarea name="atividades" rows="5" class="w-full rounded-2xl border-slate-200" placeholder="- Atividade 1&#10;- Atividade 2&#10;- Atividade 3">{{ old('atividades', $vaga->atividades) }}</textarea>
+                    <textarea name="atividades" rows="10" class="campo" placeholder="- Atividade 1&#10;- Atividade 2&#10;- Atividade 3">{{ old('atividades', $vaga->atividades) }}</textarea>
                 </div>
             </section>
 
@@ -145,19 +171,19 @@
                 <div class="mt-5 grid gap-4 md:grid-cols-2">
                     <div>
                         <label class="mb-1 block text-sm font-medium text-slate-700">Horas/dia</label>
-                        <input type="text" name="horas_dia" value="{{ old('horas_dia', $vaga->horas_dia) }}" class="w-full rounded-2xl border-slate-200">
+                        <input type="text" name="horas_dia" value="{{ old('horas_dia', $vaga->horas_dia) }}" class="campo">
                     </div>
                     <div>
                         <label class="mb-1 block text-sm font-medium text-slate-700">Dias</label>
-                        <input type="text" name="dias" value="{{ old('dias', $vaga->dias) }}" class="w-full rounded-2xl border-slate-200">
+                        <input type="text" name="dias" value="{{ old('dias', $vaga->dias) }}" class="campo">
                     </div>
                     <div>
                         <label class="mb-1 block text-sm font-medium text-slate-700">Horario</label>
-                        <input type="text" name="horario" value="{{ old('horario', $vaga->horario) }}" class="w-full rounded-2xl border-slate-200">
+                        <input type="text" name="horario" value="{{ old('horario', $vaga->horario) }}" class="campo">
                     </div>
                     <div>
                         <label class="mb-1 block text-sm font-medium text-slate-700">Flexibilidade</label>
-                        <input type="text" name="flexibilidade" value="{{ old('flexibilidade', $vaga->flexibilidade) }}" class="w-full rounded-2xl border-slate-200">
+                        <input type="text" name="flexibilidade" value="{{ old('flexibilidade', $vaga->flexibilidade) }}" class="campo">
                     </div>
                 </div>
             </section>
@@ -167,23 +193,23 @@
                 <div class="mt-5 grid gap-4 md:grid-cols-2">
                     <div>
                         <label class="mb-1 block text-sm font-medium text-slate-700">Bolsa</label>
-                        <input type="number" step="0.01" min="0" name="bolsa_auxilio" value="{{ old('bolsa_auxilio', $vaga->bolsa_auxilio) }}" class="w-full rounded-2xl border-slate-200">
+                        <input type="number" step="0.01" min="0" name="bolsa_auxilio" value="{{ old('bolsa_auxilio', $vaga->bolsa_auxilio) }}" class="campo">
                     </div>
                     <div>
                         <label class="mb-1 block text-sm font-medium text-slate-700">Transporte</label>
-                        <input type="text" name="transporte" value="{{ old('transporte', $vaga->transporte) }}" class="w-full rounded-2xl border-slate-200">
+                        <input type="text" name="transporte" value="{{ old('transporte', $vaga->transporte) }}" class="campo">
                     </div>
                     <div>
                         <label class="mb-1 block text-sm font-medium text-slate-700">Alimentacao</label>
-                        <input type="text" name="alimentacao" value="{{ old('alimentacao', $vaga->alimentacao) }}" class="w-full rounded-2xl border-slate-200">
+                        <input type="text" name="alimentacao" value="{{ old('alimentacao', $vaga->alimentacao) }}" class="campo">
                     </div>
                     <div>
                         <label class="mb-1 block text-sm font-medium text-slate-700">Seguro</label>
-                        <input type="text" name="seguro" value="{{ old('seguro', $vaga->seguro) }}" class="w-full rounded-2xl border-slate-200">
+                        <input type="text" name="seguro" value="{{ old('seguro', $vaga->seguro) }}" class="campo">
                     </div>
                     <div class="md:col-span-2">
                         <label class="mb-1 block text-sm font-medium text-slate-700">Outros</label>
-                        <textarea name="outros_beneficios" rows="3" class="w-full rounded-2xl border-slate-200">{{ old('outros_beneficios', $vaga->outros_beneficios) }}</textarea>
+                        <textarea name="outros_beneficios" rows="3" class="campo">{{ old('outros_beneficios', $vaga->outros_beneficios) }}</textarea>
                     </div>
                 </div>
             </section>
@@ -193,18 +219,18 @@
                 <div class="mt-5 grid gap-4 md:grid-cols-2">
                     <div>
                         <label class="mb-1 block text-sm font-medium text-slate-700">Obrigatorio/nao obrigatorio</label>
-                        <select name="contratacao_tipo" class="w-full rounded-2xl border-slate-200">
+                        <select name="contratacao_tipo" class="campo">
                             <option value="Obrigatorio" @selected(old('contratacao_tipo', $vaga->contratacao_tipo) === 'Obrigatorio')>Obrigatorio</option>
                             <option value="Nao obrigatorio" @selected(old('contratacao_tipo', $vaga->contratacao_tipo) === 'Nao obrigatorio')>Nao obrigatorio</option>
                         </select>
                     </div>
                     <div>
                         <label class="mb-1 block text-sm font-medium text-slate-700">Duracao</label>
-                        <input type="text" name="duracao" value="{{ old('duracao', $vaga->duracao) }}" class="w-full rounded-2xl border-slate-200">
+                        <input type="text" name="duracao" value="{{ old('duracao', $vaga->duracao) }}" class="campo">
                     </div>
                     <div class="md:col-span-2">
                         <label class="mb-1 block text-sm font-medium text-slate-700">Possibilidade de efetivacao</label>
-                        <input type="text" name="possibilidade_efetivacao" value="{{ old('possibilidade_efetivacao', $vaga->possibilidade_efetivacao) }}" class="w-full rounded-2xl border-slate-200">
+                        <input type="text" name="possibilidade_efetivacao" value="{{ old('possibilidade_efetivacao', $vaga->possibilidade_efetivacao) }}" class="campo">
                     </div>
                 </div>
             </section>
@@ -214,15 +240,15 @@
                 <div class="mt-5 grid gap-4 md:grid-cols-2">
                     <div class="md:col-span-2">
                         <label class="mb-1 block text-sm font-medium text-slate-700">Etapas</label>
-                        <textarea name="etapas" rows="3" class="w-full rounded-2xl border-slate-200">{{ old('etapas', $vaga->etapas) }}</textarea>
+                        <textarea name="etapas" rows="3" class="campo">{{ old('etapas', $vaga->etapas) }}</textarea>
                     </div>
                     <div>
                         <label class="mb-1 block text-sm font-medium text-slate-700">Prazo</label>
-                        <input type="date" name="prazo" value="{{ old('prazo', optional($vaga->prazo)->format('Y-m-d')) }}" class="w-full rounded-2xl border-slate-200">
+                        <input type="date" name="prazo" value="{{ old('prazo', optional($vaga->prazo)->format('Y-m-d')) }}" class="campo">
                     </div>
                     <div>
                         <label class="mb-1 block text-sm font-medium text-slate-700">Retorno</label>
-                        <textarea name="retorno" rows="3" class="w-full rounded-2xl border-slate-200">{{ old('retorno', $vaga->retorno) }}</textarea>
+                        <textarea name="retorno" rows="3" class="campo">{{ old('retorno', $vaga->retorno) }}</textarea>
                     </div>
                 </div>
             </section>
@@ -232,15 +258,15 @@
                 <div class="mt-5 grid gap-4 md:grid-cols-2">
                     <div>
                         <label class="mb-1 block text-sm font-medium text-slate-700">Link</label>
-                        <input type="url" name="link_candidatura" value="{{ old('link_candidatura', $vaga->link_candidatura) }}" class="w-full rounded-2xl border-slate-200">
+                        <input type="url" name="link_candidatura" value="{{ old('link_candidatura', $vaga->link_candidatura) }}" class="campo">
                     </div>
                     <div>
                         <label class="mb-1 block text-sm font-medium text-slate-700">E-mail</label>
-                        <input type="email" name="email_candidatura" value="{{ old('email_candidatura', $vaga->email_candidatura) }}" class="w-full rounded-2xl border-slate-200">
+                        <input type="email" name="email_candidatura" value="{{ old('email_candidatura', $vaga->email_candidatura) }}" class="campo">
                     </div>
                     <div class="md:col-span-2">
                         <label class="mb-1 block text-sm font-medium text-slate-700">Instrucoes</label>
-                        <textarea name="instrucoes_candidatura" rows="3" class="w-full rounded-2xl border-slate-200">{{ old('instrucoes_candidatura', $vaga->instrucoes_candidatura) }}</textarea>
+                        <textarea name="instrucoes_candidatura" rows="3" class="campo">{{ old('instrucoes_candidatura', $vaga->instrucoes_candidatura) }}</textarea>
                     </div>
                 </div>
             </section>
@@ -248,7 +274,7 @@
             <section class="rounded-[28px] bg-white p-6 shadow-xl ring-1 ring-slate-200">
                 <h2 class="text-lg font-black uppercase tracking-[0.2em] text-slate-800">Observacoes</h2>
                 <div class="mt-5 space-y-4">
-                    <textarea name="observacoes" rows="4" class="w-full rounded-2xl border-slate-200">{{ old('observacoes', $vaga->observacoes) }}</textarea>
+                    <textarea name="observacoes" rows="4" class="campo">{{ old('observacoes', $vaga->observacoes) }}</textarea>
                     <label class="flex items-center gap-2 text-sm font-medium text-slate-700">
                         <input type="hidden" name="ativa" value="0">
                         <input type="checkbox" name="ativa" value="1" @checked(old('ativa', $vaga->ativa)) class="rounded border-slate-300 text-sky-600 focus:ring-sky-500">
@@ -263,5 +289,32 @@
             </div>
         </form>
     </div>
+<script>
+function toggleInicioPrevisto(sel) {
+    var campoData = document.getElementById('campo-data-inicio');
+    var hidden = document.getElementById('inicio_previsto_hidden');
+    if (sel.value === 'imediato') {
+        campoData.style.display = 'none';
+        hidden.value = 'Contratação Imediata';
+    } else {
+        campoData.style.display = '';
+        hidden.value = '';
+    }
+}
+// Sincroniza o campo date com o hidden
+document.addEventListener('DOMContentLoaded', function() {
+    var dataInput = document.querySelector('[name="inicio_previsto_data"]');
+    var hidden = document.getElementById('inicio_previsto_hidden');
+    if (dataInput) {
+        dataInput.addEventListener('change', function() {
+            hidden.value = this.value;
+        });
+        // Init
+        if (hidden.value && hidden.value !== 'Contratação Imediata') {
+            dataInput.value = hidden.value;
+        }
+    }
+});
+</script>
 </body>
 </html>

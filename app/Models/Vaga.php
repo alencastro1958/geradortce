@@ -56,7 +56,6 @@ class Vaga extends Model
     ];
 
     protected $casts = [
-        'inicio_previsto' => 'date',
         'prazo' => 'date',
         'bolsa_auxilio' => 'decimal:2',
         'ativa' => 'boolean',

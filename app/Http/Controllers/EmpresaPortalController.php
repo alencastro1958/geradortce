@@ -222,7 +222,7 @@ class EmpresaPortalController extends Controller
             'quantidade' => ['required', 'integer', 'min:1', 'max:999'],
             'modalidade' => ['required', Rule::in(['Presencial', 'Hibrido', 'Remoto'])],
             'cidade_estado' => ['nullable', 'string', 'max:255'],
-            'inicio_previsto' => ['nullable', 'date'],
+            'inicio_previsto' => ['nullable', 'string', 'max:255'],
             'formacao_aceita' => ['nullable', 'string'],
             'cursos' => ['nullable', 'string'],
             'periodo_minimo' => ['nullable', 'string', 'max:255'],
@@ -244,7 +244,7 @@ class EmpresaPortalController extends Controller
             'etapas' => ['nullable', 'string'],
             'prazo' => ['nullable', 'date'],
             'retorno' => ['nullable', 'string'],
-            'link_candidatura' => ['nullable', 'url', 'max:255'],
+            'link_candidatura' => ['nullable', 'string', 'max:255'],
             'email_candidatura' => ['nullable', 'email', 'max:255'],
             'instrucoes_candidatura' => ['nullable', 'string'],
             'observacoes' => ['nullable', 'string'],
@@ -255,7 +255,6 @@ class EmpresaPortalController extends Controller
     private function normalizarDadosVaga(array $validated): array
     {
         $validated['ativa'] = (bool) ($validated['ativa'] ?? true);
-        $validated['descricao'] = $validated['atividades'] ?: ($validated['descricao_empresa'] ?: $validated['titulo']);
 
         return $validated;
     }
