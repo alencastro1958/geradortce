@@ -61,15 +61,14 @@ class SupervisorPortalController extends Controller
             abort(403, 'Supervisor não vinculado.');
         }
 
-        // Busca estágios ativos vinculados a este supervisor:
-        // - diretamente pelo supervisor_estagio_id, OU
-        // - pela empresa concedente do supervisor (caso o campo não esteja preenchido no estágio)
+        // Busca todos os estágios da empresa do supervisor (ou vinculados diretamente)
+        // excluindo apenas rescindidos/concluídos
         $estagios = Estagio::with(['estagiario', 'relatorios'])
             ->where(function ($q) use ($supervisor) {
                 $q->where('supervisor_estagio_id', $supervisor->id)
                   ->orWhere('empresa_concedente_id', $supervisor->empresa_concedente_id);
             })
-            ->where('status', 'ativo')
+            ->whereNotIn('status', ['rescindido', 'concluido'])
             ->get();
 
         return view('supervisor.dashboard', compact('supervisor', 'estagios'));
@@ -205,6 +204,8 @@ class SupervisorPortalController extends Controller
     private function autorizarEstagio(Estagio $estagio, ?SupervisorEstagio $supervisor): void
     {
         abort_if(!$supervisor, 403, 'Supervisor não vinculado ao sistema.');
-        abort_if($estagio->supervisor_estagio_id !== $supervisor->id, 403, 'Acesso não autorizado a este estágio.');
+        $vinculado = $estagio->supervisor_estagio_id === $supervisor->id
+            || $estagio->empresa_concedente_id === $supervisor->empresa_concedente_id;
+        abort_if(!$vinculado, 403, 'Acesso não autorizado a este estágio.');
     }
 }

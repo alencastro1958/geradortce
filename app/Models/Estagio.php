@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\EstagioStatus;
+use App\Models\Relatorio;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -58,5 +59,10 @@ class Estagio extends Model
     public function supervisorEstagio(): BelongsTo
     {
         return $this->belongsTo(SupervisorEstagio::class);
+    }
+
+    public function relatorios(): HasMany
+    {
+        return $this->hasMany(Relatorio::class);
     }
 }
