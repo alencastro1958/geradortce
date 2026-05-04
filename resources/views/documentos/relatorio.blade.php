@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>Relatório Semestral de Estágio</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
         @page {
             size: A4;
             margin-top: 3.0cm;
@@ -48,8 +47,8 @@
         .page-header {
             position: fixed;
             top: -2.5cm;
-            left: 0;
-            right: 0;
+            left: 2.5cm;
+            right: 1.5cm;
             height: 2.5cm;
             text-align: center;
         }
