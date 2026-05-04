@@ -25,9 +25,16 @@
             margin-bottom: 8pt;
             text-align: justify;
         }
-        /* Títulos de cláusula: mesma fonte 11pt, bold, margem inferior reduzida */
+        /* Títulos de cláusula: bold, margem inferior reduzida */
         p.bold {
             font-size: 11pt;
+            margin-bottom: 2pt;
+        }
+        /* Títulos de seção de identificação — espaçamento maior antes de cada seção */
+        p.secao-titulo {
+            font-size: 11pt;
+            font-weight: bold;
+            margin-top: 14pt;
             margin-bottom: 2pt;
         }
         .text-center { text-align: center; }
@@ -152,7 +159,7 @@
         $supervisorTelefone = $empresa?->supervisor_telefone_whatsapp ?? $empresa?->supervisor_estagio_telefone;
     @endphp
 
-    <p class="bold mt-2 mb-1">INSTITUIÇÃO DE ENSINO</p>
+    <p class="secao-titulo">INSTITUIÇÃO DE ENSINO</p>
     @if($instituicao?->razao_social || $instituicao?->cnpj)
         <p><span class="bold">Razão Social:</span> {{ $instituicao->razao_social }} @if($instituicao?->cnpj)<span class="bold">CNPJ:</span> {{ $instituicao->cnpj }}@endif</p>
     @endif
@@ -189,7 +196,7 @@
         </p>
     @endif
 
-    <p class="bold mt-2 mb-1">UNIDADE CONCEDENTE DE ESTÁGIO</p>
+    <p class="secao-titulo">UNIDADE CONCEDENTE DE ESTÁGIO</p>
     @if($empresa?->razao_social || $empresa?->cnpj)
         <p><span class="bold">Razão Social:</span> {{ $empresa->razao_social }} @if($empresa?->cnpj)<span class="bold">CNPJ:</span> {{ $empresa->cnpj }}@endif</p>
     @endif
@@ -223,7 +230,7 @@
         </p>
     @endif
 
-    <p class="bold mt-2 mb-1">ESTAGIÁRIO(A)</p>
+    <p class="secao-titulo">ESTAGIÁRIO(A)</p>
     @if($estagiario?->nome || $estagiario?->cpf || $estagiario?->rg)
         <p>
             @if($estagiario?->nome)<span class="bold">Nome:</span> {{ $estagiario->nome }}@endif
@@ -271,7 +278,7 @@
     @endif
     <p class="mb-2"></p>
 
-    <p class="bold mt-2 mb-1">AGENTE DE INTEGRAÇÃO - ALENCASTRO CONSULTORIA</p>
+    <p class="secao-titulo">AGENTE DE INTEGRAÇÃO - ALENCASTRO CONSULTORIA</p>
     <p><span class="bold">Razão Social:</span> DIOGO LUÍS ALENCASTRO DA SILVA-ME <span class="bold">CNPJ:</span> 18.785.582/0001-24</p>
     <p><span class="bold">Endereço:</span> Av. Mauro Ramos, 1722 Aptº 92 - Bloco 08 <span class="bold">Bairro:</span> Centro</p>
     <p><span class="bold">Cidade:</span> Florianópolis <span class="bold">Estado:</span> Santa Catarina <span class="bold">CEP:</span> 88020-304</p>
