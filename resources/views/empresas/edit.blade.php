@@ -389,6 +389,12 @@
                         @if($empresa->supervisores->isEmpty())
                             <p class="text-gray-400 text-sm italic">Nenhum supervisor cadastrado.</p>
                         @else
+                            @if(session('success') && !str_contains(session('success'), 'Senha'))
+                                <div class="mb-3 p-3 bg-green-50 border border-green-200 rounded-xl text-sm text-green-800">{{ session('success') }}</div>
+                            @endif
+                            @if(session('error'))
+                                <div class="mb-3 p-3 bg-red-50 border border-red-200 rounded-xl text-sm text-red-800">{{ session('error') }}</div>
+                            @endif
                             <div class="overflow-x-auto rounded-xl border border-gray-200">
                                 <table class="min-w-full divide-y divide-gray-200 text-sm">
                                     <thead class="bg-gray-50">
@@ -397,12 +403,13 @@
                                             <th class="px-4 py-3 text-left font-medium text-gray-600">Cargo</th>
                                             <th class="px-4 py-3 text-left font-medium text-gray-600">Formação</th>
                                             <th class="px-4 py-3 text-left font-medium text-gray-600">Ativo?</th>
+                                            <th class="px-4 py-3 text-left font-medium text-gray-600">Acesso ao Portal</th>
                                             <th class="px-4 py-3 text-right font-medium text-gray-600">Ações</th>
                                         </tr>
                                     </thead>
                                     <tbody class="divide-y divide-gray-100 bg-white">
                                         @foreach($empresa->supervisores as $sup)
-                                        <tr class="hover:bg-gray-50">
+                                        <tr class="hover:bg-gray-50 align-top">
                                             <td class="px-4 py-3 font-medium text-gray-900">{{ $sup->nome }}</td>
                                             <td class="px-4 py-3 text-gray-600">{{ $sup->cargo ?? '—' }}</td>
                                             <td class="px-4 py-3 text-gray-600">{{ $sup->formacao ?? '—' }}</td>
@@ -411,6 +418,40 @@
                                                     <span class="inline-block px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">Sim</span>
                                                 @else
                                                     <span class="inline-block px-2 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">Não</span>
+                                                @endif
+                                            </td>
+                                            <td class="px-4 py-3">
+                                                @if($sup->user_id)
+                                                    <span class="inline-block px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 mb-1">✓ Ativo</span>
+                                                    <br>
+                                                    <form method="POST" action="{{ route('supervisor.revogar-acesso', $sup) }}"
+                                                        onsubmit="return confirm('Revogar acesso de {{ $sup->nome }}?')">
+                                                        @csrf @method('DELETE')
+                                                        <button type="submit" class="text-xs text-red-600 hover:underline">Revogar acesso</button>
+                                                    </form>
+                                                @else
+                                                    <div x-data="{ open: false }">
+                                                        <button type="button" @click="open = !open"
+                                                            class="inline-flex items-center px-2 py-1 rounded-lg text-xs font-medium text-white bg-emerald-600 hover:bg-emerald-500">
+                                                            + Criar Login
+                                                        </button>
+                                                        <div x-show="open" style="display:none;" class="mt-2">
+                                                            <form method="POST" action="{{ route('supervisor.criar-acesso', $sup) }}"
+                                                                class="flex flex-col gap-2">
+                                                                @csrf
+                                                                <input type="password" name="password" required minlength="8"
+                                                                    placeholder="Senha (mín. 8 car.)"
+                                                                    class="rounded-lg border-gray-300 text-xs px-2 py-1 w-40 focus:border-indigo-400 focus:ring-indigo-400">
+                                                                <input type="password" name="password_confirmation" required
+                                                                    placeholder="Confirmar senha"
+                                                                    class="rounded-lg border-gray-300 text-xs px-2 py-1 w-40 focus:border-indigo-400 focus:ring-indigo-400">
+                                                                <button type="submit"
+                                                                    class="px-3 py-1 rounded-lg text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-500 w-fit">
+                                                                    Confirmar
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
                                                 @endif
                                             </td>
                                             <td class="px-4 py-3 text-right">
