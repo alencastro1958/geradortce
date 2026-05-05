@@ -287,25 +287,40 @@ class SupervisorPortalController extends Controller
             return back()->with('error', 'Este supervisor já possui acesso ao sistema.');
         }
 
+        if (empty($supervisor->email)) {
+            return back()->with('error', 'O supervisor não possui e-mail cadastrado. Edite o cadastro e informe o e-mail antes de criar o acesso.');
+        }
+
         $request->validate([
             'password' => 'required|string|min:8|confirmed',
+        ], [
+            'password.min'       => 'A senha deve ter no mínimo 8 caracteres.',
+            'password.confirmed' => 'As senhas não conferem.',
         ]);
 
-        $user = User::create([
-            'name'     => $supervisor->nome,
-            'email'    => $supervisor->email,
-            'password' => Hash::make($request->password),
-        ]);
-        $user->assignRole('supervisor');
+        // Verifica se o e-mail já está em uso por outro usuário
+        if (User::where('email', $supervisor->email)->exists()) {
+            return back()->with('error', 'O e-mail "' . $supervisor->email . '" já está vinculado a outro usuário no sistema.');
+        }
 
-        $supervisor->update(['user_id' => $user->id]);
+        try {
+            $user = User::create([
+                'name'     => $supervisor->nome,
+                'email'    => $supervisor->email,
+                'password' => Hash::make($request->password),
+            ]);
+            $user->assignRole('supervisor');
+            $supervisor->update(['user_id' => $user->id]);
+        } catch (\Throwable $e) {
+            return back()->with('error', 'Não foi possível criar o acesso: ' . $e->getMessage());
+        }
 
         // Notifica o supervisor por e-mail com as credenciais de acesso
         try {
             $supervisor->loadMissing('empresaConcedente');
             Mail::to($supervisor->email)
                 ->send(new AcessoSupervisorMail($supervisor, $request->password));
-            $avisoEmail = ' Um e-mail com as instruções de acesso foi enviado para ' . $supervisor->email . '.';
+            $avisoEmail = ' E-mail com instruções enviado para ' . $supervisor->email . '.';
         } catch (\Throwable $e) {
             $avisoEmail = ' (Aviso: não foi possível enviar o e-mail de boas-vindas.)';
         }
