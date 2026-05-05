@@ -34,9 +34,14 @@
                     <input type="password" name="password" required
                         class="w-full rounded-xl border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 px-4 py-2">
                 </div>
-                <div class="flex items-center gap-2">
-                    <input type="checkbox" name="remember" id="remember" class="rounded">
-                    <label for="remember" class="text-sm text-gray-600">Manter-me conectado</label>
+                <div class="flex items-center justify-between">
+                    <label class="flex items-center gap-2">
+                        <input type="checkbox" name="remember" id="remember" class="rounded">
+                        <span class="text-sm text-gray-600">Manter-me conectado</span>
+                    </label>
+                    <a href="{{ route('supervisor.password.request') }}" class="text-sm text-indigo-600 hover:underline">
+                        Esqueci minha senha
+                    </a>
                 </div>
                 <button type="submit"
                     class="w-full py-3 rounded-xl font-bold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 shadow-lg transition">

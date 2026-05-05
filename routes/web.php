@@ -80,6 +80,12 @@ Route::prefix('supervisor')->name('supervisor.')->group(function () {
     Route::get('login', [SupervisorPortalController::class, 'loginForm'])->name('login');
     Route::post('login', [SupervisorPortalController::class, 'login'])->name('login.submit');
 
+    // ── Recuperação de senha ──────────────────────────────────────────────────
+    Route::get('esqueci-senha', [SupervisorPortalController::class, 'esqueceuSenhaForm'])->name('password.request');
+    Route::post('esqueci-senha', [SupervisorPortalController::class, 'enviarLinkRedefinicao'])->name('password.email');
+    Route::get('redefinir-senha/{token}', [SupervisorPortalController::class, 'redefinirSenhaForm'])->name('password.reset');
+    Route::post('redefinir-senha', [SupervisorPortalController::class, 'redefinirSenha'])->name('password.update');
+
     Route::middleware(['auth'])->group(function () {
         Route::post('logout', [SupervisorPortalController::class, 'logout'])->name('logout');
         Route::get('dashboard', [SupervisorPortalController::class, 'dashboard'])->name('dashboard');

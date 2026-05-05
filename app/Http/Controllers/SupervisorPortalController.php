@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\AcessoSupervisorMail;
+use App\Mail\SupervisorResetPasswordMail;
 use App\Models\Estagio;
 use App\Models\Relatorio;
 use App\Models\SupervisorEstagio;
@@ -11,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Password;
 
 class SupervisorPortalController extends Controller
 {
@@ -212,6 +214,69 @@ class SupervisorPortalController extends Controller
         $nome = 'RELATORIO_' . $relatorio->semestre . 'SEM_' . $estagio->estagiario->cpf . '_' . now()->format('YmdHis') . '.pdf';
 
         return $pdf->setPaper('a4')->stream($nome);
+    }
+
+    // ─── Recuperação de senha ─────────────────────────────────────────────────
+
+    public function esqueceuSenhaForm()
+    {
+        return view('supervisor.esqueci-senha');
+    }
+
+    public function enviarLinkRedefinicao(Request $request)
+    {
+        $request->validate(['email' => 'required|email'], [
+            'email.required' => 'Informe o e-mail cadastrado.',
+            'email.email'    => 'Informe um e-mail válido.',
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+
+        // Não revela se o e-mail existe ou não (segurança)
+        if ($user && $user->hasRole('supervisor')) {
+            $token = Password::broker()->createToken($user);
+            try {
+                Mail::to($user->email)->send(new SupervisorResetPasswordMail($user, $token));
+            } catch (\Throwable $e) {
+                // falha silenciosa — não expõe detalhes ao usuário
+            }
+        }
+
+        return back()->with('status', 'Se esse e-mail estiver cadastrado, você receberá as instruções em breve.');
+    }
+
+    public function redefinirSenhaForm(Request $request, string $token)
+    {
+        return view('supervisor.redefinir-senha', [
+            'token' => $token,
+            'email' => $request->query('email', ''),
+        ]);
+    }
+
+    public function redefinirSenha(Request $request)
+    {
+        $request->validate([
+            'token'                 => 'required',
+            'email'                 => 'required|email',
+            'password'              => 'required|string|min:8|confirmed',
+        ], [
+            'password.min'       => 'A senha deve ter no mínimo 8 caracteres.',
+            'password.confirmed' => 'As senhas não conferem.',
+        ]);
+
+        $status = Password::broker()->reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function (User $user, string $password) {
+                $user->forceFill(['password' => Hash::make($password)])->save();
+            }
+        );
+
+        if ($status === Password::PASSWORD_RESET) {
+            return redirect()->route('supervisor.login')
+                ->with('success', 'Senha redefinida com sucesso! Faça seu login.');
+        }
+
+        return back()->withErrors(['email' => 'Link inválido ou expirado. Solicite um novo.']);
     }
 
     // ─── Admin: Criar acesso para supervisor ─────────────────
