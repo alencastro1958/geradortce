@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Mail\AcessoSupervisorMail;
 use App\Models\Estagio;
 use App\Models\Relatorio;
 use App\Models\SupervisorEstagio;
@@ -9,6 +10,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class SupervisorPortalController extends Controller
 {
@@ -16,7 +18,8 @@ class SupervisorPortalController extends Controller
 
     public function loginForm()
     {
-        if (Auth::check() && Auth::user()->hasRole('supervisor')) {
+        $user = Auth::user();
+        if ($user instanceof User && $user->hasRole('supervisor')) {
             return redirect()->route('supervisor.dashboard');
         }
         return view('supervisor.login');
@@ -33,7 +36,8 @@ class SupervisorPortalController extends Controller
         ]);
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->boolean('remember'))) {
-            if (Auth::user()->hasRole('supervisor')) {
+            $user = Auth::user();
+            if ($user instanceof User && $user->hasRole('supervisor')) {
                 $request->session()->regenerate();
                 return redirect()->route('supervisor.dashboard');
             }
@@ -91,25 +95,20 @@ class SupervisorPortalController extends Controller
         $supervisor = Auth::user()->supervisorEstagio;
         $this->autorizarEstagio($estagio, $supervisor);
 
-        $validated = $request->validate([
-            'semestre'    => 'required|integer|min:1|max:4',
-            'avaliacao'   => 'required|in:excelente,bom,regular,insuficiente',
-            'observacoes' => 'nullable|string|max:200',
-            'finalizar'   => 'nullable|boolean',
-        ]);
-
+        $validated = $request->validate($this->regrasValidacao());
         $status = $request->boolean('finalizar') ? 'finalizado' : 'rascunho';
+
+        $dados = $this->montarDados($validated, $supervisor->id, $status);
 
         $relatorio = Relatorio::updateOrCreate(
             ['estagio_id' => $estagio->id, 'semestre' => $validated['semestre']],
-            [
-                'supervisor_estagio_id' => $supervisor->id,
-                'avaliacao'             => $validated['avaliacao'],
-                'observacoes'           => $validated['observacoes'] ?? null,
-                'status'                => $status,
-                'gerado_em'             => $status === 'finalizado' ? now() : null,
-            ]
+            $dados
         );
+
+        if ($status === 'finalizado') {
+            return redirect()->route('supervisor.relatorio.pdf', $relatorio)
+                ->with('success', 'Relatório do ' . $relatorio->labelSemestre() . ' finalizado.');
+        }
 
         return redirect()->route('supervisor.dashboard')
             ->with('success', 'Relatório do ' . $relatorio->labelSemestre() . ' salvo com sucesso.');
@@ -131,25 +130,75 @@ class SupervisorPortalController extends Controller
         $supervisor = Auth::user()->supervisorEstagio;
         abort_if($relatorio->supervisor_estagio_id !== $supervisor->id, 403);
 
-        $validated = $request->validate([
-            'semestre'    => 'required|integer|min:1|max:4',
-            'avaliacao'   => 'required|in:excelente,bom,regular,insuficiente',
-            'observacoes' => 'nullable|string|max:200',
-            'finalizar'   => 'nullable|boolean',
-        ]);
-
+        $validated = $request->validate($this->regrasValidacao());
         $status = $request->boolean('finalizar') ? 'finalizado' : 'rascunho';
 
-        $relatorio->update([
-            'semestre'    => $validated['semestre'],
-            'avaliacao'   => $validated['avaliacao'],
-            'observacoes' => $validated['observacoes'] ?? null,
-            'status'      => $status,
-            'gerado_em'   => $status === 'finalizado' ? now() : null,
-        ]);
+        $relatorio->update($this->montarDados($validated, $supervisor->id, $status));
+
+        if ($status === 'finalizado') {
+            return redirect()->route('supervisor.relatorio.pdf', $relatorio)
+                ->with('success', 'Relatório atualizado e finalizado.');
+        }
 
         return redirect()->route('supervisor.dashboard')
             ->with('success', 'Relatório atualizado com sucesso.');
+    }
+
+    // ─── Helpers de validação / montagem ─────────────────────────────────────
+
+    private function regrasValidacao(): array
+    {
+        $escala = 'nullable|in:insuficiente,regular,bom,otimo,excelente';
+        return [
+            'semestre'               => 'required|integer|min:1|max:4',
+            'data_inicio_periodo'    => 'nullable|date',
+            'data_fim_periodo'       => 'nullable|date|after_or_equal:data_inicio_periodo',
+            'atividades_descricao'   => 'nullable|string|max:3000',
+            'relacao_curso'          => 'nullable|string|max:1000',
+            'comp_pontualidade'      => $escala,
+            'comp_iniciativa'        => $escala,
+            'comp_trabalho_equipe'   => $escala,
+            'comp_qualidade_tecnica' => $escala,
+            'comp_relacionamento'    => $escala,
+            'comp_etica_sigilo'      => $escala,
+            'parecer_descritivo'     => 'nullable|string|max:2000',
+            'avaliacao'              => 'required|in:excelente,bom,regular,insuficiente',
+            'horas_previstas'        => 'nullable|integer|min:0|max:9999',
+            'horas_cumpridas'        => 'nullable|integer|min:0|max:9999',
+            'faltas_justificadas'    => 'nullable|string|max:50',
+            'faltas_nao_justificadas'=> 'nullable|string|max:50',
+            'obs_ausencias'          => 'nullable|string|max:1000',
+            'observacoes'            => 'nullable|string|max:200',
+            'finalizar'              => 'nullable|boolean',
+        ];
+    }
+
+    private function montarDados(array $validated, int $supervisorId, string $status): array
+    {
+        return [
+            'supervisor_estagio_id'  => $supervisorId,
+            'semestre'               => $validated['semestre'],
+            'data_inicio_periodo'    => $validated['data_inicio_periodo'] ?? null,
+            'data_fim_periodo'       => $validated['data_fim_periodo'] ?? null,
+            'atividades_descricao'   => $validated['atividades_descricao'] ?? null,
+            'relacao_curso'          => $validated['relacao_curso'] ?? null,
+            'comp_pontualidade'      => $validated['comp_pontualidade'] ?? null,
+            'comp_iniciativa'        => $validated['comp_iniciativa'] ?? null,
+            'comp_trabalho_equipe'   => $validated['comp_trabalho_equipe'] ?? null,
+            'comp_qualidade_tecnica' => $validated['comp_qualidade_tecnica'] ?? null,
+            'comp_relacionamento'    => $validated['comp_relacionamento'] ?? null,
+            'comp_etica_sigilo'      => $validated['comp_etica_sigilo'] ?? null,
+            'parecer_descritivo'     => $validated['parecer_descritivo'] ?? null,
+            'avaliacao'              => $validated['avaliacao'],
+            'horas_previstas'        => $validated['horas_previstas'] ?? null,
+            'horas_cumpridas'        => $validated['horas_cumpridas'] ?? null,
+            'faltas_justificadas'    => $validated['faltas_justificadas'] ?? null,
+            'faltas_nao_justificadas'=> $validated['faltas_nao_justificadas'] ?? null,
+            'obs_ausencias'          => $validated['obs_ausencias'] ?? null,
+            'observacoes'            => $validated['observacoes'] ?? null,
+            'status'                 => $status,
+            'gerado_em'              => $status === 'finalizado' ? now() : null,
+        ];
     }
 
     public function gerarPdf(Relatorio $relatorio)
@@ -186,7 +235,17 @@ class SupervisorPortalController extends Controller
 
         $supervisor->update(['user_id' => $user->id]);
 
-        return back()->with('success', 'Acesso criado para ' . $supervisor->nome . '. Login: ' . $supervisor->email);
+        // Notifica o supervisor por e-mail com as credenciais de acesso
+        try {
+            $supervisor->loadMissing('empresaConcedente');
+            Mail::to($supervisor->email)
+                ->send(new AcessoSupervisorMail($supervisor, $request->password));
+            $avisoEmail = ' Um e-mail com as instruções de acesso foi enviado para ' . $supervisor->email . '.';
+        } catch (\Throwable $e) {
+            $avisoEmail = ' (Aviso: não foi possível enviar o e-mail de boas-vindas.)';
+        }
+
+        return back()->with('success', 'Acesso criado para ' . $supervisor->nome . '. Login: ' . $supervisor->email . $avisoEmail);
     }
 
     public function revogarAcesso(SupervisorEstagio $supervisor)
