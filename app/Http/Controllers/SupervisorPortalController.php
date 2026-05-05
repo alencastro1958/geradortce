@@ -299,8 +299,16 @@ class SupervisorPortalController extends Controller
         ]);
 
         // Verifica se o e-mail já está em uso por outro usuário
-        if (User::where('email', $supervisor->email)->exists()) {
-            return back()->with('error', 'O e-mail "' . $supervisor->email . '" já está vinculado a outro usuário no sistema.');
+        $usuarioExistente = User::where('email', $supervisor->email)->first();
+
+        if ($usuarioExistente) {
+            // Vincula o supervisor ao usuário existente sem criar um novo
+            if (!$usuarioExistente->hasRole('supervisor')) {
+                $usuarioExistente->assignRole('supervisor');
+            }
+            $supervisor->update(['user_id' => $usuarioExistente->id]);
+
+            return back()->with('warning', 'ALERTA: O e-mail "' . $supervisor->email . '" já estava vinculado a outro usuário no sistema. O supervisor foi vinculado ao usuário existente. A senha anterior foi mantida.');
         }
 
         try {
