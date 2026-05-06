@@ -81,21 +81,20 @@
                             </div>
                         </div>
 
-                        <!-- Dashboard Preview -->
+                        <!-- Demo Presentation -->
                         <div class="mt-20 relative">
-                            <div class="absolute inset-0 bg-gradient-to-t from-slate-50 to-transparent z-10"></div>
                             <div class="rounded-3xl shadow-2xl border border-white/50 overflow-hidden glass p-4">
-                                <div class="rounded-2xl overflow-hidden bg-slate-900 aspect-video flex items-center justify-center">
-                                    <div class="text-center space-y-4">
-                                        <div class="inline-flex p-4 bg-white/10 rounded-full animate-pulse">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                            </svg>
-                                        </div>
-                                        <p class="text-indigo-200 font-medium">Assista como funciona em 2 minutos</p>
-                                    </div>
+                                <div class="rounded-2xl overflow-hidden bg-slate-900" style="aspect-ratio: 16/9;">
+                                    <iframe
+                                        src="/demo/index.html"
+                                        style="width:100%; height:100%; border:none; display:block;"
+                                        title="Como funciona o Rota Certa em 2 minutos"
+                                        loading="lazy">
+                                    </iframe>
                                 </div>
+                                <p class="text-center text-slate-500 text-sm mt-3">
+                                    ▶ Apresentação automática — use as setas para navegar
+                                </p>
                             </div>
                         </div>
                     </div>

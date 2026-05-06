@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Demo - Rota Certa</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', -apple-system, sans-serif; background: #0f172a; color: #fff; overflow: hidden; width: 100%; height: 100vh; }
+
+/* Slides */
+.slide { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px; opacity: 0; transition: opacity 0.6s ease; pointer-events: none; }
+.slide.active { opacity: 1; pointer-events: all; }
+
+/* Barra de progresso */
+.progress-bar { position: absolute; bottom: 0; left: 0; height: 4px; background: linear-gradient(90deg, #6366f1, #3b82f6); transition: width 0.1s linear; }
+
+/* Controles */
+.controls { position: absolute; bottom: 20px; right: 20px; display: flex; gap: 10px; z-index: 100; }
+.btn { padding: 8px 18px; border-radius: 8px; border: none; cursor: pointer; font-size: 13px; font-weight: 600; transition: all 0.2s; }
+.btn-primary { background: #6366f1; color: white; }
+.btn-primary:hover { background: #4f46e5; transform: scale(1.05); }
+.btn-secondary { background: rgba(255,255,255,0.1); color: white; }
+.btn-secondary:hover { background: rgba(255,255,255,0.2); }
+
+/* Slide dots */
+.dots { position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.3); transition: all 0.3s; }
+.dot.active { background: #6366f1; width: 24px; border-radius: 4px; }
+
+/* Timer */
+.timer { position: absolute; top: 16px; right: 16px; font-size: 12px; color: rgba(255,255,255,0.5); }
+
+/* ===== SLIDE 1 - INTRO ===== */
+.s1-logo { width: 60px; height: 60px; background: #6366f1; border-radius: 16px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; animation: popIn 0.5s 0.2s both; }
+.s1-title { font-size: 42px; font-weight: 800; text-align: center; margin-bottom: 12px; animation: slideUp 0.5s 0.3s both; }
+.s1-title span { background: linear-gradient(135deg, #6366f1, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.s1-sub { font-size: 18px; color: #94a3b8; text-align: center; max-width: 480px; animation: slideUp 0.5s 0.4s both; }
+.s1-badge { margin-top: 24px; padding: 10px 24px; background: rgba(99,102,241,0.2); border: 1px solid rgba(99,102,241,0.4); border-radius: 50px; font-size: 14px; color: #a5b4fc; animation: fadeIn 0.5s 0.6s both; }
+
+/* ===== SLIDE 2 - DASHBOARD ===== */
+.dashboard-mock { background: #1e293b; border-radius: 16px; padding: 20px; width: 100%; max-width: 560px; animation: slideUp 0.5s 0.2s both; }
+.dash-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+.dash-avatar { width: 36px; height: 36px; background: linear-gradient(135deg, #6366f1, #3b82f6); border-radius: 50%; }
+.dash-greeting { font-size: 14px; }
+.dash-greeting strong { display: block; font-size: 16px; }
+.dash-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 12px; }
+.dash-card { background: #0f172a; border-radius: 12px; padding: 16px; display: flex; align-items: center; gap: 12px; animation: popIn 0.4s both; }
+.dash-card:nth-child(1) { animation-delay: 0.3s; }
+.dash-card:nth-child(2) { animation-delay: 0.45s; }
+.dash-card:nth-child(3) { animation-delay: 0.6s; }
+.dash-card:nth-child(4) { animation-delay: 0.75s; }
+.card-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+.card-label { font-size: 12px; color: #64748b; }
+.card-name { font-size: 14px; font-weight: 700; }
+.slide-title { font-size: 13px; font-weight: 700; color: #6366f1; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; animation: fadeIn 0.5s 0.1s both; }
+.slide-desc { font-size: 15px; color: #94a3b8; max-width: 560px; text-align: center; margin-bottom: 16px; animation: fadeIn 0.5s 0.15s both; }
+
+/* ===== SLIDE 3 - CADASTROS ===== */
+.register-flow { display: flex; gap: 16px; align-items: center; animation: slideUp 0.5s 0.2s both; }
+.reg-step { background: #1e293b; border-radius: 12px; padding: 16px 20px; text-align: center; min-width: 110px; }
+.reg-step .icon { font-size: 28px; margin-bottom: 8px; }
+.reg-step .label { font-size: 12px; color: #94a3b8; }
+.reg-step .name { font-size: 13px; font-weight: 700; margin-top: 4px; }
+.arrow { font-size: 20px; color: #6366f1; }
+
+/* ===== SLIDE 4 - FORMULÁRIO TCE ===== */
+.form-mock { background: #1e293b; border-radius: 16px; padding: 20px; width: 100%; max-width: 500px; animation: slideUp 0.5s 0.2s both; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+.form-field { background: #0f172a; border-radius: 8px; padding: 10px 14px; }
+.form-field .flabel { font-size: 10px; color: #64748b; margin-bottom: 4px; }
+.form-field .fval { font-size: 12px; color: #e2e8f0; font-weight: 500; }
+.form-field.highlight { border: 1px solid #6366f1; }
+.form-full { grid-column: span 2; }
+.form-btn { margin-top: 14px; width: 100%; padding: 12px; background: linear-gradient(135deg, #6366f1, #3b82f6); border-radius: 10px; font-weight: 700; font-size: 14px; text-align: center; animation: pulse-btn 1.5s 1s infinite; }
+@keyframes pulse-btn { 0%,100%{box-shadow:0 0 0 0 rgba(99,102,241,0.4)} 50%{box-shadow:0 0 0 8px rgba(99,102,241,0)} }
+
+/* ===== SLIDE 5 - PDF ===== */
+.pdf-mock { background: white; border-radius: 12px; padding: 24px; max-width: 340px; color: #0f172a; animation: slideUp 0.5s 0.2s both; box-shadow: 0 25px 60px rgba(0,0,0,0.5); }
+.pdf-header { text-align: center; border-bottom: 2px solid #6366f1; padding-bottom: 12px; margin-bottom: 12px; }
+.pdf-title { font-size: 13px; font-weight: 800; color: #6366f1; }
+.pdf-sub { font-size: 10px; color: #64748b; margin-top: 2px; }
+.pdf-section { margin-bottom: 10px; }
+.pdf-section-title { font-size: 9px; font-weight: 700; color: #6366f1; text-transform: uppercase; margin-bottom: 6px; }
+.pdf-line { background: #f1f5f9; height: 8px; border-radius: 4px; margin-bottom: 4px; }
+.pdf-line.short { width: 60%; }
+.pdf-line.medium { width: 80%; }
+.pdf-sigs { display: flex; gap: 12px; margin-top: 14px; border-top: 1px solid #e2e8f0; padding-top: 12px; }
+.pdf-sig { flex: 1; text-align: center; }
+.pdf-sig-line { height: 1px; background: #334155; margin-bottom: 4px; }
+.pdf-sig-label { font-size: 8px; color: #64748b; }
+.checkmark { position: absolute; top: 20px; right: -10px; width: 36px; height: 36px; background: #10b981; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; animation: popIn 0.4s 0.8s both; box-shadow: 0 4px 15px rgba(16,185,129,0.5); }
+
+/* ===== SLIDE 6 - OUTROS DOCS ===== */
+.docs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 520px; animation: slideUp 0.5s 0.2s both; }
+.doc-card { background: #1e293b; border-radius: 12px; padding: 16px; text-align: center; border: 1px solid transparent; transition: all 0.3s; }
+.doc-card:hover { border-color: #6366f1; transform: translateY(-2px); }
+.doc-card .icon { font-size: 28px; margin-bottom: 8px; }
+.doc-card .dname { font-size: 12px; font-weight: 700; }
+.doc-card .ddesc { font-size: 10px; color: #64748b; margin-top: 2px; }
+.doc-card:nth-child(1) { animation: popIn 0.4s 0.3s both; }
+.doc-card:nth-child(2) { animation: popIn 0.4s 0.45s both; }
+.doc-card:nth-child(3) { animation: popIn 0.4s 0.6s both; }
+.doc-card:nth-child(4) { animation: popIn 0.4s 0.75s both; }
+.doc-card:nth-child(5) { animation: popIn 0.4s 0.9s both; }
+
+/* ===== SLIDE 7 - CTA ===== */
+.cta-icon { font-size: 64px; margin-bottom: 16px; animation: popIn 0.5s 0.2s both; }
+.cta-title { font-size: 36px; font-weight: 800; text-align: center; margin-bottom: 12px; animation: slideUp 0.5s 0.3s both; }
+.cta-sub { font-size: 16px; color: #94a3b8; text-align: center; max-width: 420px; margin-bottom: 24px; animation: slideUp 0.5s 0.4s both; }
+.cta-btn { padding: 16px 40px; background: linear-gradient(135deg, #6366f1, #3b82f6); border-radius: 14px; font-size: 18px; font-weight: 800; animation: popIn 0.5s 0.6s both; box-shadow: 0 8px 32px rgba(99,102,241,0.5); }
+
+/* Animações */
+@keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+@keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* Autoplay indicator */
+.autoplay-ring { position: absolute; top: 16px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 8px; }
+.playing-dot { width: 8px; height: 8px; background: #10b981; border-radius: 50%; animation: blink 1s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+.playing-label { font-size: 11px; color: rgba(255,255,255,0.4); }
+</style>
+</head>
+<body>
+
+<!-- Slide 1: Introdução -->
+<div class="slide active" id="slide-1">
+    <div class="s1-logo">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+        </svg>
+    </div>
+    <div class="s1-title">Rota<span>Certa</span></div>
+    <div class="s1-sub">O sistema completo para gestão e geração automática de Termos de Compromisso de Estágio</div>
+    <div class="s1-badge">📄 Conforme Lei 11.788 de Estágio</div>
+</div>
+
+<!-- Slide 2: Dashboard -->
+<div class="slide" id="slide-2">
+    <div class="slide-title">Painel de Controle</div>
+    <div class="slide-desc">Uma visão completa de todo o processo de estágio em um só lugar</div>
+    <div class="dashboard-mock">
+        <div class="dash-header">
+            <div class="dash-avatar"></div>
+            <div class="dash-greeting">
+                <span>Olá, Gestor! 👋</span>
+                <strong>Dashboard do Gestor</strong>
+            </div>
+        </div>
+        <div class="dash-cards">
+            <div class="dash-card">
+                <div class="card-icon" style="background:#1e40af20">🏫</div>
+                <div><div class="card-label">Módulo</div><div class="card-name">Instituições</div></div>
+            </div>
+            <div class="dash-card">
+                <div class="card-icon" style="background:#312e8120">🏢</div>
+                <div><div class="card-label">Módulo</div><div class="card-name">Empresas</div></div>
+            </div>
+            <div class="dash-card">
+                <div class="card-icon" style="background:#92400e20">👨‍🎓</div>
+                <div><div class="card-label">Módulo</div><div class="card-name">Estagiários</div></div>
+            </div>
+            <div class="dash-card">
+                <div class="card-icon" style="background:#5b21b620">🛡️</div>
+                <div><div class="card-label">Módulo</div><div class="card-name">Seguradoras</div></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 3: Cadastros -->
+<div class="slide" id="slide-3">
+    <div class="slide-title">Etapa 1 — Cadastros</div>
+    <div class="slide-desc">Cadastre uma vez, use sempre. Todos os dados ficam salvos para agilizar futuros TCEs</div>
+    <div class="register-flow">
+        <div class="reg-step">
+            <div class="icon">🏫</div>
+            <div class="label">Cadastre a</div>
+            <div class="name">Instituição de Ensino</div>
+        </div>
+        <div class="arrow">→</div>
+        <div class="reg-step">
+            <div class="icon">🏢</div>
+            <div class="label">Cadastre a</div>
+            <div class="name">Empresa Concedente</div>
+        </div>
+        <div class="arrow">→</div>
+        <div class="reg-step">
+            <div class="icon">👨‍🎓</div>
+            <div class="label">Cadastre o</div>
+            <div class="name">Estagiário</div>
+        </div>
+        <div class="arrow">→</div>
+        <div class="reg-step">
+            <div class="icon">🛡️</div>
+            <div class="label">Vincule a</div>
+            <div class="name">Seguradora</div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 4: Formulário TCE -->
+<div class="slide" id="slide-4">
+    <div class="slide-title">Etapa 2 — Gerar o TCE</div>
+    <div class="slide-desc">Preencha os dados do estágio. Os campos são preenchidos automaticamente com os cadastros</div>
+    <div class="form-mock">
+        <div style="font-size:13px;font-weight:700;margin-bottom:12px;color:#a5b4fc">📋 Gerar Novo TCE (Estágio)</div>
+        <div class="form-row">
+            <div class="form-field form-full highlight">
+                <div class="flabel">Estagiário *</div>
+                <div class="fval">João Silva (CPF: 123.456.789-00)</div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-field highlight">
+                <div class="flabel">Empresa Concedente *</div>
+                <div class="fval">Tech Corp Ltda</div>
+            </div>
+            <div class="form-field">
+                <div class="flabel">Instituição de Ensino *</div>
+                <div class="fval">UFBA - Bacharelado</div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-field">
+                <div class="flabel">Data de Início *</div>
+                <div class="fval">01/06/2025</div>
+            </div>
+            <div class="form-field">
+                <div class="flabel">Data de Término *</div>
+                <div class="fval">30/11/2025</div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-field">
+                <div class="flabel">Carga Horária Semanal</div>
+                <div class="fval">30 horas/semana</div>
+            </div>
+            <div class="form-field">
+                <div class="flabel">Bolsa Auxílio</div>
+                <div class="fval">R$ 1.200,00</div>
+            </div>
+        </div>
+        <div class="form-btn">⚡ Gerar Registro de Estágio</div>
+    </div>
+</div>
+
+<!-- Slide 5: PDF Gerado -->
+<div class="slide" id="slide-5">
+    <div class="slide-title">Etapa 3 — TCE Gerado Automaticamente</div>
+    <div class="slide-desc">O documento é gerado em PDF, pronto para assinatura e arquivamento</div>
+    <div style="position:relative">
+        <div class="pdf-mock">
+            <div class="pdf-header">
+                <div class="pdf-title">TERMO DE COMPROMISSO DE ESTÁGIO</div>
+                <div class="pdf-sub">Conforme Lei Federal nº 11.788/2008</div>
+            </div>
+            <div class="pdf-section">
+                <div class="pdf-section-title">Partes Envolvidas</div>
+                <div class="pdf-line"></div>
+                <div class="pdf-line medium"></div>
+                <div class="pdf-line short"></div>
+            </div>
+            <div class="pdf-section">
+                <div class="pdf-section-title">Dados do Estágio</div>
+                <div class="pdf-line medium"></div>
+                <div class="pdf-line"></div>
+                <div class="pdf-line short"></div>
+            </div>
+            <div class="pdf-section">
+                <div class="pdf-section-title">Condições Financeiras</div>
+                <div class="pdf-line short"></div>
+                <div class="pdf-line medium"></div>
+            </div>
+            <div class="pdf-sigs">
+                <div class="pdf-sig">
+                    <div class="pdf-sig-line"></div>
+                    <div class="pdf-sig-label">Estagiário</div>
+                </div>
+                <div class="pdf-sig">
+                    <div class="pdf-sig-line"></div>
+                    <div class="pdf-sig-label">Empresa</div>
+                </div>
+                <div class="pdf-sig">
+                    <div class="pdf-sig-line"></div>
+                    <div class="pdf-sig-label">Instituição</div>
+                </div>
+            </div>
+        </div>
+        <div class="checkmark">✓</div>
+    </div>
+</div>
+
+<!-- Slide 6: Outros Documentos -->
+<div class="slide" id="slide-6">
+    <div class="slide-title">Mais Documentos Inclusos</div>
+    <div class="slide-desc">Além do TCE, o sistema gera todos os documentos do ciclo completo de estágio</div>
+    <div class="docs-grid">
+        <div class="doc-card">
+            <div class="icon">📄</div>
+            <div class="dname">TCE</div>
+            <div class="ddesc">Termo de Compromisso de Estágio</div>
+        </div>
+        <div class="doc-card">
+            <div class="icon">📊</div>
+            <div class="dname">Relatório Semestral</div>
+            <div class="ddesc">Acompanhamento do estagiário</div>
+        </div>
+        <div class="doc-card">
+            <div class="icon">🎓</div>
+            <div class="dname">Certificado</div>
+            <div class="ddesc">Conclusão de estágio</div>
+        </div>
+        <div class="doc-card">
+            <div class="icon">🤝</div>
+            <div class="dname">Convênio Empresa</div>
+            <div class="ddesc">Acordo com a concedente</div>
+        </div>
+        <div class="doc-card">
+            <div class="icon">🏛️</div>
+            <div class="dname">Convênio IES</div>
+            <div class="ddesc">Acordo com a instituição</div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 7: CTA -->
+<div class="slide" id="slide-7">
+    <div class="cta-icon">🚀</div>
+    <div class="cta-title">Pronto para começar?</div>
+    <div class="cta-sub">Crie sua conta gratuitamente e gere seu primeiro TCE em menos de 5 minutos</div>
+    <div class="cta-btn">Criar Conta Gratuitamente</div>
+</div>
+
+<!-- UI -->
+<div class="progress-bar" id="progress"></div>
+<div class="autoplay-ring">
+    <div class="playing-dot"></div>
+    <span class="playing-label">Reproduzindo automaticamente</span>
+</div>
+<div class="timer" id="timer">0:00 / 2:00</div>
+<div class="dots" id="dots"></div>
+<div class="controls">
+    <button class="btn btn-secondary" onclick="prevSlide()">‹ Anterior</button>
+    <button class="btn btn-primary" onclick="nextSlide()">Próximo ›</button>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const totalSlides = slides.length;
+let current = 0;
+let elapsed = 0;
+const TOTAL_DURATION = 120; // 2 minutos
+const SLIDE_DURATION = TOTAL_DURATION / totalSlides; // ~17s por slide
+
+// Criar dots
+const dotsEl = document.getElementById('dots');
+slides.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.onclick = () => goTo(i);
+    dotsEl.appendChild(d);
+});
+
+function goTo(n) {
+    slides[current].classList.remove('active');
+    document.querySelectorAll('.dot')[current].classList.remove('active');
+    current = Math.max(0, Math.min(n, totalSlides - 1));
+    slides[current].classList.add('active');
+    document.querySelectorAll('.dot')[current].classList.add('active');
+}
+
+function nextSlide() {
+    if (current < totalSlides - 1) goTo(current + 1);
+    else goTo(0);
+}
+
+function prevSlide() {
+    if (current > 0) goTo(current - 1);
+    else goTo(totalSlides - 1);
+}
+
+// Autoplay
+const interval = setInterval(() => {
+    elapsed++;
+    const progress = (elapsed / TOTAL_DURATION) * 100;
+    document.getElementById('progress').style.width = progress + '%';
+    const m = Math.floor(elapsed / 60);
+    const s = elapsed % 60;
+    document.getElementById('timer').textContent = `${m}:${s.toString().padStart(2,'0')} / 2:00`;
+    if (elapsed % Math.round(SLIDE_DURATION) === 0 && elapsed < TOTAL_DURATION) {
+        nextSlide();
+    }
+    if (elapsed >= TOTAL_DURATION) {
+        clearInterval(interval);
+        goTo(0);
+        elapsed = 0;
+    }
+}, 1000);
+
+// Keyboard navigation
+document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') nextSlide();
+    if (e.key === 'ArrowLeft') prevSlide();
+});
+</script>
+</body>
+</html>
